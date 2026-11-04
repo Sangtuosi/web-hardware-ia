@@ -1,0 +1,424 @@
+---
+const title = 'TensorForja | Hardware para IA local: GPUs, mini PCs y workstations';
+const description = 'Guías y rankings de tarjetas gráficas y ordenadores para IA: VRAM, ancho de banda y tokens por segundo. Calculadora de modelos que caben en tu GPU.';
+---
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<meta name="description" content={description}>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style is:global>
+/* Layout: una oblea de silicio vista con cámara térmica. Hero = die de GPU vivo; debajo, módulos en rejilla como bloques del chip. Paleta térmica (frío índigo -> magenta -> naranja -> blanco caliente). */
+:root{
+  --void:#07060d;          /* fondo, silicio frío */
+  --die:#100e1c;           /* superficies */
+  --trace:#2a2540;         /* líneas, bordes */
+  --cold:#5b4dff;          /* índigo térmico */
+  --warm:#ff3d8b;          /* magenta */
+  --hot:#ff8a1f;           /* naranja */
+  --white-hot:#fff3d6;     /* texto principal */
+  --muted:#9a93b8;
+  --ok:#3ee0a1; --no:#ff4d5e;
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+  --heat:linear-gradient(90deg,var(--cold),var(--warm) 55%,var(--hot) 85%,var(--white-hot));
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--white-hot);font-family:var(--f-body);font-size:16px;line-height:1.55;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--void)}
+a{color:inherit}
+.wrap{max-width:1180px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+:focus-visible{outline:2px solid var(--hot);outline-offset:3px;border-radius:4px}
+
+/* NAV */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--void) 72%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--trace)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.logo{font-family:var(--f-display);font-weight:900;font-size:26px;letter-spacing:.02em;text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo i{width:22px;height:22px;display:inline-block;background:var(--heat);clip-path:polygon(25% 0,75% 0,100% 25%,100% 75%,75% 100%,25% 100%,0 75%,0 25%);animation:spin 8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.links{display:flex;gap:22px;font-size:14px;color:var(--muted)}
+.links a{text-decoration:none}.links a:hover{color:var(--white-hot)}
+@media (max-width:760px){.links{display:none}}
+.pill{font-family:var(--f-mono);font-size:12px;border:1px solid var(--trace);padding:6px 10px;border-radius:99px;color:var(--muted);white-space:nowrap}
+.pill b{color:var(--ok);font-weight:600}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--trace)}
+#die{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,color-mix(in srgb,var(--void) 85%,transparent) 0,transparent 60%),linear-gradient(0deg,var(--void),transparent 35%);pointer-events:none}
+.hero .wrap{position:relative;z-index:2;padding-block:96px 72px;display:grid;gap:28px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--hot)}
+h1{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(54px,11vw,152px);line-height:.86;margin:0;letter-spacing:-.005em;text-wrap:balance;max-width:11ch}
+h1 .heat{background:var(--heat);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:flow 6s ease-in-out infinite alternate}
+@keyframes flow{to{background-position:100% 0}}
+h1 .heat .ch{background:var(--heat);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rise .9s cubic-bezier(.2,.9,.2,1) both,flow 6s ease-in-out infinite alternate}
+h1 .ch{display:inline-block;animation:rise .9s cubic-bezier(.2,.9,.2,1) both}
+@keyframes rise{from{transform:translateY(.35em) skewY(6deg);filter:blur(8px)}}
+.lede{max-width:56ch;font-size:clamp(16px,2vw,19px);color:var(--muted);margin:0}
+.lede strong{color:var(--white-hot);font-weight:600}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{font-family:var(--f-mono);font-size:14px;font-weight:600;text-decoration:none;padding:14px 20px;border-radius:6px;border:1px solid var(--trace);background:var(--die);color:var(--white-hot);cursor:pointer;transition:transform .2s,border-color .2s}
+.btn:hover{transform:translateY(-2px);border-color:var(--warm)}
+.btn.primary{background:var(--heat);background-size:200% 100%;color:var(--void);border:0;animation:flow 4s ease-in-out infinite alternate}
+.readouts{display:flex;flex-wrap:wrap;gap:10px 28px;font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.readouts span b{color:var(--white-hot);font-weight:600;font-variant-numeric:tabular-nums;display:inline-block;min-width:5ch;text-align:right}
+
+/* TICKER */
+.ticker{border-bottom:1px solid var(--trace);overflow:hidden;white-space:nowrap;font-family:var(--f-mono);font-size:13px;color:var(--muted);padding-block:12px;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.ticker div{display:inline-flex;gap:40px;animation:tick 40s linear infinite;padding-left:40px}
+.ticker em{font-style:normal;color:var(--hot)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section.block{padding-block:88px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px;margin-bottom:36px}
+h2{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:clamp(38px,6vw,72px);line-height:.92;margin:0;text-wrap:balance}
+.sec-head p{max-width:46ch;color:var(--muted);margin:0}
+
+/* CALCULATOR */
+.calc{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px}
+@media (max-width:860px){.calc{grid-template-columns:1fr}}
+.panel{background:var(--die);border:1px solid var(--trace);border-radius:10px;padding:24px;min-width:0;position:relative;overflow:hidden}
+.vram-big{font-family:var(--f-display);font-weight:900;font-size:clamp(80px,12vw,140px);line-height:.9;font-variant-numeric:tabular-nums}
+.vram-big small{font-size:.32em;color:var(--muted);margin-left:6px}
+input[type=range]{width:100%;accent-color:var(--warm);margin-block:18px 6px}
+.ticks{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{font-family:var(--f-mono);font-size:12px;padding:7px 11px;border-radius:99px;border:1px solid var(--trace);background:transparent;color:var(--muted);cursor:pointer}
+.chip[aria-pressed=true]{border-color:var(--hot);color:var(--white-hot);background:color-mix(in srgb,var(--hot) 14%,transparent)}
+.quant{margin-top:20px;font-size:13px;color:var(--muted)}
+.models{display:grid;gap:10px}
+.model{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:12px 14px;border-radius:8px;border:1px solid var(--trace);transition:border-color .3s,opacity .3s}
+.model .name{font-weight:600;min-width:0}
+.model .need{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.model .bar{grid-column:1/-1;height:6px;border-radius:3px;background:var(--trace);overflow:hidden}
+.model .bar i{display:block;height:100%;background:var(--heat);transition:width .5s cubic-bezier(.2,.9,.2,1)}
+.model.no{opacity:.45}.model.no .bar i{background:var(--no)}
+.model .tag{font-family:var(--f-mono);font-size:11px;padding:2px 8px;border-radius:99px;border:1px solid currentColor}
+.model.yes .tag{color:var(--ok)}.model.no .tag{color:var(--no)}
+.reco{margin-top:18px;font-size:14px;color:var(--muted)}
+.reco b{color:var(--white-hot)}
+
+/* NICHES */
+.niches{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1px;background:var(--trace);border:1px solid var(--trace);border-radius:10px;overflow:hidden}
+.niche{background:var(--void);padding:26px 22px;position:relative;text-decoration:none;display:grid;gap:10px;align-content:start;min-height:200px;transition:background .3s}
+.niche::before{content:"";position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--warm) 22%,transparent),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.niche:hover::before{opacity:1}
+.niche .code{font-family:var(--f-mono);font-size:11px;color:var(--hot);letter-spacing:.1em}
+.niche h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:30px;line-height:1;margin:0}
+.niche p{margin:0;color:var(--muted);font-size:14px}
+.niche .kw{font-family:var(--f-mono);font-size:11px;color:var(--muted);border-top:1px dashed var(--trace);padding-top:10px;margin-top:auto}
+
+/* RANKING */
+.rank{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:18px}
+.card{background:var(--die);border:1px solid var(--trace);border-radius:12px;padding:20px;display:grid;gap:14px;transform-style:preserve-3d;transition:transform .15s ease-out,border-color .3s;will-change:transform}
+.card:hover{border-color:var(--warm)}
+.card .top{display:flex;justify-content:space-between;align-items:start;gap:8px}
+.card .pos{font-family:var(--f-display);font-weight:900;font-size:44px;line-height:.8;background:var(--heat);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card .kind{font-family:var(--f-mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;text-align:right}
+.card h3{margin:0;font-size:19px;line-height:1.2}
+.spec{display:grid;grid-template-columns:auto 1fr auto;gap:6px 10px;align-items:center;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.spec .m{height:5px;border-radius:3px;background:var(--trace);overflow:hidden}
+.spec .m i{display:block;height:100%;background:var(--heat);width:var(--w);transform-origin:left;animation:grow 1.2s cubic-bezier(.2,.9,.2,1) both}
+@keyframes grow{from{transform:scaleX(.08)}}
+.spec b{color:var(--white-hot);font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.verdict{font-size:14px;color:var(--muted);margin:0}
+.buy{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--trace);padding-top:14px}
+.price{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.price b{font-size:17px;color:var(--white-hot)}
+.amz{font-family:var(--f-mono);font-size:13px;font-weight:600;text-decoration:none;padding:10px 14px;border-radius:6px;background:var(--hot);color:var(--void);white-space:nowrap}
+.amz:hover{background:var(--white-hot)}
+.note{margin-top:18px;font-size:12px;color:var(--muted);font-family:var(--f-mono)}
+
+footer{border-top:1px solid var(--trace);padding-block:40px;color:var(--muted);font-size:13px}
+footer .wrap{display:grid;gap:10px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#top"><i></i>TensorForja</a>
+    <div class="links">
+      <a href="#calc">Calculadora VRAM</a>
+      <a href="#nichos">Categorías</a>
+      <a href="#ranking">Ranking GPUs</a>
+    </div>
+    <span class="pill">PROTOTIPO · <b>●</b> live</span>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="die" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="eyebrow">Hardware para IA local · España</div>
+    <h1 id="h1"><span class="heat">Corre la IA</span> en tu propia máquina</h1>
+    <p class="lede">Gráficas, mini PCs y workstations elegidas por lo que de verdad importa para la IA: <strong>VRAM, ancho de banda y tokens por segundo</strong>. Nada de FPS en juegos.</p>
+    <div class="ctas">
+      <a class="btn primary" href="#calc">¿Qué modelo cabe en mi GPU? →</a>
+      <a class="btn" href="#ranking">Ver ranking 2026</a>
+    </div>
+    <div class="readouts" aria-label="Simulación del chip">
+      <span>SM activos <b id="r-sm">0</b></span>
+      <span>Tensor ops <b id="r-op">0</b> TFLOPS</span>
+      <span>Temp <b id="r-t">0</b> °C</span>
+      <span>Tokens/s <b id="r-tok">0</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true"><div id="tk"></div></div>
+
+<main>
+  <section class="block" id="calc">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Calculadora<br>de VRAM</h2>
+        <p>La herramienta que más tráfico SEO puede traer: responde a "¿qué GPU necesito para Llama / Flux / Qwen?" y enlaza directo a la gráfica que lo cumple.</p>
+      </div>
+      <div class="calc">
+        <div class="panel">
+          <div class="eyebrow">Memoria de tu GPU</div>
+          <div class="vram-big"><span id="vv">24</span><small>GB</small></div>
+          <label for="vram" class="eyebrow" style="color:var(--muted)">Arrastra</label>
+          <input id="vram" type="range" min="0" max="9" step="1" value="4">
+          <div class="ticks"><span>8</span><span>16</span><span>32</span><span>128</span><span>512</span></div>
+          <div class="eyebrow" style="margin-top:22px;color:var(--muted)">Cuantización</div>
+          <div class="chips" role="group" aria-label="Cuantización">
+            <button class="chip" id="q4" data-b="4.5" aria-pressed="true">Q4 · 4-bit</button>
+            <button class="chip" id="q8" data-b="8.5" aria-pressed="false">Q8 · 8-bit</button>
+            <button class="chip" id="q16" data-b="16" aria-pressed="false">FP16</button>
+          </div>
+          <p class="quant">Estimación: parámetros × bits ÷ 8, más un 20 % para contexto y KV cache.</p>
+          <p class="reco" id="reco"></p>
+        </div>
+        <div class="panel"><div class="models" id="models"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="nichos" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Siete nichos,<br>un silo cada uno</h2>
+        <p>Cada categoría es un silo SEO: página pilar + comparativas + guías long-tail enlazadas entre sí. Debajo, la intención de búsqueda que ataca.</p>
+      </div>
+      <div class="niches" id="niches"></div>
+    </div>
+  </section>
+
+  <section class="block" id="ranking" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Ranking IA<br>noviembre 2026</h2>
+        <p>Ordenado por memoria útil para modelos y ancho de banda, que es lo que marca los tokens por segundo al generar texto.</p>
+      </div>
+      <div class="rank" id="rank"></div>
+      <p class="note">Precios orientativos de ejemplo. En la web real se leerán de la API de Amazon y se actualizarán solos.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="logo" style="font-size:20px"><i></i>TensorForja</div>
+    <div>En calidad de Afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.</div>
+    <div>Prototipo visual · nombre, datos y enlaces provisionales.</div>
+  </div>
+</footer>
+
+
+<script is:inline>
+(()=>{
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---- split H1 letters for the entrance ---- */
+const h1=document.getElementById('h1');let k=0;
+h1.querySelectorAll(':scope > .heat').forEach(()=>{});
+function split(node){
+  [...node.childNodes].forEach(n=>{
+    if(n.nodeType===3){
+      const frag=document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach(w=>{
+        if(/^\s+$/.test(w)||!w){frag.append(w);return;}
+        const s=document.createElement('span');s.className='ch';s.style.animationDelay=(k++*55)+'ms';s.textContent=w;frag.append(s);
+      });
+      n.replaceWith(frag);
+    } else if(n.nodeType===1) split(n);
+  });
+}
+split(h1);
+
+/* ---- GPU die canvas ---- */
+const cv=document.getElementById('die'),ctx=cv.getContext('2d');
+let W,H,dpr,cells=[],packets=[],mouse={x:-999,y:-999},t0=performance.now();
+const C=20; // cell size
+function heat(v){ // 0..1 thermal ramp
+  const stops=[[7,6,13],[91,77,255],[255,61,139],[255,138,31],[255,243,214]];
+  v=Math.max(0,Math.min(1,v))*(stops.length-1);const i=Math.floor(v),f=v-i;const a=stops[i],b=stops[Math.min(i+1,stops.length-1)];
+  return `rgb(${a[0]+(b[0]-a[0])*f|0},${a[1]+(b[1]-a[1])*f|0},${a[2]+(b[2]-a[2])*f|0})`;
+}
+function resize(){
+  dpr=Math.min(devicePixelRatio||1,2);const r=cv.getBoundingClientRect();W=r.width;H=r.height;
+  cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+  cells=[];const cols=Math.ceil(W/C),rows=Math.ceil(H/C);
+  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
+    // SM blocks: 8x6 groups with gutters
+    const gx=x%9,gy=y%7; if(gx===8||gy===6) continue;
+    cells.push({x,y,v:Math.random()*.15,tg:0,ph:Math.random()*6.28,core:(gx+gy)%3===0});
+  }
+  cells.cols=cols;cells.rows=rows;
+}
+function spawn(){
+  const horiz=Math.random()<.6,lane=horiz?(Math.floor(Math.random()*(H/C/7))*7+6):(Math.floor(Math.random()*(W/C/9))*9+8);
+  packets.push({horiz,lane,p:-2,s:.35+Math.random()*.9,len:3+Math.random()*8});
+}
+let last=0,ops=0;
+function frame(now){
+  const t=(now-t0)/1000;ctx.fillStyle='#07060d';ctx.fillRect(0,0,W,H);
+  // wave of compute sweeping across die
+  const wx=(Math.sin(t*.35)*.5+.5)*W, wy=(Math.cos(t*.27)*.5+.5)*H;
+  let active=0,sum=0;
+  for(const c of cells){
+    const px=c.x*C+C/2,py=c.y*C+C/2;
+    const dm=Math.hypot(px-mouse.x,py-mouse.y),dw=Math.hypot(px-wx,py-wy);
+    let target=.08+.06*Math.sin(t*2+c.ph);
+    target+=Math.max(0,1-dw/(Math.min(W,H)*.55))*.55;
+    target+=Math.max(0,1-dm/180)*.9;
+    if(Math.random()<.0008) c.tg=1;
+    c.tg*=.96;target+=c.tg*.7;
+    c.v+=(target-c.v)*.08;
+    if(c.v>.35)active++;sum+=c.v;
+    const s=C-3;
+    ctx.fillStyle=heat(c.v*(c.core?1:.8));
+    ctx.globalAlpha=.25+c.v*.75;
+    ctx.fillRect(c.x*C+1.5,c.y*C+1.5,s,s);
+    if(c.core&&c.v>.5){ctx.globalAlpha=(c.v-.5)*.9;ctx.fillStyle='#fff3d6';ctx.fillRect(c.x*C+C/2-2,c.y*C+C/2-2,4,4);}
+  }
+  ctx.globalAlpha=1;
+  // data packets along gutters (memory bus)
+  if(Math.random()<.35)spawn();
+  ctx.lineCap='round';
+  packets=packets.filter(p=>{
+    p.p+=p.s;const max=p.horiz?W/C:H/C;if(p.p-p.len>max)return false;
+    const a=(p.p-p.len)*C,b=p.p*C,l=p.lane*C+C/2;
+    const g=p.horiz?ctx.createLinearGradient(a,0,b,0):ctx.createLinearGradient(0,a,0,b);
+    g.addColorStop(0,'rgba(91,77,255,0)');g.addColorStop(.7,'rgba(255,61,139,.8)');g.addColorStop(1,'#fff3d6');
+    ctx.strokeStyle=g;ctx.lineWidth=2;ctx.beginPath();
+    if(p.horiz){ctx.moveTo(a,l);ctx.lineTo(b,l);}else{ctx.moveTo(l,a);ctx.lineTo(l,b);}
+    ctx.stroke();return true;
+  });
+  // readouts (throttled)
+  if(now-last>120){
+    last=now;const avg=sum/cells.length;
+    document.getElementById('r-sm').textContent=Math.min(170,Math.round(active/cells.length*170*2.2));
+    document.getElementById('r-op').textContent=(avg*1650).toFixed(0);
+    document.getElementById('r-t').textContent=(38+avg*60).toFixed(0);
+    document.getElementById('r-tok').textContent=(avg*420).toFixed(0);
+  }
+  if(!reduce)requestAnimationFrame(frame);
+}
+addEventListener('resize',resize);
+cv.parentElement.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
+cv.parentElement.addEventListener('pointerleave',()=>{mouse.x=mouse.y=-999});
+resize();requestAnimationFrame(frame);
+
+/* ---- data ---- */
+const gpus=[
+ {n:'NVIDIA GeForce RTX 5090',k:'Gráfica',vram:32,bw:1792,eur:'2.399',v:'La reina de la IA en casa. 32 GB y el mayor ancho de banda de consumo.'},
+ {n:'Apple Mac Studio M3 Ultra',k:'Workstation',vram:512,bw:819,eur:'4.999',v:'Hasta 512 GB unificados. Corre modelos de 400B+ que ninguna gráfica de consumo mueve.'},
+ {n:'NVIDIA DGX Spark',k:'Mini PC IA',vram:128,bw:273,eur:'3.999',v:'Superordenador de escritorio con 128 GB y stack CUDA completo. Lento generando, enorme en memoria.'},
+ {n:'Mini PC Ryzen AI Max+ 395',k:'Mini PC IA',vram:128,bw:256,eur:'2.099',v:'128 GB compartidos por la mitad que un Spark. El chollo para modelos de 70B.'},
+ {n:'NVIDIA GeForce RTX 5080',k:'Gráfica',vram:16,bw:960,eur:'1.149',v:'Muy rápida, pero 16 GB se quedan cortos para LLM grandes.'},
+ {n:'NVIDIA GeForce RTX 5070 Ti',k:'Gráfica',vram:16,bw:896,eur:'829',v:'Mejor relación precio/VRAM de NVIDIA para empezar con Stable Diffusion y LLM de 14B.'},
+ {n:'AMD Radeon RX 9070 XT',k:'Gráfica',vram:16,bw:640,eur:'669',v:'16 GB baratos. ROCm ya va bien en Linux; en Windows exige más paciencia.'},
+ {n:'NVIDIA Jetson Orin Nano Super',k:'Edge AI',vram:8,bw:102,eur:'279',v:'Para robótica, visión y domótica con IA. Pequeña y de bajo consumo.'},
+];
+const models=[
+ {n:'Llama 3.1 8B',p:8},{n:'SDXL · imagen',p:3.5,fixed:10},{n:'Qwen 2.5 14B',p:14},{n:'Flux.1 dev · imagen',p:12,fixed:24},
+ {n:'Mistral Small 24B',p:24},{n:'Qwen 2.5 32B',p:32},{n:'Llama 3.3 70B',p:70},{n:'Qwen3 235B (MoE)',p:235},{n:'DeepSeek R1 671B',p:671},
+];
+const steps=[8,12,16,20,24,32,48,128,192,512];
+const niches=[
+ ['GPU-01','Gráficas para IA','Página pilar del sitio. VRAM, CUDA vs ROCm, nuevas vs segunda mano.','mejor gráfica para IA · rtx 5090 ia'],
+ ['PC-02','PCs y workstations IA','Equipos montados y configuraciones recomendadas por presupuesto.','pc para inteligencia artificial'],
+ ['MINI-03','Mini PCs IA','Ryzen AI Max, DGX Spark y la nueva ola de memoria unificada.','mini pc ia 128gb'],
+ ['MAC-04','Mac para IA','Mac Studio y Mac mini como alternativa silenciosa con mucha memoria.','mac studio llm'],
+ ['LAP-05','Portátiles IA','Portátiles con RTX y "Copilot+ PC": qué sirve y qué es marketing.','portátil para ia local'],
+ ['CMP-06','Componentes clave','Fuentes de 1000 W+, RAM DDR5, NVMe y refrigeración para cargas 24/7.','fuente para rtx 5090'],
+ ['EDGE-07','Edge AI y maker','Jetson, Raspberry Pi AI HAT y aceleradores USB para proyectos.','jetson orin nano'],
+];
+
+/* ---- ticker ---- */
+const tkItems=gpus.map(g=>`${g.n} <em>${g.vram} GB</em> · ${g.bw} GB/s`);
+document.getElementById('tk').innerHTML=[...tkItems,...tkItems].map(s=>`<span>${s}</span>`).join('');
+
+/* ---- calculator ---- */
+const range=document.getElementById('vram'),vv=document.getElementById('vv'),list=document.getElementById('models'),reco=document.getElementById('reco');
+let bits=4.5;
+function need(m){return m.fixed?(bits>=16?m.fixed*1.6:m.fixed):m.p*bits/8*1.2}
+list.innerHTML=models.map((m,i)=>`<div class="model" id="m${i}"><span class="name">${m.n}</span><span class="tag"></span><span class="need"></span><span class="bar"><i></i></span></div>`).join('');
+function calc(){
+  const v=steps[+range.value];vv.textContent=v;
+  let fits=0;
+  models.forEach((m,i)=>{
+    const n=need(m),ok=n<=v,el=document.getElementById('m'+i);fits+=ok;
+    el.className='model '+(ok?'yes':'no');
+    el.querySelector('.tag').textContent=ok?'cabe':'no cabe';
+    el.querySelector('.need').textContent=`${n.toFixed(n<10?1:0)} GB necesarios`;
+    el.querySelector('.bar i').style.width=Math.min(100,n/v*100)+'%';
+  });
+  const match=gpus.filter(g=>g.vram>=v).sort((a,b)=>a.vram-b.vram||b.bw-a.bw)[0];
+  reco.innerHTML=`Con ${v} GB corres <b>${fits} de ${models.length}</b> modelos. `+(match?`Equipo más asequible con esa memoria: <b>${match.n}</b>.`:'');
+}
+range.addEventListener('input',calc);
+document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
+  document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+  c.setAttribute('aria-pressed','true');bits=+c.dataset.b;calc();
+}));
+calc();
+
+/* ---- niches ---- */
+document.getElementById('niches').innerHTML=niches.map(n=>`<a class="niche" href="#ranking"><span class="code">${n[0]}</span><h3>${n[1]}</h3><p>${n[2]}</p><span class="kw">busca: "${n[3]}"</span></a>`).join('');
+document.querySelectorAll('.niche').forEach(el=>el.addEventListener('pointermove',e=>{
+  const r=el.getBoundingClientRect();el.style.setProperty('--mx',(e.clientX-r.left)+'px');el.style.setProperty('--my',(e.clientY-r.top)+'px');
+}));
+
+/* ---- ranking cards ---- */
+const lv=v=>Math.log2(v/4)/Math.log2(512/4)*100;
+document.getElementById('rank').innerHTML=gpus.map((g,i)=>`
+ <article class="card">
+  <div class="top"><span class="pos">${String(i+1).padStart(2,'0')}</span><span class="kind">${g.k}</span></div>
+  <h3>${g.n}</h3>
+  <div class="spec">
+    <span>VRAM</span><span class="m"><i style="--w:${lv(g.vram)}%"></i></span><b>${g.vram} GB</b>
+    <span>Ancho</span><span class="m"><i style="--w:${g.bw/1792*100}%"></i></span><b>${g.bw} GB/s</b>
+  </div>
+  <p class="verdict">${g.v}</p>
+  <div class="buy"><span class="price">desde <b>${g.eur} €</b></span><a class="amz" href="https://www.amazon.es/s?k=${encodeURIComponent(g.n)}" target="_blank" rel="sponsored noopener">Ver en Amazon</a></div>
+ </article>`).join('');
+if(!reduce&&matchMedia('(hover:hover)').matches){
+  document.querySelectorAll('.card').forEach(c=>{
+    c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      c.style.transform=`perspective(800px) rotateY(${x*10}deg) rotateX(${-y*10}deg) translateZ(6px)`;});
+    c.addEventListener('pointerleave',()=>c.style.transform='');
+  });
+}
+})();
+</script>
+</body>
+</html>
