@@ -1,0 +1,18 @@
+---
+interface Props { items: [string, string][]; }
+const { items } = Astro.props;
+---
+<nav aria-label="Migas de pan" class="migas">
+  <ol>
+    {items.map(([href, txt], i) => (
+      <li>{i < items.length - 1 ? <a href={href}>{txt}</a> : <span aria-current="page">{txt}</span>}</li>
+    ))}
+  </ol>
+</nav>
+<style>
+  .migas ol { display: inline-flex; flex-wrap: wrap; gap: 4px; list-style: none; margin: 0; padding: 6px 8px; border-radius: var(--r-full); background: var(--inset); box-shadow: var(--sh-inset); font-size: 13px; }
+  .migas li { display: flex; align-items: center; gap: 4px; }
+  .migas li + li::before { content: '›'; color: var(--faint); }
+  .migas a { color: var(--copper-hi); text-decoration: none; padding: 4px 8px; }
+  .migas span { color: var(--muted); padding: 4px 8px; }
+</style>

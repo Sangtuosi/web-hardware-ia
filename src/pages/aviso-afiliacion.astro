@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../lib/site.js';
+import { breadcrumbs } from '../lib/schema.js';
+const migas: [string, string][] = [['/', 'Inicio'], ['/aviso-afiliacion/', 'Aviso de afiliación']];
+---
+<Base title={`Aviso de afiliación | ${SITE.nombre}`} description={`Cómo se financia ${SITE.nombre}: enlaces de afiliado de Amazon sin coste para ti.`} schema={[breadcrumbs(migas)]}>
+  <main class="wrap" style="padding-block:40px">
+    <Breadcrumbs items={migas} />
+    <article class="prose" style="margin-top:24px">
+      <h1>Aviso de afiliación</h1>
+      <p>{SITE.nombre} participa en el Programa de Afiliados de Amazon EU, un programa de publicidad para afiliados diseñado para ofrecer a sitios web un modo de obtener comisiones por publicidad, publicitando e incluyendo enlaces a Amazon.es.</p>
+      <p>En calidad de Afiliado de Amazon, obtenemos ingresos por las compras adscritas que cumplen los requisitos aplicables. Tú pagas exactamente lo mismo.</p>
+      <p>Los enlaces a Amazon están marcados como patrocinados. Ninguna marca paga por aparecer ni por su puntuación: puedes ver cómo puntuamos en <a href="/como-elegimos/">Cómo elegimos</a>.</p>
+    </article>
+  </main>
+</Base>

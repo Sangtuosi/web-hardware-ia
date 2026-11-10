@@ -1,0 +1,68 @@
+[
+  {
+    "slug": "graficas-para-ia",
+    "nombre": "Gráficas para IA",
+    "titulo": "Mejores tarjetas gráficas para IA en 2026",
+    "descripcion": "Comparativa de tarjetas gráficas para inteligencia artificial local: VRAM, ancho de banda, modelos que caben y lo que no te cuentan.",
+    "intro": "Para la IA lo que manda es la VRAM: decide qué modelos caben. Después, el ancho de banda decide lo rápido que responden. Aquí están ordenadas por eso, no por FPS en juegos.",
+    "faq": [
+      ["¿Cuánta VRAM necesito para IA?", "Con 12 GB corres modelos de 8B con soltura; con 16 GB, de 14B; con 24 GB, de 32B en Q4. Para 70B necesitas 48 GB o un equipo de memoria unificada."],
+      ["¿NVIDIA o AMD para IA?", "NVIDIA si quieres que todo funcione a la primera (CUDA). AMD da más VRAM por euro y va muy bien con LLM en Linux, pero imagen y entrenamiento dan más guerra."],
+      ["¿Merece la pena una gráfica de segunda mano?", "Para IA, una RTX 3090 o 4090 usada es de lo más rentable por GB de VRAM. Compra con garantía de reacondicionado si puedes."]
+    ]
+  },
+  {
+    "slug": "graficas-ia-baratas",
+    "nombre": "Gráficas IA baratas",
+    "titulo": "Tarjetas gráficas baratas para IA: más VRAM por euro",
+    "descripcion": "Las tarjetas gráficas más baratas que sirven de verdad para IA local, ordenadas por VRAM y ancho de banda.",
+    "intro": "Si el presupuesto manda, busca VRAM antes que potencia. Una gráfica de 16 GB lenta corre modelos que una de 8 GB rápida ni siquiera puede cargar.",
+    "faq": [
+      ["¿Sirve una gráfica de 8 GB para IA?", "Para modelos de 7 a 8B en Q4 sí, justo. Para imagen con Flux o modelos de 14B se queda corta. Mejor 12 o 16 GB."],
+      ["¿Cuál es la gráfica más barata para IA?", "Nueva, la Intel Arc B580 (12 GB) o la RTX 5060 Ti de 16 GB. Usada, la RTX 3090 da 24 GB a precio de gama media."]
+    ]
+  },
+  {
+    "slug": "graficas-para-stable-diffusion",
+    "nombre": "Para Stable Diffusion",
+    "titulo": "Mejores gráficas para Stable Diffusion y Flux",
+    "descripcion": "Qué tarjeta gráfica comprar para generar imágenes con Stable Diffusion, SDXL y Flux en local.",
+    "intro": "Para generar imágenes, CUDA marca la diferencia: casi todas las herramientas (ComfyUI, Forge) están pensadas para NVIDIA. Con 12 GB vas bien en SDXL; Flux pide 16 GB o más.",
+    "faq": [
+      ["¿Cuánta VRAM necesita Flux?", "Flux.1 dev en FP8 va cómodo con 16 GB. En FP16 completo necesitas 24 GB o más."],
+      ["¿Funciona Stable Diffusion con AMD?", "Sí, pero con más configuración. En Linux con ROCm va bien; en Windows es menos estable."]
+    ]
+  },
+  {
+    "slug": "mini-pc-ia",
+    "nombre": "Mini PCs IA",
+    "titulo": "Mini PCs para IA: 128 GB de memoria en una caja pequeña",
+    "descripcion": "Mini PCs con memoria unificada para correr modelos de IA grandes en local: Ryzen AI Max, DGX Spark y Mac mini.",
+    "intro": "La memoria unificada permite cargar modelos de 70B o más sin comprar varias gráficas. A cambio, generan texto más despacio. Aquí ves cuánto.",
+    "faq": [
+      ["¿Un mini PC puede sustituir a una gráfica para IA?", "Para modelos grandes, sí: caben donde una gráfica no. Para velocidad pura o generar imágenes, una gráfica dedicada sigue ganando."],
+      ["¿DGX Spark o Ryzen AI Max?", "DGX Spark si necesitas CUDA y desarrollas. Ryzen AI Max si quieres lo mismo de memoria por bastante menos y te vale Ollama o LM Studio."]
+    ]
+  },
+  {
+    "slug": "mac-para-ia",
+    "nombre": "Mac para IA",
+    "titulo": "Mac para IA: Mac Studio y Mac mini para modelos locales",
+    "descripcion": "Qué Mac comprar para correr modelos de IA en local: memoria unificada, velocidad y lo que no hacen bien.",
+    "intro": "Los Mac con mucha memoria unificada son la forma más silenciosa de correr modelos grandes. Su punto débil es la imagen y el vídeo, donde NVIDIA va muy por delante.",
+    "faq": [
+      ["¿Es bueno un Mac para IA?", "Para LLM, muy bueno si tiene mucha memoria. Para generar imagen o entrenar, una gráfica NVIDIA es más rápida y barata."],
+      ["¿Cuánta memoria necesito en un Mac para IA?", "32 GB para modelos de 14B con margen, 64 GB para 32B y 128 GB o más para 70B."]
+    ]
+  },
+  {
+    "slug": "edge-ai",
+    "nombre": "Edge AI y maker",
+    "titulo": "Edge AI: placas y kits para proyectos de IA",
+    "descripcion": "Placas de IA para robótica, visión artificial y domótica: Jetson y alternativas.",
+    "intro": "Pequeñas, de bajo consumo y con aceleración de IA: para cámaras inteligentes, robots o un asistente de voz en casa.",
+    "faq": [
+      ["¿Puedo correr un chatbot en una Jetson?", "Modelos pequeños de 3 a 4B sí. Para algo tipo ChatGPT necesitas una gráfica de 12 GB o más."]
+    ]
+  }
+]

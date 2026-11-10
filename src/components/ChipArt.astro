@@ -1,0 +1,32 @@
+---
+// Ilustración propia mientras no haya fotos: placa con el chip y la VRAM grabada.
+interface Props { producto: { vram: number; tipo: string; marca: string; memoria: string }; grande?: boolean; }
+const { producto, grande = false } = Astro.props;
+const n = producto.tipo === 'grafica' ? Math.min(12, Math.max(4, Math.round(producto.vram / 2.7))) : 8;
+const mods = Array.from({ length: n }, (_, i) => i);
+const etiqueta = { grafica: 'GPU', 'mini-pc': 'SoC', mac: 'Apple', edge: 'Edge' }[producto.tipo] ?? 'GPU';
+---
+<div class:list={['chip-art', { grande }]} aria-hidden="true">
+  <svg viewBox="0 0 320 200" role="presentation">
+    <defs>
+      <linearGradient id="cu" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ef9459"/><stop offset=".55" stop-color="#c9622c"/><stop offset="1" stop-color="#7a3514"/></linearGradient>
+      <linearGradient id="die" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a2a2a"/><stop offset="1" stop-color="#151515"/></linearGradient>
+    </defs>
+    <g stroke="#c9622c" stroke-opacity=".28" stroke-width="1.2" fill="none">
+      {mods.map((i) => <path d={`M${40 + (i % 6) * 48} ${i < 6 ? 30 : 170} V ${i < 6 ? 62 : 138}`} />)}
+      <path d="M20 100 H90 M230 100 H300 M160 10 V50 M160 150 V190" />
+    </g>
+    {mods.map((i) => (
+      <rect x={24 + (i % 6) * 48} y={i < 6 ? 14 : 168} width="32" height="18" rx="3" fill="#1e1e1e" stroke="#3a3a3a" />
+    ))}
+    <rect x="90" y="50" width="140" height="100" rx="14" fill="url(#cu)" />
+    <rect x="102" y="60" width="116" height="80" rx="9" fill="url(#die)" stroke="#000" stroke-opacity=".6" />
+    <text x="160" y="108" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="34" fill="#f2efe9">{producto.vram}<tspan font-size="15" fill="#e98a4f" dx="3">GB</tspan></text>
+    <text x="160" y="128" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="2" fill="#8d8a85">{etiqueta.toUpperCase()} · {producto.marca.toUpperCase()}</text>
+  </svg>
+</div>
+<style>
+  .chip-art { border-radius: var(--r-md); background: radial-gradient(circle at 50% 40%, #241a14, var(--inset) 70%); box-shadow: var(--sh-inset); padding: 14px; }
+  .chip-art svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 8px 18px #000); }
+  .chip-art.grande { padding: 28px; }
+</style>

@@ -1,0 +1,175 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ChipArt from '../../components/ChipArt.astro';
+import Radar from '../../components/Radar.astro';
+import AmazonBtn from '../../components/AmazonBtn.astro';
+import productos from '../../data/productos.json';
+import categorias from '../../data/categorias.json';
+import modelos from '../../data/modelos.json';
+import { SITE } from '../../lib/site.js';
+import { puntuaciones, notaIA, vramNecesaria, cabe, tokensPorSegundo } from '../../lib/calc.js';
+import { breadcrumbs, abs } from '../../lib/schema.js';
+
+export function getStaticPaths() {
+  return productos.map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props;
+const cat = categorias.find((c) => c.slug === p.categorias[0]);
+const migas: [string, string][] = [['/', 'Inicio'], [`/${cat.slug}/`, cat.nombre], [`/hardware/${p.slug}/`, p.nombre]];
+const radar = puntuaciones(p, productos);
+const nota = notaIA(p, productos);
+const tabla = modelos.map((m) => ({ m, ok: cabe(m, p.vram), gb: vramNecesaria(m), tps: tokensPorSegundo(p, m) }));
+const relacionados = productos.filter((x) => x.slug !== p.slug && x.categorias.some((c) => p.categorias.includes(c))).slice(0, 3);
+const tipoTxt = { grafica: 'Tarjeta gráfica', 'mini-pc': 'Mini PC', mac: 'Mac', edge: 'Placa de IA' }[p.tipo];
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: p.nombre,
+  brand: { '@type': 'Brand', name: p.marca },
+  description: p.resumen,
+  url: abs(`/hardware/${p.slug}/`),
+  review: {
+    '@type': 'Review',
+    author: { '@type': 'Person', name: SITE.autor },
+    datePublished: p.revisado,
+    reviewBody: p.paraQuien,
+    reviewRating: { '@type': 'Rating', ratingValue: nota, bestRating: 100, worstRating: 0 },
+  },
+};
+---
+<Base
+  title={`${p.nombre}: ficha para IA, VRAM y modelos que caben | ${SITE.nombre}`}
+  description={`${p.nombre} para IA local: ${p.vram} GB de ${p.memoria}, ${p.anchoBanda} GB/s. Qué modelos caben, tokens por segundo estimados y lo que no hace bien.`}
+  schema={[breadcrumbs(migas), productSchema]}
+  ogType="product"
+>
+  <main class="wrap">
+    <div style="padding-top:32px"><Breadcrumbs items={migas} /></div>
+
+    <section class="ficha">
+      <div class="visual">
+        <ChipArt producto={p} grande />
+      </div>
+      <div class="datos">
+        <span class="badge badge-copper">{tipoTxt} · {p.ecosistema}</span>
+        <h1>{p.nombre}</h1>
+        <p class="resumen">{p.resumen}</p>
+        <div class="estrella surface">
+          <div>
+            <span class="eyebrow">Memoria para IA</span>
+            <div class="gb"><b>{p.vram}</b><span>GB {p.memoria}</span></div>
+          </div>
+          <div class="nota">
+            <span class="eyebrow">Nota IA</span>
+            <b class="copper-text">{nota}</b>
+          </div>
+        </div>
+        <AmazonBtn producto={p} />
+        <p class="mini muted">Precio y disponibilidad en Amazon. Cambian a diario.</p>
+      </div>
+    </section>
+
+    <section class="bloques">
+      <div class="surface pad">
+        <h2>Puntuación</h2>
+        <Radar valores={radar} />
+        <p class="mini muted">Fórmulas publicadas en <a href="/como-elegimos/">Cómo elegimos</a>.</p>
+      </div>
+      <div class="surface pad">
+        <h2>Modelos que caben</h2>
+        <p class="mini muted">En Q4. Tokens/s: estimación propia a partir del ancho de banda, no benchmark verificado.</p>
+        <table class="modelos">
+          <thead><tr><th>Modelo</th><th>Necesita</th><th>¿Cabe?</th><th>Tokens/s</th></tr></thead>
+          <tbody>
+            {tabla.map(({ m, ok, gb, tps }) => (
+              <tr class={ok ? 'si' : 'no'}>
+                <td>{m.nombre}</td>
+                <td class="mono">{gb.toFixed(gb < 10 ? 1 : 0)} GB</td>
+                <td><span class:list={['badge', ok ? 'badge-ok' : '']}>{ok ? 'Sí' : 'No'}</span></td>
+                <td class="mono">{tps ? `≈ ${tps}` : m.tipo === 'imagen' && ok ? 'imagen' : '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="bloques tres">
+      <div class="surface pad">
+        <h2 class="h-ok">Lo bueno</h2>
+        <ul class="lista">{p.pros.map((x) => <li>{x}</li>)}</ul>
+      </div>
+      <div class="surface pad">
+        <h2 class="h-no">Lo que no</h2>
+        <ul class="lista no">{p.loQueNo.map((x) => <li>{x}</li>)}</ul>
+      </div>
+      <div class="surface pad para">
+        <h2>Para quién es</h2>
+        <p>{p.paraQuien}</p>
+        <AmazonBtn producto={p} texto="Ver en Amazon" small />
+      </div>
+    </section>
+
+    <section class="surface pad specs-wrap">
+      <h2>Especificaciones</h2>
+      <dl class="specs">
+        <dt>Marca</dt><dd>{p.marca}</dd>
+        <dt>Memoria</dt><dd>{p.vram} GB {p.memoria}</dd>
+        <dt>Ancho de banda</dt><dd>{p.anchoBanda} GB/s</dd>
+        <dt>Consumo</dt><dd>{p.consumo} W{p.tipo !== 'grafica' && ' (equipo completo)'}</dd>
+        {p.fuente > 0 && <><dt>Fuente recomendada</dt><dd>{p.fuente} W</dd></>}
+        <dt>Software de IA</dt><dd>{p.ecosistema}</dd>
+        <dt>Lanzamiento</dt><dd>{p.lanzamiento}</dd>
+        <dt>Datos revisados</dt><dd>{new Date(p.revisado).toLocaleDateString('es-ES')}</dd>
+      </dl>
+    </section>
+
+    {relacionados.length > 0 && (
+      <section class="block">
+        <div class="sec-head"><h2>Si no te encaja, mira estos</h2></div>
+        <div class="grid-cards">{relacionados.map((r) => <ProductCard producto={r} />)}</div>
+      </section>
+    )}
+
+    <p class="mini muted">Enlace de afiliado de Amazon: si compras desde él recibimos una comisión sin coste para ti. Datos revisados el {new Date(p.revisado).toLocaleDateString('es-ES')}.</p>
+  </main>
+</Base>
+<style>
+  .ficha { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding-block: 32px 48px; }
+  @media (max-width: 860px) { .ficha { grid-template-columns: 1fr; } }
+  .datos { display: grid; gap: 18px; justify-items: start; }
+  .resumen { font-size: 18px; color: var(--muted); }
+  .estrella { display: flex; justify-content: space-between; gap: 24px; padding: 22px 26px; width: 100%; }
+  .gb { display: flex; align-items: end; gap: 10px; }
+  .gb b { font: 700 clamp(64px, 9vw, 96px)/0.85 var(--f-display); }
+  .gb span { font: 12px var(--f-mono); color: var(--muted); padding-bottom: 6px; }
+  .nota { text-align: right; display: grid; align-content: start; }
+  .nota b { font: 700 56px/1 var(--f-display); }
+  .mini { font-size: 13px; }
+  .mini a { color: var(--copper-hi); }
+  .bloques { display: grid; grid-template-columns: 2fr 3fr; gap: 24px; margin-bottom: 24px; }
+  .bloques.tres { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 960px) { .bloques, .bloques.tres { grid-template-columns: 1fr; } }
+  .pad { padding: clamp(20px, 3vw, 30px); display: grid; gap: 16px; align-content: start; min-width: 0; }
+  .pad h2 { font-size: 24px; }
+  .h-ok::before, .h-no::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 10px; vertical-align: middle; }
+  .h-ok::before { background: var(--ok); box-shadow: 0 0 10px var(--ok); }
+  .h-no::before { background: var(--no); box-shadow: 0 0 10px var(--no); }
+  .lista { margin: 0; padding-left: 18px; display: grid; gap: 10px; color: #d6d4cf; }
+  .lista li::marker { color: var(--ok); }
+  .lista.no li::marker { color: var(--no); }
+  .para { border: 1px solid #c9622c40; }
+  .modelos { width: 100%; border-collapse: separate; border-spacing: 0 6px; font-size: 14px; }
+  .modelos th { text-align: left; font: 600 11px var(--f-mono); color: var(--faint); text-transform: uppercase; letter-spacing: 0.08em; padding: 0 10px; }
+  .modelos td { padding: 10px; background: var(--inset); }
+  .modelos td:first-child { border-radius: 10px 0 0 10px; }
+  .modelos td:last-child { border-radius: 0 10px 10px 0; color: var(--copper-hi); }
+  .modelos tr.no td { opacity: 0.5; }
+  .specs-wrap { margin-bottom: 24px; }
+  .specs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 12px; margin: 0; }
+  .specs dt { font: 11px var(--f-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); }
+  .specs dd { margin: 4px 0 0; font-weight: 600; }
+  .specs > dt { grid-column: auto; }
+</style>

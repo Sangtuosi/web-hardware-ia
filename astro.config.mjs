@@ -1,2 +1,4 @@
 import { defineConfig } from 'astro/config';
-export default defineConfig({ site: 'https://example.com' });
+import { SITE } from './src/lib/site.js';
+
+export default defineConfig({ site: SITE.url, trailingSlash: 'ignore' });

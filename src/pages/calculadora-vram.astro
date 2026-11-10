@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import VramCalc from '../components/VramCalc.astro';
+import Faq from '../components/Faq.astro';
+import { SITE } from '../lib/site.js';
+import { breadcrumbs, faqPage } from '../lib/schema.js';
+
+const migas: [string, string][] = [['/', 'Inicio'], ['/calculadora-vram/', 'Calculadora de VRAM']];
+const faq: [string, string][] = [
+  ['¿Cuánta VRAM necesita Llama 3 70B?', 'En Q4 unos 47 GB contando el contexto: no cabe en una sola gráfica de consumo. Necesitas dos de 24 GB, una de 48 GB o un equipo de memoria unificada de 64 GB o más.'],
+  ['¿Qué es la cuantización Q4?', 'Guardar los pesos del modelo con unos 4 bits en lugar de 16. Ocupa casi cuatro veces menos y la calidad apenas baja en modelos grandes.'],
+  ['¿Qué pasa si el modelo no cabe en la VRAM?', 'Herramientas como Ollama o LM Studio pasan parte a la RAM del PC, pero la velocidad cae muchísimo: de decenas de tokens por segundo a pocos.'],
+  ['¿Cuenta la memoria unificada de Mac o Ryzen AI Max como VRAM?', 'Sí, casi toda. En Mac el sistema reserva una parte; en Ryzen AI Max se pueden asignar hasta 96 GB de los 128 a la gráfica.'],
+];
+---
+<Base
+  title={`Calculadora de VRAM: ¿qué modelo de IA cabe en mi GPU? | ${SITE.nombre}`}
+  description="Calcula qué modelos de IA (Llama, Qwen, DeepSeek, Flux, SDXL) caben en la VRAM de tu tarjeta gráfica según la cuantización, y qué gráfica necesitas."
+  schema={[breadcrumbs(migas), faqPage(faq), { '@context': 'https://schema.org', '@type': 'WebApplication', name: 'Calculadora de VRAM', applicationCategory: 'UtilityApplication', operatingSystem: 'Web', offers: { '@type': 'Offer', price: 0, priceCurrency: 'EUR' } }]}
+>
+  <main class="wrap">
+    <section class="cabecera">
+      <Breadcrumbs items={migas} />
+      <h1>¿Qué modelo de IA cabe en mi GPU?</h1>
+      <p class="muted intro">Elige la memoria de tu gráfica y la cuantización. Verás qué modelos de texto e imagen puedes correr en local y el equipo más ajustado si te falta memoria.</p>
+    </section>
+    <VramCalc />
+    <section class="block prose">
+      <h2>Cómo se calcula</h2>
+      <p>Un modelo ocupa, en GB, sus miles de millones de parámetros multiplicados por los bits de cada peso y divididos entre 8. A eso le sumamos un 20 % para el contexto de la conversación (la caché KV) y el resto de la memoria que usa el programa.</p>
+      <p>Ejemplo: Qwen 2.5 32B en Q4 (unos 4,5 bits reales) ocupa 32 × 4,5 ÷ 8 = 18 GB de pesos, más un 20 %: unos 21,6 GB. Cabe en una gráfica de 24 GB, no en una de 16.</p>
+      <p>Para los modelos de imagen usamos el consumo típico medido: SDXL va bien en 8 GB y Flux.1 dev en FP8 pide 16 GB.</p>
+    </section>
+    <Faq items={faq} />
+  </main>
+</Base>
+<style>
+  .cabecera { display: grid; gap: 18px; padding-block: 40px 32px; justify-items: start; }
+  .intro { font-size: 18px; max-width: 70ch; }
+</style>

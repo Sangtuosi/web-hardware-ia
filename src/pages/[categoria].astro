@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Faq from '../components/Faq.astro';
+import productos from '../data/productos.json';
+import categorias from '../data/categorias.json';
+import { SITE } from '../lib/site.js';
+import { breadcrumbs, faqPage, itemList } from '../lib/schema.js';
+
+export function getStaticPaths() {
+  return categorias.map((c) => ({ params: { categoria: c.slug }, props: { cat: c } }));
+}
+const { cat } = Astro.props;
+const lista = productos
+  .filter((p) => p.categorias.includes(cat.slug))
+  .sort((a, b) => b.vram - a.vram || b.anchoBanda - a.anchoBanda);
+const migas: [string, string][] = [['/', 'Inicio'], [`/${cat.slug}/`, cat.nombre]];
+const revisado = lista.map((p) => p.revisado).sort().at(-1);
+const otras = categorias.filter((c) => c.slug !== cat.slug);
+---
+<Base
+  title={`${cat.titulo} | ${SITE.nombre}`}
+  description={cat.descripcion}
+  schema={[breadcrumbs(migas), itemList(lista), faqPage(cat.faq)]}
+>
+  <main class="wrap">
+    <section class="cabecera">
+      <Breadcrumbs items={migas} />
+      <h1>{cat.titulo}</h1>
+      <p class="intro">{cat.intro}</p>
+      <div class="meta mono">
+        <span class="badge">{lista.length} equipos</span>
+        <span class="badge">Datos revisados el {new Date(revisado).toLocaleDateString('es-ES')}</span>
+        <a class="badge badge-copper" href="/comparador/">Comparar →</a>
+      </div>
+    </section>
+
+    <div class="grid-cards">{lista.map((p, i) => <ProductCard producto={p} pos={i + 1} />)}</div>
+
+    <section class="block">
+      <Faq items={cat.faq} />
+    </section>
+
+    <section class="otras">
+      <p class="eyebrow">Otras categorías</p>
+      <div class="chips">{otras.map((c) => <a class="chip" href={`/${c.slug}/`}>{c.nombre}</a>)}</div>
+    </section>
+
+    <p class="aviso muted">Enlaces de afiliado de Amazon: si compras desde ellos recibimos una comisión sin coste para ti. No mostramos precios porque cambian a diario.</p>
+  </main>
+</Base>
+<style>
+  .cabecera { display: grid; gap: 20px; padding-block: 40px 40px; justify-items: start; }
+  .intro { max-width: 70ch; font-size: 18px; color: var(--muted); }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; }
+  .meta a { text-decoration: none; }
+  .otras { display: grid; gap: 14px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 12px; }
+  .chips a { text-decoration: none; }
+  .chips a:hover { color: var(--copper-hi); }
+  .aviso { font-size: 13px; margin-top: 40px; }
+</style>
