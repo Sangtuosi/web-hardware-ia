@@ -1,0 +1,125 @@
+/* Sistema neo-skeuomorphic táctil: superficies de carbón con relieve (luz arriba-izquierda,
+   sombra abajo-derecha) y acentos de cobre que "brillan" cuando algo está activo. */
+:root {
+  --bg: #141414;
+  --surface: #1b1b1b;
+  --raised: #212121;
+  --inset: #121212;
+  --line: #2b2b2b;
+  --ink: #ededeb;
+  --muted: #9b9893;
+  --faint: #6b6965;
+
+  --copper: #c9622c;
+  --copper-hi: #e98a4f;
+  --copper-lo: #8a3e18;
+  --glow: rgba(233, 138, 79, 0.45);
+  --ok: #7fbf7a;
+  --no: #d9574a;
+  --warn: #c99a3c;
+
+  --sh-raised: 7px 7px 16px #0a0a0a, -5px -5px 14px rgba(255, 255, 255, 0.035);
+  --sh-raised-sm: 4px 4px 9px #0a0a0a, -3px -3px 8px rgba(255, 255, 255, 0.03);
+  --sh-inset: inset 4px 4px 9px #0a0a0a, inset -3px -3px 8px rgba(255, 255, 255, 0.03);
+  --sh-lift: 12px 14px 28px #070707, -6px -6px 16px rgba(255, 255, 255, 0.04);
+  --edge: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-full: 999px;
+
+  --f-display: 'Space Grotesk', 'Arial Narrow', system-ui, sans-serif;
+  --f-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+img, svg { max-width: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--copper-hi); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: 1200px; margin-inline: auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+h1, h2, h3 { font-family: var(--f-display); line-height: 1.05; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h1 { font-size: clamp(36px, 6vw, 68px); font-weight: 700; }
+h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 700; }
+h3 { font-size: 20px; font-weight: 600; }
+p { margin: 0; }
+.muted { color: var(--muted); }
+.mono { font-family: var(--f-mono); }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--copper-hi); }
+.copper-text { background: linear-gradient(180deg, var(--copper-hi), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* Superficies */
+.surface { background: linear-gradient(145deg, #1f1f1f, #191919); border-radius: var(--r-lg); box-shadow: var(--sh-raised), var(--edge); }
+.well { background: var(--inset); border-radius: var(--r-md); box-shadow: var(--sh-inset); }
+
+/* Botones en pastilla con relieve */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font: 600 15px/1 var(--f-body);
+  padding: 14px 24px; border-radius: var(--r-full); border: 0; cursor: pointer; text-decoration: none;
+  color: var(--ink);
+  background: linear-gradient(145deg, #262626, #1c1c1c);
+  box-shadow: var(--sh-raised-sm), var(--edge);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, color 0.2s;
+}
+.btn:hover { color: var(--copper-hi); transform: translateY(-1px); }
+.btn:active { box-shadow: var(--sh-inset); transform: translateY(0); }
+.btn-copper {
+  color: #fff7f0;
+  background: linear-gradient(160deg, var(--copper-hi), var(--copper) 55%, var(--copper-lo));
+  box-shadow: var(--sh-raised-sm), inset 0 1px 0 rgba(255, 220, 190, 0.45), inset 0 -2px 4px rgba(0, 0, 0, 0.25), 0 0 0 1px #00000060;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+}
+.btn-copper:hover { color: #fff; box-shadow: var(--sh-raised-sm), inset 0 1px 0 rgba(255, 220, 190, 0.5), 0 0 22px var(--glow); }
+.btn-copper:active { box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.45), inset -2px -2px 6px rgba(255, 200, 160, 0.2); }
+.btn-sm { padding: 10px 16px; font-size: 14px; }
+
+/* Badges y chips */
+.badge { display: inline-flex; align-items: center; gap: 6px; font: 600 11px/1 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; padding: 6px 10px; border-radius: var(--r-full); background: var(--inset); box-shadow: var(--sh-inset); color: var(--muted); }
+.badge-copper { color: var(--copper-hi); }
+.badge-ok { color: var(--ok); }
+.chip {
+  font: 500 13px/1 var(--f-mono); padding: 10px 14px; border-radius: var(--r-full); border: 0; cursor: pointer;
+  background: linear-gradient(145deg, #242424, #1c1c1c); color: var(--muted); box-shadow: var(--sh-raised-sm), var(--edge);
+  transition: color 0.2s, box-shadow 0.2s;
+}
+.chip[aria-pressed='true'] { color: #fff7f0; background: linear-gradient(160deg, var(--copper-hi), var(--copper)); box-shadow: var(--sh-inset), 0 0 16px var(--glow); }
+
+/* Barras de medida (pista hundida + relleno de cobre) */
+.meter { height: 8px; border-radius: var(--r-full); background: var(--inset); box-shadow: var(--sh-inset); overflow: hidden; }
+.meter > i { display: block; height: 100%; width: var(--w, 0%); border-radius: inherit; background: linear-gradient(90deg, var(--copper-lo), var(--copper-hi)); box-shadow: 0 0 10px var(--glow); }
+
+/* Secciones */
+section.block { padding-block: clamp(56px, 8vw, 96px); }
+.sec-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 32px; }
+.sec-head p { max-width: 52ch; color: var(--muted); }
+.grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 24px; }
+
+/* Texto largo */
+.prose { max-width: 72ch; display: grid; gap: 16px; color: #d6d4cf; }
+.prose h2 { font-size: 28px; margin-top: 16px; color: var(--ink); }
+.prose a { color: var(--copper-hi); }
+
+/* Aparición al hacer scroll (sin JS se ve todo) */
+.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.9, 0.2, 1); }
+.js .reveal.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+  .js .reveal { opacity: 1; transform: none; }
+}

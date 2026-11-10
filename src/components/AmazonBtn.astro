@@ -1,0 +1,9 @@
+---
+import { amazonUrl, AMAZON_REL } from '../lib/site.js';
+interface Props { producto: { asin: string; nombre: string }; texto?: string; small?: boolean; }
+const { producto, texto = 'Ver precio en Amazon', small = false } = Astro.props;
+---
+<a class:list={['btn', 'btn-copper', { 'btn-sm': small }]} href={amazonUrl(producto)} target="_blank" rel={AMAZON_REL}>
+  {texto}
+  <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg>
+</a>

@@ -1,0 +1,121 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import productos from '../data/productos.json';
+import modelos from '../data/modelos.json';
+import { SITE, amazonUrl, AMAZON_REL } from '../lib/site.js';
+import { breadcrumbs } from '../lib/schema.js';
+import { modelosQueCaben, tokensPorSegundo } from '../lib/calc.js';
+
+const migas: [string, string][] = [['/', 'Inicio'], ['/comparador/', 'Comparador']];
+const llama8 = modelos.find((m) => m.params === 8);
+// Filas del comparador. "mejor": 'max' o 'min' marca en cobre el mejor valor de la fila.
+const filas = [
+  ['VRAM', 'max', (p) => p.vram, (p) => `${p.vram} GB`],
+  ['Tipo de memoria', null, null, (p) => p.memoria],
+  ['Ancho de banda', 'max', (p) => p.anchoBanda, (p) => `${p.anchoBanda} GB/s`],
+  ['Tokens/s Llama 8B (est.)', 'max', (p) => tokensPorSegundo(p, llama8) ?? 0, (p) => `≈ ${tokensPorSegundo(p, llama8) ?? '—'}`],
+  ['Modelo más grande en Q4', 'max', (p) => modelosQueCaben(p, modelos).filter((m) => m.tipo === 'texto').length, (p) => modelosQueCaben(p, modelos).filter((m) => m.tipo === 'texto').at(-1)?.nombre ?? '—'],
+  ['Consumo', 'min', (p) => p.consumo, (p) => `${p.consumo} W`],
+  ['Software de IA', null, null, (p) => p.ecosistema],
+  ['Fuente recomendada', null, null, (p) => (p.fuente ? `${p.fuente} W` : 'Incluida')],
+];
+const datos = productos.map((p) => ({
+  slug: p.slug, nombre: p.nombre, url: amazonUrl(p),
+  celdas: filas.map(([, , num, txt]) => ({ n: num ? num(p) : null, t: txt(p) })),
+}));
+const meta = filas.map(([nombre, mejor]) => ({ nombre, mejor }));
+const inicial = ['nvidia-rtx-5090', 'nvidia-rtx-4090', 'amd-radeon-rx-7900-xtx', 'mini-pc-ryzen-ai-max-395'];
+---
+<Base
+  title={`Comparador de tarjetas gráficas para IA | ${SITE.nombre}`}
+  description="Compara hasta 4 tarjetas gráficas, mini PCs o Mac para IA: VRAM, ancho de banda, tokens por segundo estimados, consumo y modelo más grande que cabe."
+  schema={[breadcrumbs(migas)]}
+>
+  <main class="wrap">
+    <section class="cabecera">
+      <Breadcrumbs items={migas} />
+      <h1>Comparador de hardware para IA</h1>
+      <p class="muted intro">Elige hasta cuatro. En cobre, el mejor valor de cada fila.</p>
+    </section>
+
+    <div class="selectores">
+      {[0, 1, 2, 3].map((i) => (
+        <label class="well sel">
+          <span class="sr-only">Equipo {i + 1}</span>
+          <select data-sel={i}>
+            <option value="">— Ninguno —</option>
+            {productos.map((p) => <option value={p.slug} selected={p.slug === inicial[i]}>{p.nombre}</option>)}
+          </select>
+        </label>
+      ))}
+    </div>
+
+    <div class="tabla-wrap surface">
+      <table class="tabla" data-tabla>
+        <thead><tr><th scope="col">Dato</th>{[0, 1, 2, 3].map(() => <th scope="col"></th>)}</tr></thead>
+        <tbody>
+          {meta.map((f) => <tr><th scope="row">{f.nombre}</th>{[0, 1, 2, 3].map(() => <td></td>)}</tr>)}
+          <tr class="comprar"><th scope="row">Precio</th>{[0, 1, 2, 3].map(() => <td></td>)}</tr>
+        </tbody>
+      </table>
+    </div>
+    <noscript><p class="muted">El comparador necesita JavaScript. Puedes ver todas las fichas desde las categorías.</p></noscript>
+    <p class="muted mini">Tokens/s: estimación propia a partir del ancho de banda (ver <a href="/como-elegimos/">Cómo elegimos</a>). Enlaces de afiliado de Amazon.</p>
+    <script type="application/json" data-datos set:html={JSON.stringify({ datos, meta, rel: AMAZON_REL })} />
+  </main>
+</Base>
+
+<script>
+  const { datos, meta, rel } = JSON.parse(document.querySelector('[data-datos]')!.textContent!);
+  const sels = [...document.querySelectorAll<HTMLSelectElement>('[data-sel]')];
+  const tabla = document.querySelector<HTMLTableElement>('[data-tabla]')!;
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+  const params = new URLSearchParams(location.search).get('c');
+  if (params) params.split(',').slice(0, 4).forEach((s, i) => { if (datos.some((d: any) => d.slug === s)) sels[i].value = s; });
+
+  function pinta() {
+    const elegidos = sels.map((s) => datos.find((d: any) => d.slug === s.value) ?? null);
+    const head = tabla.tHead!.rows[0].cells;
+    elegidos.forEach((d, i) => { head[i + 1].innerHTML = d ? `<a href="/hardware/${d.slug}/">${esc(d.nombre)}</a>` : '—'; });
+    const rows = tabla.tBodies[0].rows;
+    meta.forEach((f: any, r: number) => {
+      const nums = elegidos.map((d) => (d ? d.celdas[r].n : null)).filter((n) => n !== null);
+      const best = f.mejor === 'max' ? Math.max(...nums) : f.mejor === 'min' ? Math.min(...nums) : null;
+      elegidos.forEach((d, i) => {
+        const td = rows[r].cells[i + 1];
+        td.textContent = d ? d.celdas[r].t : '';
+        td.classList.toggle('mejor', !!d && best !== null && nums.length > 1 && d.celdas[r].n === best);
+      });
+    });
+    elegidos.forEach((d, i) => {
+      rows[meta.length].cells[i + 1].innerHTML = d ? `<a class="btn btn-copper btn-sm" href="${d.url}" target="_blank" rel="${rel}">Ver en Amazon</a>` : '';
+    });
+    const sel = elegidos.filter(Boolean).map((d: any) => d.slug).join(',');
+    history.replaceState(null, '', sel ? `?c=${sel}` : location.pathname);
+  }
+  sels.forEach((s) => s.addEventListener('change', pinta));
+  pinta();
+</script>
+
+<style>
+  .cabecera { display: grid; gap: 18px; padding-block: 40px 28px; justify-items: start; }
+  .intro { font-size: 18px; }
+  .selectores { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+  @media (max-width: 860px) { .selectores { grid-template-columns: 1fr 1fr; } }
+  .sel { display: block; padding: 4px 6px; border-radius: var(--r-full); }
+  select { width: 100%; background: transparent; color: var(--ink); border: 0; padding: 12px 10px; font: 500 14px var(--f-body); cursor: pointer; }
+  select option { background: #1b1b1b; }
+  .tabla-wrap { overflow-x: auto; padding: 8px; }
+  .tabla { width: 100%; min-width: 720px; border-collapse: separate; border-spacing: 6px; }
+  .tabla th, .tabla td { padding: 14px 12px; text-align: left; vertical-align: middle; }
+  .tabla thead th { font: 600 15px var(--f-display); }
+  .tabla thead th :global(a) { text-decoration: none; }
+  .tabla thead th :global(a:hover) { color: var(--copper-hi); }
+  .tabla tbody th { font: 500 12px var(--f-mono); color: var(--faint); text-transform: uppercase; letter-spacing: 0.06em; width: 18%; }
+  .tabla tbody td { background: var(--inset); border-radius: 10px; box-shadow: var(--sh-inset); font-variant-numeric: tabular-nums; }
+  .tabla td.mejor { color: #fff3e8; background: linear-gradient(160deg, #3a2114, #24150d); box-shadow: inset 0 0 0 1px #c9622c80, 0 0 16px #c9622c40; font-weight: 600; }
+  .tabla tr.comprar td { background: transparent; box-shadow: none; }
+  .mini { font-size: 13px; margin-top: 18px; }
+  .mini a { color: var(--copper-hi); }
+</style>

@@ -1,0 +1,109 @@
+---
+import modelos from '../data/modelos.json';
+import productos from '../data/productos.json';
+import { vramNecesaria } from '../lib/calc.js';
+const pasos = [8, 12, 16, 24, 32, 48, 64, 128, 192, 512];
+const inicial = 3; // 24 GB
+const datos = { modelos, pasos, productos: productos.map(({ slug, nombre, vram, anchoBanda }) => ({ slug, nombre, vram, anchoBanda })) };
+---
+<div class="calc" data-calc>
+  <div class="panel surface">
+    <p class="eyebrow">Memoria de tu GPU</p>
+    <output class="vram-big" data-out><span data-v>{pasos[inicial]}</span><small>GB</small></output>
+    <label class="sr-only" for="vram-range">VRAM disponible</label>
+    <div class="slider well">
+      <input id="vram-range" type="range" min="0" max={pasos.length - 1} step="1" value={inicial} data-range />
+    </div>
+    <div class="ticks mono"><span>8</span><span>24</span><span>64</span><span>192</span><span>512</span></div>
+    <p class="eyebrow" style="margin-top:26px">Cuantización</p>
+    <div class="chips" role="group" aria-label="Cuantización">
+      <button type="button" class="chip" data-bits="4.5" aria-pressed="true">Q4</button>
+      <button type="button" class="chip" data-bits="8.5" aria-pressed="false">Q8</button>
+      <button type="button" class="chip" data-bits="16" aria-pressed="false">FP16</button>
+    </div>
+    <p class="nota muted">Estimación: parámetros × bits ÷ 8, más un 20 % para contexto y caché. Los modelos de imagen usan su consumo medido típico.</p>
+    <p class="reco" data-reco></p>
+  </div>
+  <div class="panel surface">
+    <ul class="modelos" data-list>
+      {modelos.map((m) => {
+        const n = vramNecesaria(m);
+        const ok = n <= pasos[inicial];
+        return (
+          <li class:list={['modelo', ok ? 'si' : 'no']}>
+            <span class="nombre">{m.nombre} <small class="muted">{m.tipo}</small></span>
+            <span class="tag">{ok ? 'cabe' : 'no cabe'}</span>
+            <span class="meter"><i style={`--w:${Math.min(100, (n / pasos[inicial]) * 100)}%`}></i></span>
+            <span class="need mono">{n.toFixed(n < 10 ? 1 : 0)} GB</span>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+  <script type="application/json" data-datos set:html={JSON.stringify(datos)} />
+</div>
+
+<script>
+  import { vramNecesaria, recomendado } from '../lib/calc.js';
+  document.querySelectorAll<HTMLElement>('[data-calc]').forEach((root) => {
+    const d = JSON.parse(root.querySelector('[data-datos]')!.textContent!);
+    const range = root.querySelector<HTMLInputElement>('[data-range]')!;
+    const items = [...root.querySelectorAll<HTMLElement>('.modelo')];
+    const reco = root.querySelector<HTMLElement>('[data-reco]')!;
+    let bits = 4.5;
+    const pinta = () => {
+      const v = d.pasos[+range.value];
+      root.querySelector('[data-v]')!.textContent = String(v);
+      range.style.setProperty('--p', `${(+range.value / (d.pasos.length - 1)) * 100}%`);
+      let caben = 0;
+      d.modelos.forEach((m: any, i: number) => {
+        const n = vramNecesaria(m, bits), ok = n <= v, el = items[i];
+        caben += +ok;
+        el.className = 'modelo ' + (ok ? 'si' : 'no');
+        el.querySelector('.tag')!.textContent = ok ? 'cabe' : 'no cabe';
+        el.querySelector('.need')!.textContent = `${n.toFixed(n < 10 ? 1 : 0)} GB`;
+        el.querySelector<HTMLElement>('.meter i')!.style.setProperty('--w', `${Math.min(100, (n / v) * 100)}%`);
+      });
+      const r = recomendado(v, d.productos);
+      reco.innerHTML = `Con ${v} GB corres <b>${caben} de ${d.modelos.length}</b> modelos.` +
+        (r ? ` El equipo más ajustado con esa memoria: <a href="/hardware/${r.slug}/">${r.nombre}</a>.` : '');
+    };
+    range.addEventListener('input', pinta);
+    root.querySelectorAll<HTMLButtonElement>('[data-bits]').forEach((b) => b.addEventListener('click', () => {
+      root.querySelectorAll('[data-bits]').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      bits = +b.dataset.bits!;
+      pinta();
+    }));
+    pinta();
+  });
+</script>
+
+<style>
+  .calc { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 28px; }
+  @media (max-width: 860px) { .calc { grid-template-columns: 1fr; } }
+  .panel { padding: clamp(20px, 3vw, 32px); min-width: 0; }
+  .vram-big { display: block; font: 700 clamp(84px, 12vw, 136px)/0.9 var(--f-display); margin: 10px 0 18px; font-variant-numeric: tabular-nums; background: linear-gradient(180deg, #fff3e8, var(--copper-hi) 70%, var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 18px rgba(233, 138, 79, 0.25)); }
+  .vram-big small { font-size: 0.3em; margin-left: 6px; }
+  .slider { padding: 14px 16px; border-radius: var(--r-full); }
+  input[type='range'] { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; border-radius: 99px; background: linear-gradient(90deg, var(--copper-lo), var(--copper-hi)) 0 / var(--p, 33%) 100% no-repeat, #0c0c0c; box-shadow: inset 1px 1px 3px #000; cursor: pointer; }
+  input[type='range']::-webkit-slider-thumb { -webkit-appearance: none; width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(145deg, #3a3a3a, #1f1f1f); box-shadow: 4px 4px 8px #070707, -2px -2px 6px #ffffff10, inset 0 1px 0 #ffffff1a, 0 0 0 2px var(--copper); }
+  input[type='range']::-moz-range-thumb { width: 28px; height: 28px; border-radius: 9px; border: 2px solid var(--copper); background: linear-gradient(145deg, #3a3a3a, #1f1f1f); box-shadow: 4px 4px 8px #070707; }
+  .ticks { display: flex; justify-content: space-between; font-size: 11px; color: var(--faint); padding: 8px 16px 0; }
+  .chips { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+  .nota { font-size: 13px; margin-top: 20px; }
+  .reco { margin-top: 16px; font-size: 15px; color: var(--muted); }
+  .reco :global(b) { color: var(--ink); }
+  .reco :global(a) { color: var(--copper-hi); }
+  .modelos { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .modelo { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; align-items: center; padding: 14px 16px; border-radius: var(--r-md); background: var(--inset); box-shadow: var(--sh-inset); transition: opacity 0.3s; }
+  .nombre { font-weight: 600; min-width: 0; }
+  .nombre small { font: 11px var(--f-mono); margin-left: 4px; }
+  .tag { font: 600 11px/1 var(--f-mono); text-transform: uppercase; padding: 6px 10px; border-radius: 99px; }
+  .si .tag { color: var(--ok); box-shadow: 0 0 0 1px #7fbf7a55; }
+  .no { opacity: 0.55; }
+  .no .tag { color: var(--no); box-shadow: 0 0 0 1px #d9574a55; }
+  .no .meter > i { background: linear-gradient(90deg, #6d2a22, var(--no)); box-shadow: none; }
+  .modelo .meter > i { transition: width 0.5s cubic-bezier(0.2, 0.9, 0.2, 1); }
+  .need { font-size: 12px; color: var(--muted); text-align: right; }
+</style>

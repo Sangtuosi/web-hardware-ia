@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../lib/site.js';
+import { breadcrumbs } from '../lib/schema.js';
+const migas: [string, string][] = [['/', 'Inicio'], ['/como-elegimos/', 'Cómo elegimos']];
+---
+<Base title={`Cómo elegimos y puntuamos el hardware para IA | ${SITE.nombre}`} description="Criterios y fórmulas públicas con las que puntuamos tarjetas gráficas y equipos para IA: VRAM, ancho de banda, eficiencia, ecosistema y consumo." schema={[breadcrumbs(migas)]}>
+  <main class="wrap" style="padding-block:40px">
+    <Breadcrumbs items={migas} />
+    <article class="prose" style="margin-top:24px">
+      <h1>Cómo elegimos</h1>
+      <p>No probamos el hardware que nos regalan ni cobramos por aparecer. Partimos de las especificaciones oficiales, las revisamos a mano y calculamos con fórmulas públicas lo que importa para la IA. Cada ficha lleva la fecha de su última revisión.</p>
+      <h2>La puntuación (0 a 100)</h2>
+      <p>Cada ficha tiene un radar con cinco ejes. La <b>nota IA</b> es la media de los tres que más pesan para IA (VRAM, ancho de banda y ecosistema); eficiencia y consumo se ven en el radar para que decidas tú.</p>
+      <ul>
+        <li><b>VRAM</b>: escala logarítmica de 4 GB (0) a 512 GB (100), porque pasar de 8 a 16 GB cambia más que pasar de 256 a 264.</li>
+        <li><b>Ancho de banda</b>: GB/s divididos entre 1.792 (la RTX 5090 es 100).</li>
+        <li><b>Eficiencia</b>: GB/s por vatio, relativo al mejor equipo del catálogo.</li>
+        <li><b>Ecosistema</b>: CUDA 100, Metal 70, ROCm 60, oneAPI 45. Mide cuánto software de IA funciona sin pelearse.</li>
+        <li><b>Bajo consumo</b>: 100 menos los vatios divididos entre 6 (600 W o más es 0).</li>
+      </ul>
+      <h2>Modelos que caben</h2>
+      <p>Memoria necesaria = parámetros × bits ÷ 8 + 20 % de contexto. En Q4 usamos 4,5 bits por peso, que es lo que ocupan de verdad los formatos habituales (GGUF Q4_K_M).</p>
+      <h2>Tokens por segundo</h2>
+      <p>Al generar texto, cada token obliga a leer todos los pesos de la memoria. Por eso estimamos: tokens/s ≈ ancho de banda × 0,7 ÷ tamaño de los pesos. El 0,7 recoge que ningún equipo aprovecha el 100 % de su ancho de banda. <b>Es una estimación, no un benchmark</b>: cuando tengamos medidas reales lo indicaremos en cada ficha.</p>
+      <h2>Lo que no</h2>
+      <p>Toda ficha tiene un apartado "Lo que no" con sus limitaciones reales: fuente necesaria, software que no va, versiones con menos memoria y mismo nombre. Si un producto no tiene nada malo que contar, no lo hemos mirado bien.</p>
+      <h2>Precios</h2>
+      <p>No los copiamos: cambian varias veces al día. Todos los botones llevan al precio actual en Amazon.</p>
+    </article>
+  </main>
+</Base>

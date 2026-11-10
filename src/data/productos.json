@@ -1,0 +1,398 @@
+[
+  {
+    "slug": "nvidia-rtx-5090",
+    "nombre": "NVIDIA GeForce RTX 5090",
+    "marca": "NVIDIA",
+    "tipo": "grafica",
+    "categorias": ["graficas-para-ia", "graficas-para-stable-diffusion"],
+    "asin": "",
+    "vram": 32,
+    "memoria": "GDDR7",
+    "anchoBanda": 1792,
+    "consumo": 575,
+    "fuente": 1000,
+    "ecosistema": "CUDA",
+    "lanzamiento": 2025,
+    "gama": "alta",
+    "resumen": "La gráfica de consumo más potente para IA en casa: 32 GB y el mayor ancho de banda que puedes poner en un PC.",
+    "pros": [
+      "32 GB de VRAM: modelos de 32B en Q4 con contexto largo",
+      "Ancho de banda de 1,8 TB/s, el más alto de consumo",
+      "CUDA: todo el software de IA funciona a la primera"
+    ],
+    "loQueNo": [
+      "Consume hasta 575 W y pide fuente de 1000 W con conector 12V-2x6",
+      "Llama 3.3 70B no cabe entera ni en Q4: necesitas dos o descargar capas a la RAM",
+      "Muy grande: comprueba que cabe en tu caja antes de comprar"
+    ],
+    "paraQuien": "Para quien quiere la máxima velocidad en local con LLM de hasta 32B, Flux o vídeo, y tiene caja y fuente para ella.",
+    "revisado": "2026-11-10"
+  },
+  {
+    "slug": "nvidia-rtx-5080",
+    "nombre": "NVIDIA GeForce RTX 5080",
+    "marca": "NVIDIA",
+    "tipo": "grafica",
+    "categorias": ["graficas-para-ia", "graficas-para-stable-diffusion"],
+    "asin": "",
+    "vram": 16,
+    "memoria": "GDDR7",
+    "anchoBanda": 960,
+    "consumo": 360,
+    "fuente": 850,
+    "ecosistema": "CUDA",
+    "lanzamiento": 2025,
+    "gama": "alta",
+    "resumen": "Muy rápida generando, pero con 16 GB se queda en modelos medianos.",
+    "pros": [
+      "Ancho de banda alto: muchos tokens por segundo en modelos que caben",
+      "Excelente para Stable Diffusion XL y Flux en FP8",
+      "Consumo razonable para su potencia"
+    ],
+    "loQueNo": [
+      "16 GB es la misma VRAM que la 5070 Ti, que cuesta bastante menos",
+      "Modelos de 32B no caben ni en Q4 sin descargar capas",
+      "Para IA pura, una 4090 o 3090 de segunda mano da más memoria"
+    ],
+    "paraQuien": "Para quien juega y además quiere generar imágenes o usar LLM de hasta 14B con soltura.",
+    "revisado": "2026-11-10"
+  },
+  {
+    "slug": "nvidia-rtx-5070-ti",
+    "nombre": "NVIDIA GeForce RTX 5070 Ti",
+    "marca": "NVIDIA",
+    "tipo": "grafica",
+    "categorias": ["graficas-para-ia", "graficas-para-stable-diffusion", "graficas-ia-baratas"],
+    "asin": "",
+    "vram": 16,
+    "memoria": "GDDR7",
+    "anchoBanda": 896,
+    "consumo": 300,
+    "fuente": 750,
+    "ecosistema": "CUDA",
+    "lanzamiento": 2025,
+    "gama": "media",
+    "resumen": "La mejor relación entre VRAM y precio dentro de NVIDIA nueva.",
+    "pros": [
+      "16 GB GDDR7 con casi el ancho de banda de la 5080",
+      "CUDA y soporte de FP4/FP8 de la serie 50",
+      "Cabe en casi cualquier caja y fuente de 750 W"
+    ],
+    "loQueNo": [
+      "Los 16 GB limitan a modelos de 14B con contexto cómodo",
+      "Para entrenar o ajustar modelos grandes se queda corta"
+    ],
+    "paraQuien": "Para empezar en serio con IA local: LLM de 8 a 14B, SDXL y Flux en FP8.",
+    "revisado": "2026-11-10"
+  },
+  {
+    "slug": "nvidia-rtx-5060-ti-16gb",
+    "nombre": "NVIDIA GeForce RTX 5060 Ti 16 GB",
+    "marca": "NVIDIA",
+    "tipo": "grafica",
+    "categorias": ["graficas-ia-baratas", "graficas-para-stable-diffusion"],
+    "asin": "",
+    "vram": 16,
+    "memoria": "GDDR7",
+    "anchoBanda": 448,
+    "consumo": 180,
+    "fuente": 600,
+    "ecosistema": "CUDA",
+    "lanzamiento": 2025,
+    "gama": "entrada",
+    "resumen": "La forma más barata de tener 16 GB con CUDA nuevos.",
+    "pros": [
+      "16 GB por poco dinero: caben los mismos modelos que en una 5080",
+      "Bajo consumo, fuente de 600 W basta",
+      "CUDA completo"
+    ],
+    "loQueNo": [
+      "Ancho de banda de 448 GB/s: genera texto a la mitad de velocidad que una 5070 Ti",
+      "Ojo: existe una versión de 8 GB con el mismo nombre; compra la de 16 GB"
+    ],
+    "paraQuien": "Para probar IA local con poco presupuesto sin renunciar a modelos de 14B.",
+    "revisado": "2026-11-10"
+  },
+  {
+    "slug": "nvidia-rtx-4090",
+    "nombre": "NVIDIA GeForce RTX 4090",
+    "marca": "NVIDIA",
+    "tipo": "grafica",
+    "categorias": ["graficas-para-ia", "graficas-para-stable-diffusion"],
+    "asin": "",
+    "vram": 24,
+    "memoria": "GDDR6X",
+    "anchoBanda": 1008,
+    "consumo": 450,
+    "fuente": 850,
+    "ecosistema": "CUDA",
+    "lanzamiento": 2022,
+    "gama": "alta",
+    "resumen": "La reina de la generación anterior: 24 GB que siguen siendo muy útiles para IA.",
+    "pros": [
+      "24 GB: modelos de 24 a 32B en Q4",
+      "Muy probada: todo el software está optimizado para ella",
+      "Más eficiente que la 5090 por vatio"
+    ],
+    "loQueNo": [
+      "Descatalogada: casi solo se encuentra de segunda mano o reacondicionada",
+      "Conector 12VHPWR que conviene revisar bien"
+    ],
+    "paraQuien": "Para quien encuentra una a buen precio y quiere 24 GB sin pagar una 5090.",
+    "revisado": "2026-11-10"
+  },
+  {
+    "slug": "nvidia-rtx-3090",
+    "nombre": "NVIDIA GeForce RTX 3090",
+    "marca": "NVIDIA",
+    "tipo": "grafica",
+    "categorias": ["graficas-ia-baratas", "graficas-para-ia"],
+    "asin": "",
+    "vram": 24,
+    "memoria": "GDDR6X",
+    "anchoBanda": 936,
+    "consumo": 350,
+    "fuente": 750,
+    "ecosistema": "CUDA",
+    "lanzamiento": 2020,
+    "gama": "media",
+    "resumen": "El truco de la comunidad: 24 GB de VRAM al precio de una gráfica media.",
+    "pros": [
+      "24 GB por mucho menos que cualquier gráfica nueva con esa memoria",
+      "Ancho de banda casi igual que la 4090",
+      "Se pueden juntar dos para 48 GB y mover modelos de 70B"
+    ],
+    "loQueNo": [
+      "Solo de segunda mano o reacondicionada: sin garantía larga",
+      "Sin FP8 ni FP4: los modelos más nuevos van más lentos",
+      "Calienta y hace ruido; la memoria trasera necesita buena ventilación"
+    ],
+    "paraQuien": "Para quien prioriza memoria por euro y no le importa comprar usado.",
+    "revisado": "2026-11-10"
+  },
+  {
+    "slug": "amd-radeon-rx-9070-xt",
+    "nombre": "AMD Radeon RX 9070 XT",
+    "marca": "AMD",
+    "tipo": "grafica",
+    "categorias": ["graficas-ia-baratas", "graficas-para-ia"],
+    "asin": "",
+    "vram": 16,
+    "memoria": "GDDR6",
+    "anchoBanda": 640,
+    "consumo": 304,
+    "fuente": 750,
+    "ecosistema": "ROCm",
+    "lanzamiento": 2025,
+    "gama": "media",
+    "resumen": "16 GB baratos de AMD, muy buena en Linux con ROCm.",
+    "pros": [
+      "16 GB a buen precio",
+      "Funciona bien con llama.cpp, Ollama y LM Studio (Vulkan y ROCm)",
+      "Gran gráfica para juegos si la usas para las dos cosas"
+    ],
+    "loQueNo": [
+      "ROCm en Windows sigue más verde que CUDA: algunas herramientas no van",
+      "Stable Diffusion y entrenamiento dan más guerra que en NVIDIA"
+    ],
+    "paraQuien": "Para quien usa Linux o solo quiere LLM con Ollama y LM Studio.",
+    "revisado": "2026-11-10"
+  },
+  {
+    "slug": "amd-radeon-rx-7900-xtx",
+    "nombre": "AMD Radeon RX 7900 XTX",
+    "marca": "AMD",
+    "tipo": "grafica",
+    "categorias": ["graficas-para-ia"],
+    "asin": "",
+    "vram": 24,
+    "memoria": "GDDR6",
+    "anchoBanda": 960,
+    "consumo": 355,
+    "fuente": 800,
+    "ecosistema": "ROCm",
+    "lanzamiento": 2022,
+    "gama": "alta",
+    "resumen": "La forma más barata de tener 24 GB nuevos.",
+    "pros": [
+      "24 GB y 960 GB/s: muy rápida en LLM",
+      "Soporte oficial de ROCm en Linux"
+    ],
+    "loQueNo": [
+      "Ecosistema menos maduro que CUDA para imagen y vídeo",
+      "Consumo alto en picos"
+    ],
+    "paraQuien": "Para quien quiere 24 GB nuevos con garantía y usa sobre todo LLM.",
+    "revisado": "2026-11-10"
+  },
+  {
+    "slug": "intel-arc-b580",
+    "nombre": "Intel Arc B580",
+    "marca": "Intel",
+    "tipo": "grafica",
+    "categorias": ["graficas-ia-baratas"],
+    "asin": "",
+    "vram": 12,
+    "memoria": "GDDR6",
+    "anchoBanda": 456,
+    "consumo": 190,
+    "fuente": 600,
+    "ecosistema": "oneAPI",
+    "lanzamiento": 2024,
+    "gama": "entrada",
+    "resumen": "12 GB por muy poco dinero, para trastear con IA.",
+    "pros": [
+      "La VRAM más barata del mercado nuevo",
+      "Funciona con Ollama y LM Studio vía Vulkan o IPEX"
+    ],
+    "loQueNo": [
+      "Ecosistema de IA de Intel aún limitado",
+      "12 GB: modelos de hasta 8B con margen, 14B justo"
+    ],
+    "paraQuien": "Para curiosos con poco presupuesto que quieren correr un chatbot local.",
+    "revisado": "2026-11-10"
+  },
+  {
+    "slug": "nvidia-dgx-spark",
+    "nombre": "NVIDIA DGX Spark",
+    "marca": "NVIDIA",
+    "tipo": "mini-pc",
+    "categorias": ["mini-pc-ia"],
+    "asin": "",
+    "vram": 128,
+    "memoria": "LPDDR5X unificada",
+    "anchoBanda": 273,
+    "consumo": 240,
+    "fuente": 0,
+    "ecosistema": "CUDA",
+    "lanzamiento": 2025,
+    "gama": "alta",
+    "resumen": "Superordenador de escritorio con 128 GB y stack CUDA completo.",
+    "pros": [
+      "128 GB unificados: modelos de 70B y más en una caja pequeña",
+      "CUDA y software de NVIDIA listos de serie",
+      "Ideal para ajustar (fine-tuning) modelos medianos"
+    ],
+    "loQueNo": [
+      "Ancho de banda de 273 GB/s: genera texto despacio en modelos grandes",
+      "Sistema ARM con Linux: no es un PC de uso general con Windows",
+      "Precio alto para la velocidad que da"
+    ],
+    "paraQuien": "Para desarrolladores que necesitan mucha memoria con CUDA, más que velocidad.",
+    "revisado": "2026-11-10"
+  },
+  {
+    "slug": "mini-pc-ryzen-ai-max-395",
+    "nombre": "Mini PC AMD Ryzen AI Max+ 395 (128 GB)",
+    "marca": "AMD",
+    "tipo": "mini-pc",
+    "categorias": ["mini-pc-ia"],
+    "asin": "",
+    "vram": 128,
+    "memoria": "LPDDR5X unificada",
+    "anchoBanda": 256,
+    "consumo": 140,
+    "fuente": 0,
+    "ecosistema": "ROCm",
+    "lanzamiento": 2025,
+    "gama": "media",
+    "resumen": "128 GB compartidos por mucho menos que un DGX Spark.",
+    "pros": [
+      "Hasta 96 GB asignables a la gráfica integrada",
+      "Windows o Linux, sirve también como PC normal",
+      "Silencioso y de bajo consumo"
+    ],
+    "loQueNo": [
+      "Ancho de banda limitado: modelos de 70B van a pocos tokens por segundo",
+      "Sin CUDA: imagen y vídeo dan más trabajo",
+      "La RAM va soldada: elige bien la configuración de 128 GB"
+    ],
+    "paraQuien": "Para correr modelos grandes (70B, MoE) en casa sin gastar en varias gráficas.",
+    "revisado": "2026-11-10"
+  },
+  {
+    "slug": "apple-mac-studio-m3-ultra",
+    "nombre": "Apple Mac Studio M3 Ultra",
+    "marca": "Apple",
+    "tipo": "mac",
+    "categorias": ["mac-para-ia"],
+    "asin": "",
+    "vram": 512,
+    "memoria": "Unificada",
+    "anchoBanda": 819,
+    "consumo": 270,
+    "fuente": 0,
+    "ecosistema": "Metal",
+    "lanzamiento": 2025,
+    "gama": "alta",
+    "resumen": "Hasta 512 GB unificados: corre modelos que ninguna gráfica de consumo mueve.",
+    "pros": [
+      "Hasta 512 GB: DeepSeek y Qwen gigantes en local",
+      "819 GB/s: rápido incluso con modelos grandes",
+      "Silencioso y muy eficiente"
+    ],
+    "loQueNo": [
+      "Precio muy alto en las configuraciones de mucha memoria",
+      "Sin CUDA: la generación de imagen y vídeo es más lenta que en NVIDIA",
+      "No se puede ampliar: la memoria se elige al comprar"
+    ],
+    "paraQuien": "Para quien necesita modelos enormes en local y prefiere silencio a montar un PC.",
+    "revisado": "2026-11-10"
+  },
+  {
+    "slug": "apple-mac-mini-m4-pro",
+    "nombre": "Apple Mac mini M4 Pro (64 GB)",
+    "marca": "Apple",
+    "tipo": "mac",
+    "categorias": ["mac-para-ia", "mini-pc-ia"],
+    "asin": "",
+    "vram": 64,
+    "memoria": "Unificada",
+    "anchoBanda": 273,
+    "consumo": 140,
+    "fuente": 0,
+    "ecosistema": "Metal",
+    "lanzamiento": 2024,
+    "gama": "media",
+    "resumen": "Un ordenador diminuto que corre modelos de 32B sin despeinarse.",
+    "pros": [
+      "64 GB unificados en un equipo de 13 cm",
+      "Muy bajo consumo, puede estar encendido 24/7",
+      "MLX y Ollama funcionan muy bien"
+    ],
+    "loQueNo": [
+      "273 GB/s: lento con modelos de más de 32B",
+      "Ampliar memoria al comprarlo cuesta caro"
+    ],
+    "paraQuien": "Para tener un servidor de IA silencioso en casa con modelos medianos.",
+    "revisado": "2026-11-10"
+  },
+  {
+    "slug": "nvidia-jetson-orin-nano-super",
+    "nombre": "NVIDIA Jetson Orin Nano Super",
+    "marca": "NVIDIA",
+    "tipo": "edge",
+    "categorias": ["edge-ai"],
+    "asin": "",
+    "vram": 8,
+    "memoria": "LPDDR5 unificada",
+    "anchoBanda": 102,
+    "consumo": 25,
+    "fuente": 0,
+    "ecosistema": "CUDA",
+    "lanzamiento": 2024,
+    "gama": "entrada",
+    "resumen": "Kit de IA para robótica, visión y domótica con CUDA.",
+    "pros": [
+      "CUDA en una placa de 25 W",
+      "Ideal para visión artificial y robots",
+      "Gran comunidad y ejemplos de NVIDIA"
+    ],
+    "loQueNo": [
+      "8 GB compartidos: solo modelos de lenguaje pequeños (3 a 4B)",
+      "No sustituye a un PC con gráfica para chatbots grandes"
+    ],
+    "paraQuien": "Para makers y proyectos de IA embebida, no para chatbots grandes.",
+    "revisado": "2026-11-10"
+  }
+]

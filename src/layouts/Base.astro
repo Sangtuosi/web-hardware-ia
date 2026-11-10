@@ -1,0 +1,140 @@
+---
+import '../styles/global.css';
+import { SITE } from '../lib/site.js';
+import categorias from '../data/categorias.json';
+
+interface Props {
+  title: string;
+  description: string;
+  schema?: object[];
+  ogType?: string;
+}
+const { title, description, schema = [], ogType = 'website' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.nombre,
+  url: SITE.url,
+  founder: { '@type': 'Person', name: SITE.autor },
+};
+const path = Astro.url.pathname;
+const nav = [
+  ['/graficas-para-ia/', 'Gráficas IA'],
+  ['/mini-pc-ia/', 'Mini PCs'],
+  ['/mac-para-ia/', 'Mac'],
+  ['/comparador/', 'Comparador'],
+  ['/calculadora-vram/', 'Calculadora VRAM'],
+];
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#141414" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" />
+  <script is:inline>document.documentElement.classList.add('js');</script>
+  {[org, ...schema].map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap bar">
+      <a class="logo" href="/" aria-label={`${SITE.nombre}, inicio`}>
+        <span class="logo-mark" aria-hidden="true"></span>{SITE.nombre}
+      </a>
+      <nav aria-label="Principal">
+        <ul class="tabs">
+          {nav.map(([href, txt]) => (
+            <li><a href={href} aria-current={path === href ? 'page' : undefined}>{txt}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <details class="menu-movil">
+        <summary class="btn btn-sm" aria-label="Menú">Menú</summary>
+        <ul class="surface">
+          {nav.map(([href, txt]) => <li><a href={href}>{txt}</a></li>)}
+          {categorias.filter((c) => !nav.some(([h]) => h === `/${c.slug}/`)).map((c) => <li><a href={`/${c.slug}/`}>{c.nombre}</a></li>)}
+        </ul>
+      </details>
+    </div>
+  </header>
+
+  <slot />
+
+  <footer class="pie">
+    <div class="wrap pie-grid">
+      <div>
+        <a class="logo" href="/"><span class="logo-mark" aria-hidden="true"></span>{SITE.nombre}</a>
+        <p class="muted" style="margin-top:12px;max-width:40ch">Hardware para IA local elegido por VRAM, ancho de banda y lo que de verdad cabe. Sin precios copiados: siempre el actual en Amazon.</p>
+      </div>
+      <div>
+        <p class="eyebrow">Categorías</p>
+        <ul>{categorias.map((c) => <li><a href={`/${c.slug}/`}>{c.nombre}</a></li>)}</ul>
+      </div>
+      <div>
+        <p class="eyebrow">Herramientas</p>
+        <ul>
+          <li><a href="/comparador/">Comparador</a></li>
+          <li><a href="/calculadora-vram/">Calculadora de VRAM</a></li>
+        </ul>
+        <p class="eyebrow" style="margin-top:20px">Confianza</p>
+        <ul>
+          <li><a href="/como-elegimos/">Cómo elegimos</a></li>
+          <li><a href="/aviso-afiliacion/">Aviso de afiliación</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap legal">
+      En calidad de Afiliado de Amazon, {SITE.nombre} obtiene ingresos por las compras adscritas que cumplen los requisitos aplicables. Los precios cambian a diario: consulta siempre el actual en Amazon.
+    </div>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    // Respaldo: si algo falla, mostrar todo a los 3,5 s
+    setTimeout(() => document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in')), 3500);
+  </script>
+</body>
+</html>
+
+<style>
+  .topbar { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(14px); box-shadow: 0 6px 18px #0a0a0a90; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; font: 700 22px/1 var(--f-display); text-decoration: none; letter-spacing: -0.01em; }
+  .logo-mark { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(150deg, var(--copper-hi), var(--copper-lo)); box-shadow: var(--sh-raised-sm), inset 0 1px 0 #ffd6b880, 0 0 14px var(--glow); position: relative; }
+  .logo-mark::after { content: ''; position: absolute; inset: 7px; border-radius: 3px; background: #1a1a1a; box-shadow: inset 1px 1px 3px #000; }
+  .tabs { display: flex; gap: 4px; list-style: none; margin: 0; padding: 5px; border-radius: var(--r-full); background: var(--inset); box-shadow: var(--sh-inset); }
+  .tabs a { display: block; padding: 9px 14px; border-radius: var(--r-full); font-size: 14px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .tabs a:hover { color: var(--ink); }
+  .tabs a[aria-current='page'] { color: #fff7f0; background: linear-gradient(160deg, var(--copper-hi), var(--copper)); box-shadow: var(--sh-raised-sm), 0 0 14px var(--glow); }
+  .menu-movil { display: none; position: relative; }
+  .menu-movil summary { list-style: none; }
+  .menu-movil summary::-webkit-details-marker { display: none; }
+  .menu-movil ul { position: absolute; right: 0; top: calc(100% + 10px); list-style: none; margin: 0; padding: 10px; min-width: 220px; display: grid; gap: 2px; }
+  .menu-movil li a { display: block; padding: 10px 12px; border-radius: 8px; text-decoration: none; }
+  .menu-movil li a:hover { color: var(--copper-hi); }
+  @media (max-width: 900px) { nav { display: none; } .menu-movil { display: block; } }
+
+  .pie { margin-top: 40px; padding-block: 56px 32px; background: linear-gradient(180deg, transparent, #101010); }
+  .pie-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 32px; }
+  @media (max-width: 760px) { .pie-grid { grid-template-columns: 1fr; } }
+  .pie ul { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 6px; font-size: 14px; }
+  .pie ul a { color: var(--muted); text-decoration: none; }
+  .pie ul a:hover { color: var(--copper-hi); }
+  .legal { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--faint); }
+</style>

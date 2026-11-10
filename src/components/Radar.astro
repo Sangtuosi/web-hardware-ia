@@ -1,0 +1,23 @@
+---
+interface Props { valores: Record<string, number>; }
+const { valores } = Astro.props;
+const ejes = Object.entries(valores);
+const c = 130, r = 92;
+const pt = (i: number, v: number) => {
+  const a = -Math.PI / 2 + (i * 2 * Math.PI) / ejes.length;
+  return [c + Math.cos(a) * r * (v / 100), c + Math.sin(a) * r * (v / 100)];
+};
+const poly = (v: (i: number) => number) => ejes.map((_, i) => pt(i, v(i)).map((n) => n.toFixed(1)).join(',')).join(' ');
+---
+<figure class="radar">
+  <svg viewBox="0 0 260 260" role="img" aria-label={ejes.map(([k, v]) => `${k} ${v}`).join(', ')}>
+    {[25, 50, 75, 100].map((l) => <polygon points={poly(() => l)} fill="none" stroke="#2f2f2f" />)}
+    {ejes.map((_, i) => { const [x, y] = pt(i, 100); return <line x1={c} y1={c} x2={x} y2={y} stroke="#2a2a2a" />; })}
+    <polygon points={poly((i) => ejes[i][1])} fill="#c9622c" fill-opacity=".28" stroke="#e98a4f" stroke-width="2" style="filter:drop-shadow(0 0 8px rgba(233,138,79,.55))" />
+    {ejes.map(([k, v], i) => { const [x, y] = pt(i, 122); return <text x={x} y={y} text-anchor="middle" dominant-baseline="middle" font-size="10" font-family="JetBrains Mono, monospace" fill="#9b9893">{k} <tspan fill="#ededeb">{v}</tspan></text>; })}
+  </svg>
+</figure>
+<style>
+  .radar { margin: 0; }
+  .radar svg { width: 100%; max-width: 340px; display: block; margin-inline: auto; overflow: visible; }
+</style>

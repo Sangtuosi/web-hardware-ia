@@ -1,0 +1,11 @@
+[
+  { "nombre": "Llama 3.1 8B", "tipo": "texto", "params": 8 },
+  { "nombre": "SDXL", "tipo": "imagen", "params": 3.5, "fijo": 8 },
+  { "nombre": "Qwen 2.5 14B", "tipo": "texto", "params": 14 },
+  { "nombre": "Flux.1 dev", "tipo": "imagen", "params": 12, "fijo": 16 },
+  { "nombre": "Mistral Small 24B", "tipo": "texto", "params": 24 },
+  { "nombre": "Qwen 2.5 32B", "tipo": "texto", "params": 32 },
+  { "nombre": "Llama 3.3 70B", "tipo": "texto", "params": 70 },
+  { "nombre": "Qwen3 235B (MoE)", "tipo": "texto", "params": 235 },
+  { "nombre": "DeepSeek R1 671B", "tipo": "texto", "params": 671 }
+]

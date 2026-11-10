@@ -1,0 +1,48 @@
+---
+import ChipArt from './ChipArt.astro';
+import AmazonBtn from './AmazonBtn.astro';
+import { modelosQueCaben } from '../lib/calc.js';
+import modelos from '../data/modelos.json';
+interface Props { producto: any; pos?: number; }
+const { producto, pos } = Astro.props;
+const caben = modelosQueCaben(producto, modelos).filter((m) => m.tipo === 'texto');
+const mayor = caben.at(-1);
+const lv = (v: number) => (Math.log2(v / 4) / Math.log2(512 / 4)) * 100;
+---
+<article class="card surface reveal">
+  <div class="top">
+    {pos && <span class="pos copper-text">{String(pos).padStart(2, '0')}</span>}
+    <span class="badge">{producto.ecosistema}</span>
+  </div>
+  <a href={`/hardware/${producto.slug}/`} tabindex="-1" aria-hidden="true"><ChipArt producto={producto} /></a>
+  <h3><a href={`/hardware/${producto.slug}/`}>{producto.nombre}</a></h3>
+  <div class="star"><b>{producto.vram}</b><span>GB<br />{producto.memoria}</span></div>
+  <dl class="specs">
+    <dt>VRAM</dt><dd class="meter"><i style={`--w:${lv(producto.vram)}%`}></i></dd>
+    <dt>Ancho</dt><dd class="meter"><i style={`--w:${(producto.anchoBanda / 1792) * 100}%`}></i></dd>
+  </dl>
+  <p class="fits mono">{mayor ? <>Hasta <b>{mayor.nombre}</b> en Q4</> : 'Modelos pequeños'} · {producto.anchoBanda} GB/s</p>
+  <p class="resumen muted">{producto.resumen}</p>
+  <div class="acciones">
+    <a class="btn btn-sm" href={`/hardware/${producto.slug}/`}>Ver ficha</a>
+    <AmazonBtn producto={producto} texto="Ver en Amazon" small />
+  </div>
+</article>
+<style>
+  .card { padding: 20px; display: grid; gap: 14px; align-content: start; transition: transform 0.2s ease, box-shadow 0.25s ease; }
+  .card:hover { transform: translateY(-4px); box-shadow: var(--sh-lift), var(--edge), 0 0 0 1px #c9622c33; }
+  .top { display: flex; justify-content: space-between; align-items: center; min-height: 26px; }
+  .pos { font: 700 32px/1 var(--f-display); }
+  h3 a { text-decoration: none; }
+  h3 a:hover { color: var(--copper-hi); }
+  .star { display: flex; align-items: end; gap: 8px; }
+  .star b { font: 700 54px/0.85 var(--f-display); color: var(--ink); }
+  .star span { font: 500 11px/1.3 var(--f-mono); color: var(--muted); text-transform: uppercase; }
+  .specs { display: grid; grid-template-columns: 52px 1fr; gap: 8px 10px; align-items: center; margin: 0; font: 12px var(--f-mono); color: var(--muted); }
+  .specs dd { margin: 0; }
+  .fits { font-size: 12px; color: var(--muted); }
+  .fits b { color: var(--copper-hi); font-weight: 600; }
+  .resumen { font-size: 14px; }
+  .acciones { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 6px; }
+  .acciones > :global(*) { flex: 1 1 auto; }
+</style>

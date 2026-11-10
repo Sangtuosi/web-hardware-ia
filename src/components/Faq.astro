@@ -1,0 +1,25 @@
+---
+interface Props { items: [string, string][]; titulo?: string; }
+const { items, titulo = 'Preguntas frecuentes' } = Astro.props;
+---
+<section class="faq">
+  <h2>{titulo}</h2>
+  <div class="lista">
+    {items.map(([q, a]) => (
+      <details class="surface">
+        <summary>{q}</summary>
+        <p>{a}</p>
+      </details>
+    ))}
+  </div>
+</section>
+<style>
+  .faq { display: grid; gap: 24px; }
+  .lista { display: grid; gap: 14px; }
+  details { padding: 4px 20px; border-radius: var(--r-md); }
+  summary { cursor: pointer; padding: 16px 0; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; font: 600 18px/1 var(--f-mono); color: var(--copper-hi); transition: transform 0.2s; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { padding-bottom: 18px; color: var(--muted); }
+</style>
