@@ -361,7 +361,7 @@
       "Pensada para trabajar 24 horas: entrenamiento, render 3D y vídeo"
     ],
     "loQueNo": [
-      "Cuesta como un coche de segunda mano: solo compensa si le sacas dinero",
+      "Cuesta como un coche nuevo: solo compensa si le sacas dinero",
       "Hasta 600 W: pide fuente de 1000 W y una caja bien ventilada",
       "Para jugar no rinde más que una RTX 5090, que vale mucho menos"
     ],
@@ -392,7 +392,7 @@
       "Formato de dos ranuras: puedes montar dos en la misma placa"
     ],
     "loQueNo": [
-      "Vale bastante más que una RTX 5090, que es más rápida con 32 GB",
+      "Cuesta parecido a una RTX 5090, que es más rápida pero se queda en 32 GB",
       "Llama 3.3 70B en Q4 no cabe entero: necesitas dos tarjetas",
       "Ventilador de turbina: más ruidosa que una gráfica de consumo"
     ],
@@ -416,7 +416,7 @@
     "ecosistema": "CUDA",
     "lanzamiento": 2025,
     "gama": "alta",
-    "resumen": "Los mismos 32 GB que una RTX 5090 con un tercio del consumo.",
+    "resumen": "Los mismos 32 GB que una RTX 5090 con un tercio del consumo y, hoy, por menos dinero.",
     "pros": [
       "32 GB de VRAM con solo 200 W",
       "Dos ranuras: fácil de combinar en equipos con varias GPU",
@@ -424,7 +424,7 @@
     ],
     "loQueNo": [
       "La mitad de ancho de banda que una RTX 5090: genera más despacio",
-      "Precio parecido o superior al de la 5090",
+      "Sigue siendo una tarjeta cara: pagas la memoria y el formato profesional",
       "Menos disponible en tiendas que las gráficas de consumo"
     ],
     "paraQuien": "Para estaciones de trabajo con varias tarjetas o con límite de consumo y de espacio.",
