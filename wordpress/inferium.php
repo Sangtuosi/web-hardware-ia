@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) { exit; }
 
 const INF_NOMBRE = 'Inferium';
 const INF_AUTOR = 'Ernesto Santos';
-const INF_VERSION = '1.1.0';
+const INF_VERSION = '1.2.0';
 const INF_REL = 'sponsored nofollow noopener';
 
 /* ---------- Datos ---------- */
@@ -374,7 +374,7 @@ function inf_pag_comparador() {
             ['n' => $p['consumo'], 't' => $p['consumo'] . ' W'], ['n' => null, 't' => $p['ecosistema']], ['n' => null, 't' => $p['fuente'] ? $p['fuente'] . ' W' : 'Incluida'], ['n' => inf_nota($p), 't' => (string) inf_nota($p)],
         ]];
     }
-    $ini = ['nvidia-rtx-5090', 'nvidia-rtx-4090', 'amd-radeon-rx-7900-xtx', 'mini-pc-ryzen-ai-max-395'];
+    $ini = ['nvidia-rtx-5060-ti-16gb', 'amd-radeon-rx-9070-xt', 'nvidia-rtx-5080', 'apple-mac-mini-m6'];
     $b = '<main class="wrap"><section class="cabecera">' . inf_migas($migas) . '<h1>Comparador de GPU y hardware para IA</h1><p class="muted intro">Elige hasta cuatro. En cobre, el mejor valor de cada fila.</p></section><div class="selectores">';
     for ($i = 0; $i < 4; $i++) {
         $b .= '<label class="well sel"><span class="sr-only">Equipo ' . ($i + 1) . '</span><select data-sel="' . $i . '"><option value="">Ninguno</option>';
