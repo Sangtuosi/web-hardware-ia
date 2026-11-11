@@ -160,3 +160,47 @@
   if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { var was = visible; visible = es[0].isIntersecting; if (visible && !was && !reduce) requestAnimationFrame(frame); }).observe(host);
   resize(); requestAnimationFrame(frame);
 })();
+
+/* Medición: eventos para Google Analytics 4. Solo envían algo si el visitante aceptó las cookies (existe window.gtag). */
+(function () {
+  'use strict';
+  function ev(nombre, datos) { if (typeof window.gtag === 'function') window.gtag('event', nombre, datos || {}); }
+  function zona(el) {
+    if (el.closest('header')) return 'menu';
+    if (el.closest('footer')) return 'pie';
+    var s = el.closest('section, .surface');
+    var h = s && s.querySelector('h1, h2');
+    return h ? h.textContent.trim().slice(0, 60) : 'contenido';
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a, button, summary');
+    if (!a) return;
+    var txt = (a.textContent || '').trim().slice(0, 60);
+    if (a.tagName === 'A' && /amazon\./.test(a.href)) {
+      var m = a.href.match(/\/dp\/([A-Z0-9]{10})/);
+      ev('clic_amazon', { producto: a.getAttribute('data-prod') || txt, asin: m ? m[1] : 'busqueda', zona: zona(a) });
+    } else if (a.tagName === 'A') {
+      var interno = a.host === location.host;
+      ev(interno ? 'clic_enlace' : 'clic_salida', { destino: interno ? a.pathname : a.href, texto: txt, zona: zona(a) });
+    } else if (a.tagName === 'SUMMARY') {
+      ev('abre_pregunta', { pregunta: txt });
+    } else {
+      ev('clic_boton', { texto: txt, zona: zona(a) });
+    }
+  }, true);
+  document.addEventListener('change', function (e) {
+    var t = e.target;
+    if (t.matches && t.matches('[data-sel]')) ev('usa_comparador', { equipo: t.value || 'ninguno' });
+    else if (t.closest && t.closest('[data-calc]')) ev('usa_calculadora', { valor: String(t.value) });
+  }, true);
+  var vistos = {};
+  function prof() {
+    var d = document.documentElement, total = d.scrollHeight - innerHeight;
+    if (total <= 0) return;
+    var p = Math.round((scrollY / total) * 100);
+    [25, 50, 75, 100].forEach(function (n) { if (p >= n - 1 && !vistos[n]) { vistos[n] = 1; ev('profundidad_scroll', { porcentaje: n }); } });
+  }
+  addEventListener('scroll', prof, { passive: true });
+  var t0 = Date.now();
+  addEventListener('pagehide', function () { ev('tiempo_en_pagina', { segundos: Math.round((Date.now() - t0) / 1000) }); });
+})();

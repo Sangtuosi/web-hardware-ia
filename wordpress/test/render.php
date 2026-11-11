@@ -44,6 +44,9 @@ $pub = inf_documento(inf_pagina('inicio')); $bor = inf_documento(inf_pagina('ini
 ok(str_contains($pub, 'google-site-verification" content="abc_123-XYZ"') && str_contains($bor, 'google-site-verification'), 'meta search console');
 ok(str_contains($pub, 'G-TEST12345') && str_contains($pub, 'data-cookies-si'), 'analytics con aviso en publicadas');
 ok(!str_contains($bor, 'G-TEST12345'), 'sin analytics en borradores');
+ok(str_contains($pub, 'data-prod="'), 'producto en boton amazon');
+$GLOBALS['opts']['inferium_clarity'] = 'abc123xyz'; ok(str_contains(inf_documento(inf_pagina('inicio')), 'clarity.ms/tag/') && str_contains(inf_documento(inf_pagina('inicio')), 'cl="abc123xyz"'), 'clarity');
+unset($GLOBALS['opts']['inferium_clarity']);
 $GLOBALS['opts']['inferium_ga4'] = '"><script>'; ok(!str_contains(inf_documento(inf_pagina('inicio')), 'googletagmanager'), 'ga4 invalido se ignora');
 echo count($pags) . " paginas, $fallos fallos\n";
 exit($fallos ? 1 : 0);

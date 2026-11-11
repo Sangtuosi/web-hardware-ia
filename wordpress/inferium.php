@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) { exit; }
 
 const INF_NOMBRE = 'Inferium';
 const INF_AUTOR = 'Ernesto Santos';
-const INF_VERSION = '1.4.0';
+const INF_VERSION = '1.5.0';
 const INF_REL = 'sponsored nofollow noopener';
 
 /* ---------- Datos ---------- */
@@ -129,7 +129,7 @@ function inf_schema_lista($productos) {
 function inf_e($s) { return esc_html($s); }
 
 function inf_btn_amazon($p, $texto = 'Ver precio en Amazon', $small = false) {
-    return '<a class="btn btn-copper' . ($small ? ' btn-sm' : '') . '" href="' . esc_url(inf_amazon_url($p)) . '" target="_blank" rel="' . INF_REL . '">' . inf_e($texto)
+    return '<a class="btn btn-copper' . ($small ? ' btn-sm' : '') . '" href="' . esc_url(inf_amazon_url($p)) . '" data-prod="' . esc_attr($p['nombre']) . '" target="_blank" rel="' . INF_REL . '">' . inf_e($texto)
         . ' <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg></a>';
 }
 
@@ -239,11 +239,12 @@ function inf_documento($a) {
     $gsc = preg_replace('/[^A-Za-z0-9_-]/', '', (string) get_option('inferium_gsc', ''));
     $ga4 = (string) get_option('inferium_ga4', ''); if (!preg_match('/^G-[A-Z0-9]{4,}$/', $ga4)) $ga4 = '';
     if ($gsc) $h .= '<meta name="google-site-verification" content="' . esc_attr($gsc) . '">';
+    $clar = preg_replace('/[^a-z0-9]/', '', (string) get_option('inferium_clarity', ''));
     $cookies = '';
-    if ($ga4 && !$a['borrador']) {
-        $cookies = '<div class="cookies surface" data-cookies hidden role="dialog" aria-label="Aviso de cookies"><p>Usamos cookies de Google Analytics solo para contar visitas y mejorar la web. <a href="' . esc_url(inf_url('/cookies/')) . '">Más información</a>.</p><div class="cookies-btns"><button class="btn btn-sm" type="button" data-cookies-no>Rechazar</button><button class="btn btn-sm btn-copper" type="button" data-cookies-si>Aceptar</button></div></div>'
-            . '<script>(function(){var K="inf_cookies",id="' . $ga4 . '",b=document.querySelector("[data-cookies]");function get(){try{return localStorage.getItem(K)}catch(e){return null}}function set(v){try{localStorage.setItem(K,v)}catch(e){}}'
-            . 'function ga(){var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id="+id;document.head.appendChild(s);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag("js",new Date());gtag("config",id,{anonymize_ip:true})}'
+    if (($ga4 || $clar) && !$a['borrador']) {
+        $cookies = '<div class="cookies surface" data-cookies hidden role="dialog" aria-label="Aviso de cookies"><p>Usamos cookies de medición solo para saber qué se visita y mejorar la web. <a href="' . esc_url(inf_url('/cookies/')) . '">Más información</a>.</p><div class="cookies-btns"><button class="btn btn-sm" type="button" data-cookies-no>Rechazar</button><button class="btn btn-sm btn-copper" type="button" data-cookies-si>Aceptar</button></div></div>'
+            . '<script>(function(){var K="inf_cookies",id="' . $ga4 . '",cl="' . $clar . '",b=document.querySelector("[data-cookies]");function get(){try{return localStorage.getItem(K)}catch(e){return null}}function set(v){try{localStorage.setItem(K,v)}catch(e){}}'
+            . 'function ga(){if(cl){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script",cl)}if(!id)return;var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id="+id;document.head.appendChild(s);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag("js",new Date());gtag("config",id,{anonymize_ip:true})}'
             . 'var v=get();if(v==="si")ga();else if(v!=="no"&&b)b.hidden=false;if(b){b.querySelector("[data-cookies-si]").onclick=function(){set("si");b.hidden=true;ga()};b.querySelector("[data-cookies-no]").onclick=function(){set("no");b.hidden=true}}'
             . 'var r=document.querySelector("[data-cookies-reset]");if(r)r.onclick=function(){try{localStorage.removeItem(K)}catch(e){}location.reload()}})();</script>';
     }
@@ -525,7 +526,7 @@ function inf_pag_texto($layout) {
         $title = 'Privacidad y cookies | ' . INF_NOMBRE;
         $desc = 'Qué cookies usa ' . INF_NOMBRE . ', para qué sirven y cómo aceptarlas o rechazarlas.';
         $txt = '<p>' . INF_NOMBRE . ' no te pide registro ni guarda datos personales tuyos. Solo usamos dos cosas que conviene que conozcas.</p>'
-            . '<h2>Cookies de medición</h2><p>Si las aceptas en el aviso, usamos Google Analytics 4 para saber cuántas visitas tiene cada página y mejorar la web. Si las rechazas, no se carga nada de Google Analytics. Tu elección se guarda en tu navegador.</p>'
+            . '<h2>Cookies de medición</h2><p>Si las aceptas en el aviso, usamos Google Analytics 4 y Microsoft Clarity para saber qué páginas se visitan, en qué se hace clic y hasta dónde se lee, y así mejorar la web. Si las rechazas, no se carga ninguna de las dos. Tu elección se guarda en tu navegador.</p>'
             . '<p><button class="btn btn-sm" type="button" data-cookies-reset>Cambiar mi elección de cookies</button></p>'
             . '<h2>Enlaces a Amazon</h2><p>Los botones de compra llevan a Amazon.es con nuestro identificador de afiliado. Al llegar allí, Amazon aplica su propia política de privacidad y de cookies.</p>'
             . '<h2>Responsable</h2><p>El responsable de esta web es ' . INF_AUTOR . '. Puedes ver cómo nos financiamos en el <a href="' . esc_url(inf_url('/aviso-afiliacion/')) . '">aviso de afiliación</a>.</p>';
