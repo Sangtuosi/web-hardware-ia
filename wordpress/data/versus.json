@@ -1,0 +1,12 @@
+[
+  { "slug": "rx-9070-xt-vs-rtx-5070", "a": "amd-radeon-rx-9070-xt", "b": "nvidia-rtx-5070" },
+  { "slug": "rx-9070-xt-vs-rtx-5070-ti", "a": "amd-radeon-rx-9070-xt", "b": "nvidia-rtx-5070-ti" },
+  { "slug": "rtx-5060-ti-vs-rtx-5070", "a": "nvidia-rtx-5060-ti-16gb", "b": "nvidia-rtx-5070" },
+  { "slug": "rx-9060-xt-vs-rtx-5060-ti", "a": "amd-radeon-rx-9060-xt-16gb", "b": "nvidia-rtx-5060-ti-16gb" },
+  { "slug": "rtx-5060-vs-rtx-5060-ti", "a": "nvidia-rtx-5060", "b": "nvidia-rtx-5060-ti-16gb" },
+  { "slug": "rtx-3060-vs-rtx-5060", "a": "nvidia-rtx-3060-12gb", "b": "nvidia-rtx-5060" },
+  { "slug": "rtx-5070-ti-vs-rtx-5080", "a": "nvidia-rtx-5070-ti", "b": "nvidia-rtx-5080" },
+  { "slug": "rtx-5080-vs-rtx-5090", "a": "nvidia-rtx-5080", "b": "nvidia-rtx-5090" },
+  { "slug": "rtx-5090-vs-rtx-pro-6000", "a": "nvidia-rtx-5090", "b": "nvidia-rtx-pro-6000-blackwell" },
+  { "slug": "mac-mini-m4-vs-mac-mini-m6", "a": "apple-mac-mini-m4", "b": "apple-mac-mini-m6" }
+]

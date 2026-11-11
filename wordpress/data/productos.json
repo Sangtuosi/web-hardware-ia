@@ -177,11 +177,11 @@
       "SDXL va fluido y consume solo 250 W"
     ],
     "loQueNo": [
-      "12 GB de VRAM: un modelo de 14B en Q4 ya no cabe entero",
+      "12 GB de VRAM: los modelos de 24B y 32B no caben",
       "Flux.1 dev pide 16 GB: aquí toca usar versiones recortadas",
       "Por un precio parecido, la RTX 5060 Ti de 16 GB carga modelos más grandes"
     ],
-    "paraQuien": "Para quien juega y además quiere IA local con modelos de hasta 8B o imagen con SDXL. Si la IA es lo principal, mejor 16 GB.",
+    "paraQuien": "Para quien juega y además quiere IA local con modelos de hasta 14B o imagen con SDXL. Si la IA es lo principal, mejor 16 GB.",
     "revisado": "2026-11-11"
   },
   {
@@ -298,7 +298,7 @@
       "Tiene CUDA, así que el software arranca sin trucos"
     ],
     "loQueNo": [
-      "6 GB de VRAM: un modelo de 8B en Q4 ya no cabe entero",
+      "6 GB de VRAM: un modelo de 8B cabe muy justo y casi sin contexto",
       "SDXL va muy justo y Flux queda descartado",
       "Ancho de banda de 168 GB/s: lenta incluso con lo poco que carga"
     ],

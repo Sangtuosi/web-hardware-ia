@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) { exit; }
 
 const INF_NOMBRE = 'Inferium';
 const INF_AUTOR = 'Ernesto Santos';
-const INF_VERSION = '1.2.0';
+const INF_VERSION = '1.3.0';
 const INF_REL = 'sponsored nofollow noopener';
 
 /* ---------- Datos ---------- */
@@ -31,6 +31,8 @@ function inf_datos($nombre) {
 function inf_productos() { return inf_datos('productos'); }
 function inf_categorias() { return inf_datos('categorias'); }
 function inf_modelos() { return inf_datos('modelos'); }
+function inf_versus() { return inf_datos('versus'); }
+function inf_corto($p) { return trim(preg_replace('/^(NVIDIA GeForce|AMD Radeon|NVIDIA|Apple|AMD)\s+|\s*\(.*\)$/u', '', $p['nombre'])); }
 function inf_producto($slug) { foreach (inf_productos() as $p) { if ($p['slug'] === $slug) return $p; } return null; }
 function inf_categoria($slug) { foreach (inf_categorias() as $c) { if ($c['slug'] === $slug) return $c; } return null; }
 
@@ -350,12 +352,18 @@ function inf_pag_ficha($slug) {
         . '<div><dt>Ancho de banda</dt><dd>' . (int) $p['anchoBanda'] . ' GB/s</dd></div><div><dt>Consumo</dt><dd>' . (int) $p['consumo'] . ' W' . ($p['tipo'] !== 'grafica' ? ' (equipo completo)' : '') . '</dd></div>'
         . ($p['fuente'] > 0 ? '<div><dt>Fuente recomendada</dt><dd>' . (int) $p['fuente'] . ' W</dd></div>' : '')
         . '<div><dt>Software de IA</dt><dd>' . inf_e($p['ecosistema']) . '</dd></div><div><dt>Lanzamiento</dt><dd>' . (int) $p['lanzamiento'] . '</dd></div><div><dt>Datos revisados</dt><dd>' . inf_fecha($p['revisado']) . '</dd></div></dl></section>';
+    $vs = array_values(array_filter(inf_versus(), fn($v) => $v['a'] === $slug || $v['b'] === $slug));
+    if ($vs) {
+        $b .= '<section class="surface pad"><h2>Comparativas</h2><ul class="lista enlaces">';
+        foreach ($vs as $v) { $pa = inf_producto($v['a']); $pb = inf_producto($v['b']); if ($pa && $pb) $b .= '<li><a href="' . esc_url(inf_url('/comparador/' . $v['slug'] . '/')) . '">' . inf_e(inf_corto($pa) . ' vs ' . inf_corto($pb)) . ': cuál comprar</a></li>'; }
+        $b .= '</ul></section>';
+    }
     $rel = array_slice(array_values(array_filter(inf_productos(), fn($x) => $x['slug'] !== $slug && $x['tipo'] === $p['tipo'])), 0, 3);
     if ($rel) { $b .= '<section class="block"><div class="sec-head"><h2>Si no te encaja, mira estos</h2></div><div class="grid-cards">'; foreach ($rel as $r) $b .= inf_card($r); $b .= '</div></section>'; }
     $b .= '<p class="mini muted">Enlace de afiliado de Amazon: si compras desde él recibimos una comisión sin coste para ti. Datos revisados el ' . inf_fecha($p['revisado']) . '.</p></main>';
     $prod = ['@context' => 'https://schema.org', '@type' => 'Product', 'name' => $p['nombre'], 'brand' => ['@type' => 'Brand', 'name' => $p['marca']], 'description' => $p['resumen'], 'url' => home_url($path),
         'review' => ['@type' => 'Review', 'author' => ['@type' => 'Person', 'name' => INF_AUTOR], 'datePublished' => $p['revisado'], 'reviewBody' => $p['paraQuien'], 'reviewRating' => ['@type' => 'Rating', 'ratingValue' => $nota, 'bestRating' => 100, 'worstRating' => 0]]];
-    return ['title' => $p['nombre'] . ($p['tipo'] === 'grafica' ? ': GPU para IA, VRAM y modelos que caben | ' : ': ficha para IA, memoria y modelos que caben | ') . INF_NOMBRE,
+    return ['title' => inf_corto($p) . ': precio, opiniones y qué IA mueve' . ($p['tipo'] === 'grafica' ? ' esta GPU | ' : ' | ') . INF_NOMBRE,
         'description' => $p['nombre'] . ' para IA local: ' . $p['vram'] . ' GB de ' . $p['memoria'] . ', ' . $p['anchoBanda'] . ' GB/s. Qué modelos caben, tokens por segundo estimados y lo que no hace bien.',
         'path' => $path, 'clase' => 'p-ficha', 'og' => 'product', 'body' => $b, 'schema' => [inf_schema_migas($migas), $prod]];
 }
@@ -389,6 +397,81 @@ function inf_pag_comparador() {
         . '<script type="application/json" data-comparador>' . wp_json_encode(['datos' => $datos, 'meta' => $meta, 'rel' => INF_REL]) . '</script></main>';
     return ['title' => 'Comparador de GPU y tarjetas gráficas para IA | ' . INF_NOMBRE, 'description' => 'Compara hasta 4 GPU (tarjetas gráficas), mini PCs o Mac para IA: VRAM, ancho de banda, tokens por segundo estimados, consumo y modelo más grande que cabe.',
         'path' => '/comparador/', 'clase' => 'p-comparador', 'body' => $b, 'schema' => [inf_schema_migas($migas)]];
+}
+
+function inf_pag_versus($slug) {
+    $v = null; foreach (inf_versus() as $x) { if ($x['slug'] === $slug) $v = $x; }
+    if (!$v) return null;
+    $a = inf_producto($v['a']); $b2 = inf_producto($v['b']);
+    if (!$a || !$b2) return null;
+    $na = inf_corto($a); $nb = inf_corto($b2); $path = '/comparador/' . $slug . '/';
+    $migas = [['/', 'Inicio'], ['/comparador/', 'Comparador'], [$path, $na . ' vs ' . $nb]];
+    $llama8 = null; foreach (inf_modelos() as $m) { if ($m['params'] == 8) $llama8 = $m; }
+    $ta = inf_tokens($a, $llama8); $tb = inf_tokens($b2, $llama8);
+    $ma = inf_mayor_modelo($a); $mb = inf_mayor_modelo($b2);
+    $nta = inf_nota($a); $ntb = inf_nota($b2);
+    $esGpu = $a['tipo'] === 'grafica' && $b2['tipo'] === 'grafica';
+    $filas = [
+        ['Memoria para IA (VRAM)', $a['vram'], $b2['vram'], $a['vram'] . ' GB', $b2['vram'] . ' GB', 'max'],
+        ['Tipo de memoria', null, null, $a['memoria'], $b2['memoria'], null],
+        ['Ancho de banda', $a['anchoBanda'], $b2['anchoBanda'], $a['anchoBanda'] . ' GB/s', $b2['anchoBanda'] . ' GB/s', 'max'],
+        ['Tokens/s Llama 8B (est.)', $ta ?? 0, $tb ?? 0, $ta ? '≈ ' . $ta : 'no cabe', $tb ? '≈ ' . $tb : 'no cabe', 'max'],
+        ['Modelo más grande en Q4', $ma ? $ma['params'] : 0, $mb ? $mb['params'] : 0, $ma ? $ma['nombre'] : 'ninguno', $mb ? $mb['nombre'] : 'ninguno', 'max'],
+        ['Consumo', $a['consumo'], $b2['consumo'], $a['consumo'] . ' W', $b2['consumo'] . ' W', 'min'],
+        ['Software de IA', null, null, $a['ecosistema'], $b2['ecosistema'], null],
+        ['Nota IA', $nta, $ntb, (string) $nta, (string) $ntb, 'max'],
+    ];
+    // Veredicto en frases, a partir de los datos
+    $v1 = [];
+    if ($a['vram'] !== $b2['vram']) {
+        $g = $a['vram'] > $b2['vram'] ? [$na, $a, $nb, $b2, $ma] : [$nb, $b2, $na, $a, $mb];
+        $v1[] = 'La ' . $g[0] . ' tiene ' . $g[1]['vram'] . ' GB de memoria frente a los ' . $g[3]['vram'] . ' GB de la ' . $g[2] . '. En IA eso manda: decide qué modelos caben' . ($g[4] && (!$ma || !$mb || $ma['params'] !== $mb['params']) ? ', y con ella llegas hasta ' . $g[4]['nombre'] . ' en Q4.' : ' y cuánto contexto les queda.');
+    } else {
+        $v1[] = 'Las dos tienen ' . $a['vram'] . ' GB de memoria, así que cargan exactamente los mismos modelos de IA. La diferencia está en la velocidad y en el software.';
+    }
+    if ($a['anchoBanda'] !== $b2['anchoBanda']) {
+        $g = $a['anchoBanda'] > $b2['anchoBanda'] ? [$na, $a, $nb, $b2] : [$nb, $b2, $na, $a];
+        $v1[] = 'En velocidad gana la ' . $g[0] . ': ' . $g[1]['anchoBanda'] . ' GB/s de ancho de banda frente a ' . $g[3]['anchoBanda'] . ' GB/s, lo que se traduce en respuestas más rápidas con el mismo modelo.';
+    } else {
+        $v1[] = 'En velocidad de memoria van igual: ' . $a['anchoBanda'] . ' GB/s las dos.';
+    }
+    if ($a['ecosistema'] !== $b2['ecosistema']) {
+        $cu = $a['ecosistema'] === 'CUDA' ? $na : ($b2['ecosistema'] === 'CUDA' ? $nb : null);
+        $v1[] = $cu ? 'La ' . $cu . ' usa CUDA, con el que funciona todo el software de IA a la primera, sobre todo imagen y vídeo. La otra va bien con modelos de texto en Ollama o LM Studio, pero pide más configuración para lo demás.'
+            : 'Usan software distinto (' . $a['ecosistema'] . ' y ' . $b2['ecosistema'] . '): comprueba que tus programas lo soportan.';
+    }
+    $gan = $nta === $ntb ? null : ($nta > $ntb ? $a : $b2);
+    $fin = $gan ? 'Para IA nos quedamos con la ' . inf_corto($gan) . ' (nota ' . max($nta, $ntb) . ' frente a ' . min($nta, $ntb) . '). Si la diferencia de precio en Amazon es grande, la otra sigue siendo una compra sensata.'
+        : 'Para IA es un empate técnico (nota ' . $nta . ' las dos): elige la que esté más barata hoy en Amazon.';
+    $h1 = $na . ' vs ' . $nb . ': cuál comprar';
+    $bd = '<main class="wrap"><section class="cabecera">' . inf_migas($migas) . '<h1>' . inf_e($h1) . '</h1><p class="muted intro">Comparativa de la ' . inf_e($a['nombre']) . ' y la ' . inf_e($b2['nombre']) . ' pensando en inteligencia artificial en local: memoria, velocidad, consumo y qué modelos mueve cada ' . ($esGpu ? 'tarjeta gráfica' : 'equipo') . '.</p></section>';
+    $bd .= '<div class="tabla-wrap surface"><table class="tabla"><thead><tr><th scope="col">Dato</th><th scope="col"><a href="' . esc_url(inf_url(inf_ficha_path($a))) . '">' . inf_e($na) . '</a></th><th scope="col"><a href="' . esc_url(inf_url(inf_ficha_path($b2))) . '">' . inf_e($nb) . '</a></th></tr></thead><tbody>';
+    foreach ($filas as $f) {
+        $ma1 = $mb1 = false;
+        if ($f[5] && $f[1] !== $f[2]) { $ma1 = $f[5] === 'max' ? $f[1] > $f[2] : $f[1] < $f[2]; $mb1 = !$ma1; }
+        $bd .= '<tr><th scope="row">' . inf_e($f[0]) . '</th><td' . ($ma1 ? ' class="mejor"' : '') . '>' . inf_e($f[3]) . '</td><td' . ($mb1 ? ' class="mejor"' : '') . '>' . inf_e($f[4]) . '</td></tr>';
+    }
+    $bd .= '<tr class="comprar"><th scope="row">Precio</th><td>' . inf_btn_amazon($a, 'Ver precio', true) . '</td><td>' . inf_btn_amazon($b2, 'Ver precio', true) . '</td></tr></tbody></table></div>';
+    $bd .= '<section class="surface pad"><h2>' . inf_e($na . ' o ' . $nb) . ': nuestro veredicto</h2>';
+    foreach ($v1 as $t) $bd .= '<p>' . inf_e($t) . '</p>';
+    $bd .= '<p><strong>' . inf_e($fin) . '</strong></p></section>';
+    $bd .= '<section class="bloques">';
+    foreach ([$a, $b2] as $p) {
+        $bd .= '<div class="surface pad"><h2>Lo que no te cuentan de la ' . inf_e(inf_corto($p)) . '</h2><ul class="lista no">';
+        foreach ($p['loQueNo'] as $x) $bd .= '<li>' . inf_e($x) . '</li>';
+        $bd .= '</ul><p><a href="' . esc_url(inf_url(inf_ficha_path($p))) . '">Ver la ficha completa de la ' . inf_e(inf_corto($p)) . '</a></p></div>';
+    }
+    $bd .= '</section>';
+    $faq = [
+        ['¿Cuál es mejor para IA, la ' . $na . ' o la ' . $nb . '?', $fin],
+        ['¿Cuál consume menos?', $a['consumo'] === $b2['consumo'] ? 'Consumen lo mismo: ' . $a['consumo'] . ' W.' : 'La ' . ($a['consumo'] < $b2['consumo'] ? $na : $nb) . ', con ' . min($a['consumo'], $b2['consumo']) . ' W frente a ' . max($a['consumo'], $b2['consumo']) . ' W.'],
+        ['¿Cuál es más barata?', 'Los precios cambian cada día, por eso no los copiamos: mira el precio actual de las dos en Amazon con los botones de la tabla.'],
+    ];
+    $bd .= inf_faq($faq) . '<section class="block"><div class="sec-head"><h2>Las dos, frente a frente</h2><p>¿Quieres añadir una tercera? Usa el <a href="' . esc_url(inf_url('/comparador/')) . '">comparador de GPU</a> o la <a href="' . esc_url(inf_url('/calculadora-vram/')) . '">calculadora de VRAM</a>.</p></div><div class="grid-cards">' . inf_card($a) . inf_card($b2) . '</div></section>'
+        . '<p class="mini muted">Tokens/s: estimación propia. Enlaces de afiliado de Amazon.</p></main>';
+    return ['title' => $na . ' vs ' . $nb . ': comparativa y cuál comprar | ' . INF_NOMBRE,
+        'description' => $na . ' vs ' . $nb . ': comparativa de memoria, velocidad, consumo y modelos de IA que mueve cada una. Veredicto claro y precio actual en Amazon.',
+        'path' => $path, 'clase' => 'p-comparador p-versus', 'body' => $bd, 'schema' => [inf_schema_migas($migas), inf_schema_faq($faq)]];
 }
 
 function inf_pag_calculadora() {
@@ -458,6 +541,7 @@ function inf_pagina($layout, $slug = '') {
         case 'catalogo': return inf_pag_catalogo();
         case 'ficha': return inf_pag_ficha($slug);
         case 'comparador': return inf_pag_comparador();
+        case 'versus': return inf_pag_versus($slug);
         case 'calculadora': return inf_pag_calculadora();
         case 'como-elegimos': case 'aviso': return inf_pag_texto($layout);
     }

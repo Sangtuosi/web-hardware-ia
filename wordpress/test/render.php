@@ -27,6 +27,7 @@ $out = $argv[1] ?? sys_get_temp_dir() . '/inferium-out';
 $pags = [['proximamente', '', '/'], ['inicio', '', '/inicio/'], ['catalogo', '', '/hardware/'], ['comparador', '', '/comparador/'], ['calculadora', '', '/calculadora-vram/'], ['como-elegimos', '', '/como-elegimos/'], ['aviso', '', '/aviso-afiliacion/']];
 foreach (inf_categorias() as $c) $pags[] = ['categoria', $c['slug'], '/' . $c['slug'] . '/'];
 foreach (inf_productos() as $p) $pags[] = ['ficha', $p['slug'], inf_ficha_path($p)];
+foreach (inf_versus() as $v) $pags[] = ['versus', $v['slug'], '/comparador/' . $v['slug'] . '/'];
 foreach ($pags as [$l, $s, $path]) {
     $pag = inf_pagina($l, $s);
     ok($pag !== null, "pagina $l $s");
