@@ -27,6 +27,8 @@ $out = $argv[1] ?? sys_get_temp_dir() . '/inferium-out';
 $pags = [['proximamente', '', '/'], ['inicio', '', '/inicio/'], ['catalogo', '', '/hardware/'], ['comparador', '', '/comparador/'], ['calculadora', '', '/calculadora-vram/'], ['como-elegimos', '', '/como-elegimos/'], ['aviso', '', '/aviso-afiliacion/'], ['cookies', '', '/cookies/']];
 foreach (inf_categorias() as $c) $pags[] = ['categoria', $c['slug'], '/' . $c['slug'] . '/'];
 foreach (inf_productos() as $p) $pags[] = ['ficha', $p['slug'], inf_ficha_path($p)];
+$pags[] = ['componentes', '', '/componentes/'];
+foreach (inf_grupos() as $g) $pags[] = ['grupo', $g['slug'], inf_grupo_path($g)];
 foreach (inf_versus() as $v) $pags[] = ['versus', $v['slug'], '/comparador/' . $v['slug'] . '/'];
 foreach ($pags as [$l, $s, $path]) {
     $pag = inf_pagina($l, $s);
@@ -48,5 +50,7 @@ ok(str_contains($pub, 'data-prod="'), 'producto en boton amazon');
 $GLOBALS['opts']['inferium_clarity'] = 'abc123xyz'; ok(str_contains(inf_documento(inf_pagina('inicio')), 'clarity.ms/tag/') && str_contains(inf_documento(inf_pagina('inicio')), 'cl="abc123xyz"'), 'clarity');
 unset($GLOBALS['opts']['inferium_clarity']);
 $GLOBALS['opts']['inferium_ga4'] = '"><script>'; ok(!str_contains(inf_documento(inf_pagina('inicio')), 'googletagmanager'), 'ga4 invalido se ignora');
+$ids = []; foreach (inf_grupos() as $g) foreach ($g['items'] as $i) { ok(!in_array($i['id'], $ids, true), 'id repetido ' . $i['id']); $ids[] = $i['id']; }
+ok(str_contains(inf_cruzada(inf_producto('nvidia-rtx-5080')), 'RM850x') && str_contains(inf_cruzada(inf_producto('nvidia-rtx-5090')), '1200 W') && str_contains(inf_cruzada(inf_producto('nvidia-rtx-5060')), 'RM650e'), 'fuente segun gpu');
 echo count($pags) . " paginas, $fallos fallos\n";
 exit($fallos ? 1 : 0);

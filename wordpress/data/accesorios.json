@@ -1,0 +1,420 @@
+[
+  {
+    "slug": "fuentes-de-alimentacion",
+    "nombre": "Fuentes de alimentación",
+    "titulo": "Fuentes de alimentación para tarjetas gráficas e IA",
+    "descripcion": "Qué fuente de alimentación necesita tu tarjeta gráfica: las más vendidas en Amazon de 650 a 1200 W y cuál elegir según tu GPU.",
+    "intro": "La fuente es lo que más se olvida al cambiar de tarjeta gráfica. Una GPU potente con una fuente justa da cuelgues y reinicios justo cuando más trabaja, que en IA es durante horas. Mira los vatios recomendados en la ficha de tu gráfica y elige una fuente igual o superior.",
+    "consejo": "Regla rápida: 650 W para gráficas de hasta 250 W, 850 W para las de 300 a 360 W y 1000 W o más para una RTX 5090 o una RTX PRO 6000.",
+    "items": [
+      {
+        "id": "psu650",
+        "nombre": "Corsair RM650e 650 W",
+        "asin": "B0DMTLB5LJ",
+        "nota": "La fuente más vendida de Amazon. Suficiente para una RTX 5060 Ti, una RX 9060 XT o una RTX 5070.",
+        "w": 650
+      },
+      {
+        "id": "psu650b",
+        "nombre": "Corsair CX650 650 W",
+        "asin": "B0CK8NDN1Q",
+        "nota": "La opción económica de 650 W, con más de mil valoraciones.",
+        "w": 650
+      },
+      {
+        "id": "psu850",
+        "nombre": "Corsair RM850x 850 W",
+        "asin": "B0D9C1DT62",
+        "nota": "Para una RTX 5070 Ti, una RTX 5080 o una RX 9070 XT con margen.",
+        "w": 850
+      },
+      {
+        "id": "psu850b",
+        "nombre": "be quiet! Pure Power 13 M 850 W",
+        "asin": "B0F9YW611F",
+        "nota": "Alternativa silenciosa de 850 W, también entre las más vendidas.",
+        "w": 850
+      },
+      {
+        "id": "psu1200",
+        "nombre": "ASUS ROG Strix 1200 W Platinum",
+        "asin": "",
+        "nota": "Para una RTX 5090 o una RTX PRO 6000, que piden 1000 W o más.",
+        "w": 1200
+      }
+    ]
+  },
+  {
+    "slug": "memoria-ram-ddr5",
+    "nombre": "Memoria RAM",
+    "titulo": "Memoria RAM DDR5 para IA: kits de 32, 64 y 128 GB",
+    "descripcion": "Cuánta memoria RAM necesitas para IA local y los kits DDR5 de 32, 64 y 128 GB más vendidos en Amazon.",
+    "intro": "Cuando un modelo no cabe entero en la tarjeta gráfica, lo que sobra se va a la memoria RAM del ordenador. Va más lento, pero funciona. Por eso para IA conviene tener al menos tanta RAM como VRAM, y mejor el doble.",
+    "consejo": "Con 32 GB vas bien para modelos de hasta 14B. Si quieres probar modelos de 32B o 70B repartidos entre gráfica y RAM, ve a 64 GB.",
+    "items": [
+      {
+        "id": "ram32",
+        "nombre": "Crucial Pro DDR5 32 GB 6000",
+        "asin": "B0CTHXMYL8",
+        "nota": "El kit DDR5 de 32 GB con más valoraciones entre los más vendidos."
+      },
+      {
+        "id": "ram32b",
+        "nombre": "Patriot Viper Venom RGB DDR5 32 GB 6000 CL30",
+        "asin": "B0D4NLTM6R",
+        "nota": "Número 1 en memoria RAM de Amazon."
+      },
+      {
+        "id": "ram64",
+        "nombre": "Crucial Pro DDR5 64 GB 6400",
+        "asin": "B0DSR14511",
+        "nota": "64 GB para repartir modelos grandes entre la GPU y la RAM."
+      },
+      {
+        "id": "ram64b",
+        "nombre": "Corsair Vengeance RGB DDR5 64 GB 6400",
+        "asin": "B0C1RGLVZ8",
+        "nota": "El kit de 64 GB con más valoraciones."
+      },
+      {
+        "id": "ram64so",
+        "nombre": "Corsair Vengeance SODIMM DDR5 64 GB 4800",
+        "asin": "B09X5SNVF9",
+        "nota": "Formato portátil (SODIMM): el que usan los mini PC ampliables."
+      },
+      {
+        "id": "ram128",
+        "nombre": "Kingston FURY Beast DDR5 128 GB (4x32) 5200",
+        "asin": "B0C34D1BBT",
+        "nota": "128 GB para estaciones de trabajo que reparten modelos enormes entre GPU y RAM. Necesita una placa con cuatro ranuras."
+      }
+    ]
+  },
+  {
+    "slug": "ssd-nvme",
+    "nombre": "Discos SSD NVMe",
+    "titulo": "SSD NVMe para IA: dónde guardar tus modelos",
+    "descripcion": "Los SSD NVMe de 1 y 2 TB más vendidos en Amazon para guardar modelos de IA y cargarlos rápido.",
+    "intro": "Los modelos de IA ocupan mucho: entre 5 y 40 GB cada uno, y es fácil acabar con veinte descargados. Un SSD NVMe rápido también reduce lo que tarda cada modelo en cargarse en la gráfica.",
+    "consejo": "Para IA, mejor 2 TB que 1 TB. La velocidad extra de los PCIe 5.0 apenas se nota: uno bueno PCIe 4.0 es la compra sensata.",
+    "items": [
+      {
+        "id": "ssd2",
+        "nombre": "Samsung 990 Pro 2 TB",
+        "asin": "B0B9C4DKKG",
+        "nota": "El SSD de referencia, con más de quince mil valoraciones."
+      },
+      {
+        "id": "ssd2b",
+        "nombre": "Kingston NV3 2 TB",
+        "asin": "B0DBR6TRZQ",
+        "nota": "2 TB a buen precio para una biblioteca grande de modelos."
+      },
+      {
+        "id": "ssd2c",
+        "nombre": "WD_Black SN7100 2 TB",
+        "asin": "B0DN6ZQ3PD",
+        "nota": "Rápido y eficiente, muy usado también en portátiles."
+      },
+      {
+        "id": "ssd1",
+        "nombre": "Samsung 990 Pro 1 TB",
+        "asin": "B0B9C3ZVHR",
+        "nota": "La versión de 1 TB, número 2 en SSD internos."
+      },
+      {
+        "id": "ssd1b",
+        "nombre": "Crucial P310 1 TB",
+        "asin": "B0DC8VPSHV",
+        "nota": "Opción económica de 1 TB entre las más vendidas."
+      }
+    ]
+  },
+  {
+    "slug": "procesadores",
+    "nombre": "Procesadores",
+    "titulo": "Procesadores para un PC de IA",
+    "descripcion": "Qué procesador poner en un PC para IA local y los más vendidos de AMD e Intel en Amazon.",
+    "intro": "En IA local el procesador importa menos que la tarjeta gráfica: prepara los datos y mueve lo que no cabe en la GPU. No hace falta el más caro, pero sí uno moderno que no frene a la gráfica.",
+    "consejo": "Si el presupuesto es limitado, gasta en VRAM antes que en procesador. Un Ryzen 5 o 7 actual acompaña bien a cualquier GPU de esta web.",
+    "items": [
+      {
+        "id": "cpu1",
+        "nombre": "AMD Ryzen 7 9800X3D",
+        "asin": "B0DKFMSMYK",
+        "nota": "El procesador más vendido de Amazon. Ideal si el PC también es para jugar."
+      },
+      {
+        "id": "cpu2",
+        "nombre": "AMD Ryzen 7 9700X",
+        "asin": "B0D6NMDNNX",
+        "nota": "Ocho núcleos eficientes para un PC de IA equilibrado."
+      },
+      {
+        "id": "cpu3",
+        "nombre": "AMD Ryzen 5 9600X",
+        "asin": "B0D6NN6TM7",
+        "nota": "El punto de entrada sensato en la plataforma AM5."
+      },
+      {
+        "id": "cpu4",
+        "nombre": "AMD Ryzen 7 7800X3D",
+        "asin": "B0BTZB7F88",
+        "nota": "La generación anterior, todavía entre los más vendidos."
+      },
+      {
+        "id": "cpu5",
+        "nombre": "Intel Core Ultra 7 270K Plus",
+        "asin": "B0GMLJCBBM",
+        "nota": "El Intel más vendido de la lista."
+      },
+      {
+        "id": "cpu6",
+        "nombre": "Intel Core i5-14400F",
+        "asin": "B0CQ3142LB",
+        "nota": "Opción barata de Intel para montar un PC con gráfica dedicada."
+      }
+    ]
+  },
+  {
+    "slug": "placas-base",
+    "nombre": "Placas base",
+    "titulo": "Placas base para montar un PC de IA",
+    "descripcion": "Las placas base AMD más vendidas en Amazon para un PC de IA con tarjeta gráfica dedicada.",
+    "intro": "La placa base decide qué procesador, cuánta RAM y cuántas tarjetas gráficas puedes poner. Para una sola GPU sirve casi cualquiera actual. Si piensas montar dos, fíjate en que tenga dos ranuras largas bien separadas.",
+    "consejo": "Las B850 son para procesadores Ryzen 7000 y 9000 con memoria DDR5. Las B550 son para Ryzen 5000 con DDR4, más baratas.",
+    "items": [
+      {
+        "id": "mb1",
+        "nombre": "Gigabyte B850 Eagle WIFI6E",
+        "asin": "B0DQNW4J1G",
+        "nota": "La placa AM5 más vendida, con wifi."
+      },
+      {
+        "id": "mb2",
+        "nombre": "MSI B850 Gaming Plus WiFi",
+        "asin": "B0DPKV94MX",
+        "nota": "Alternativa AM5 con casi cuatrocientas valoraciones."
+      },
+      {
+        "id": "mb3",
+        "nombre": "Gigabyte B550 Eagle",
+        "asin": "B0DXFYWWVN",
+        "nota": "Para montar un PC económico con Ryzen 5000."
+      },
+      {
+        "id": "mb4",
+        "nombre": "Gigabyte B550M DS3H R2",
+        "asin": "B0F4H61PLX",
+        "nota": "Formato pequeño (microATX) y la más barata de la lista."
+      }
+    ]
+  },
+  {
+    "slug": "cajas-pc",
+    "nombre": "Cajas de PC",
+    "titulo": "Cajas de PC para tarjetas gráficas grandes",
+    "descripcion": "Las cajas de PC más vendidas en Amazon donde cabe una tarjeta gráfica grande con buena ventilación.",
+    "intro": "Las tarjetas gráficas actuales son enormes y en IA trabajan al cien por cien durante horas. Necesitas una caja donde quepa la GPU y por la que pase aire.",
+    "consejo": "Antes de comprar, compara la longitud de tu gráfica con la longitud máxima de GPU que admite la caja. Viene en la ficha de las dos.",
+    "items": [
+      {
+        "id": "caja1",
+        "nombre": "Corsair 3500X ARGB",
+        "asin": "B0FJ2Y9GK1",
+        "nota": "Una de las cajas más vendidas, con cristal y ventiladores incluidos."
+      },
+      {
+        "id": "caja2",
+        "nombre": "Corsair Frame 4000D ARGB",
+        "asin": "B0DFHNV7TK",
+        "nota": "Frontal de malla para mover mucho aire. Casi dos mil valoraciones."
+      },
+      {
+        "id": "caja3",
+        "nombre": "Corsair 3200D ARGB",
+        "asin": "B0GBXXB5L3",
+        "nota": "Número 2 en cajas de Amazon."
+      },
+      {
+        "id": "caja4",
+        "nombre": "Mars Gaming MC-XO",
+        "asin": "B0DZCJ7NJW",
+        "nota": "La más vendida y la más barata de la lista."
+      },
+      {
+        "id": "caja5",
+        "nombre": "MUSETEX Y6",
+        "asin": "B0GDFFSFTF",
+        "nota": "Caja panorámica con buena puntuación de los compradores."
+      }
+    ]
+  },
+  {
+    "slug": "refrigeracion-liquida",
+    "nombre": "Refrigeración líquida",
+    "titulo": "Refrigeración líquida para el procesador",
+    "descripcion": "Las refrigeraciones líquidas de 240 y 360 mm más vendidas en Amazon para un PC de IA.",
+    "intro": "Cuando la tarjeta gráfica trabaja durante horas, calienta toda la caja. Una refrigeración líquida saca el calor del procesador directamente fuera y deja el aire del interior para la GPU.",
+    "consejo": "Con un radiador de 240 mm basta para casi todos los procesadores. Elige 360 mm para los de gama alta, y comprueba que cabe en tu caja.",
+    "items": [
+      {
+        "id": "rl1",
+        "nombre": "MSI MAG CoreLiquid A13 240",
+        "asin": "B0DLNZY23J",
+        "nota": "La más vendida y de las más baratas."
+      },
+      {
+        "id": "rl2",
+        "nombre": "MSI MAG CoreLiquid A13 360",
+        "asin": "B0BSLK8VYH",
+        "nota": "La versión de 360 mm."
+      },
+      {
+        "id": "rl3",
+        "nombre": "Corsair Nautilus 360 RS ARGB",
+        "asin": "B0DF7G8JFP",
+        "nota": "360 mm con más de ochocientas valoraciones."
+      },
+      {
+        "id": "rl4",
+        "nombre": "Thermalright Aqua Elite 240 V3",
+        "asin": "B0CCP9RDLV",
+        "nota": "240 mm económica y bien valorada."
+      },
+      {
+        "id": "rl5",
+        "nombre": "Corsair iCUE Link Titan 360 RX",
+        "asin": "B0D6BCSFNC",
+        "nota": "Gama alta para procesadores muy exigentes."
+      }
+    ]
+  },
+  {
+    "slug": "gpu-externas-egpu",
+    "nombre": "GPU externas (eGPU)",
+    "titulo": "Tarjeta gráfica externa (eGPU) para portátil y mini PC",
+    "descripcion": "Cómo conectar una tarjeta gráfica externa a un portátil o mini PC con OCuLink o Thunderbolt, y las bases eGPU más vendidas.",
+    "intro": "Una tarjeta gráfica externa permite usar una GPU de sobremesa con un portátil o un mini PC. Compras una base (dock), le pinchas la gráfica y una fuente, y la conectas por OCuLink o Thunderbolt. Es la forma de hacer IA en serio sin cambiar de ordenador.",
+    "consejo": "OCuLink es más rápido y barato, pero tu equipo tiene que tener ese puerto (muchos mini PC lo traen). Thunderbolt es más común en portátiles. La base no incluye la tarjeta gráfica.",
+    "items": [
+      {
+        "id": "egpu1",
+        "nombre": "MINISFORUM DEG1 (OCuLink)",
+        "asin": "B0DCZF77VT",
+        "nota": "La base OCuLink más popular. Necesita una fuente ATX aparte."
+      },
+      {
+        "id": "egpu2",
+        "nombre": "MINISFORUM DEG2 (Thunderbolt 5 y OCuLink)",
+        "asin": "B0GDZFZ73D",
+        "nota": "Con los dos tipos de conexión, sirve para portátil y mini PC."
+      },
+      {
+        "id": "egpu3",
+        "nombre": "AOOSTAR AG03 (OCuLink y Thunderbolt 5)",
+        "asin": "B0HFNK55DH",
+        "nota": "La que más valoraciones tiene de las de doble conexión."
+      },
+      {
+        "id": "egpu4",
+        "nombre": "AOOSTAR EG01 (OCuLink)",
+        "asin": "B0G1M9DLRB",
+        "nota": "Alternativa económica solo OCuLink."
+      }
+    ]
+  },
+  {
+    "slug": "accesorios-para-gpu",
+    "nombre": "Accesorios para GPU",
+    "titulo": "Accesorios para tarjetas gráficas: soportes y cables",
+    "descripcion": "Soportes para tarjeta gráfica y cables 12V-2x6 más vendidos en Amazon para evitar que la GPU se doble o el conector se caliente.",
+    "intro": "Dos accesorios baratos que evitan los dos problemas más habituales de las tarjetas gráficas grandes: que se doblen por el peso y que el conector de alimentación trabaje forzado.",
+    "consejo": "Si tu gráfica pesa más de un kilo o mide más de 30 cm, ponle un soporte. Cuesta menos de 10 euros.",
+    "items": [
+      {
+        "id": "sop1",
+        "nombre": "Soporte para tarjeta gráfica ajustable",
+        "asin": "B0BHZGT2FY",
+        "nota": "El típico soporte de columna, con miles de valoraciones."
+      },
+      {
+        "id": "sop2",
+        "nombre": "RAGE soporte GPU de aluminio",
+        "asin": "B0BXDH6B38",
+        "nota": "De los más vendidos en la categoría de tarjetas gráficas."
+      },
+      {
+        "id": "sop3",
+        "nombre": "ASUS ROG Herculx",
+        "asin": "B09RPYGVBW",
+        "nota": "Soporte de gama alta para las gráficas más pesadas."
+      },
+      {
+        "id": "cable1",
+        "nombre": "be quiet! cable 12V-2x6 / 12VHPWR",
+        "asin": "B0CSPPLLJ1",
+        "nota": "Cable directo de la fuente a la gráfica, sin adaptadores. Solo para fuentes be quiet! compatibles."
+      },
+      {
+        "id": "cable2",
+        "nombre": "Cable GPU de 16 pines a 3x8 pines",
+        "asin": "B0FBGNYY5J",
+        "nota": "Adaptador para fuentes sin conector de 16 pines. Comprueba la compatibilidad con tu fuente."
+      }
+    ]
+  },
+  {
+    "slug": "portatiles-para-ia",
+    "raiz": true,
+    "nombre": "Portátiles para IA",
+    "titulo": "Portátiles para IA: con RTX y MacBook",
+    "descripcion": "Qué portátil comprar para inteligencia artificial en local: portátiles con RTX 5060, 5070 y 5080 y MacBook, elegidos entre los más vendidos de Amazon.",
+    "intro": "En un portátil para IA manda lo mismo que en sobremesa: la memoria de la tarjeta gráfica. Ojo, porque las gráficas de portátil llevan menos memoria que las de sobremesa con el mismo nombre: una RTX 5070 de portátil tiene 8 GB y una RTX 5080 de portátil, 16 GB. Los MacBook usan memoria unificada, así que toda su RAM sirve para IA.",
+    "consejo": "Para IA en serio, busca RTX 5080 (16 GB) o un MacBook con 24 GB o más. Con 8 GB mueves modelos de 8B y poco más. Y siempre puedes añadir después una GPU externa.",
+    "items": [
+      {
+        "id": "port1",
+        "nombre": "HyperX OMEN MAX 16 con RTX 5080",
+        "asin": "B0H2W8NDGF",
+        "nota": "RTX 5080 de portátil con 16 GB de VRAM: el mínimo cómodo para IA."
+      },
+      {
+        "id": "port2",
+        "nombre": "Lenovo Legion Pro 7 con RTX 5080",
+        "asin": "B0HC7QR1GG",
+        "nota": "Gama alta de Lenovo con RTX 5080."
+      },
+      {
+        "id": "port3",
+        "nombre": "Lenovo Legion Pro 5 con RTX 5070 y 32 GB",
+        "asin": "B0HBXDLZVQ",
+        "nota": "RTX 5070 de portátil (8 GB): modelos de hasta 8B con soltura."
+      },
+      {
+        "id": "port4",
+        "nombre": "Lenovo Legion 5 con RTX 5060 y 32 GB",
+        "asin": "B0HM9JQJR4",
+        "nota": "Más barato, con 8 GB de VRAM para empezar."
+      },
+      {
+        "id": "port5",
+        "nombre": "Acer Nitro V 15 con RTX 5060",
+        "asin": "B0F1918M68",
+        "nota": "De los portátiles con RTX más baratos y con valoraciones."
+      },
+      {
+        "id": "port6",
+        "nombre": "Apple MacBook Air 13 M5",
+        "asin": "B0GR1SB84G",
+        "nota": "El portátil más vendido de Amazon. Silencioso y con memoria unificada."
+      },
+      {
+        "id": "port7",
+        "nombre": "Apple MacBook Air 15 M5",
+        "asin": "B0GR1QGFN5",
+        "nota": "La versión de 15 pulgadas."
+      }
+    ]
+  }
+]

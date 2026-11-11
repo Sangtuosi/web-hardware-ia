@@ -303,3 +303,9 @@ table.modelos tr.no td { opacity: 0.5; }
 .cookies[hidden] { display: none; }
 .cookies a { color: var(--copper-hi); }
 .cookies-btns { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+/* Componentes y venta cruzada */
+.item h2, .item h3 { font-size: 20px; }
+.item h2 a { text-decoration: none; }
+.item h2 a:hover { color: var(--copper-hi); }
+.item .btn { justify-self: start; margin-top: auto; }
+.lista.enlaces a { color: var(--copper-hi); }
