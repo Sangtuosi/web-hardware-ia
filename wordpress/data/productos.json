@@ -609,6 +609,35 @@
     "revisado": "2026-11-11"
   },
   {
+    "slug": "gmktec-evo-x2-64gb",
+    "nombre": "GMKtec EVO-X2 Ryzen AI Max+ 395 (64 GB)",
+    "marca": "GMKtec",
+    "tipo": "mini-pc",
+    "categorias": [],
+    "asin": "B0GT94KWJR",
+    "vram": 64,
+    "memoria": "LPDDR5X unificada",
+    "anchoBanda": 256,
+    "consumo": 140,
+    "fuente": 0,
+    "ecosistema": "ROCm",
+    "lanzamiento": 2025,
+    "gama": "media",
+    "resumen": "El mini PC para IA con 64 GB de memoria unificada más vendido en Amazon: mitad de memoria que el de 128 GB y casi mitad de precio.",
+    "pros": [
+      "64 GB unificados: modelos de 32B a buena calidad y de 70B muy cuantizados",
+      "Mucho más barato que la versión de 128 GB",
+      "Pequeño, silencioso y con un consumo muy bajo para lo que carga"
+    ],
+    "loQueNo": [
+      "Llama 3.3 70B en Q4 va muy justo: para eso mejor el de 128 GB",
+      "Ancho de banda de 256 GB/s: carga modelos grandes, pero responde despacio",
+      "La memoria va soldada: no se puede ampliar después"
+    ],
+    "paraQuien": "Para quien quiere modelos de texto de hasta 32B en un equipo pequeño sin pagar los 128 GB.",
+    "revisado": "2026-11-11"
+  },
+  {
     "slug": "mini-pc-ryzen-ai-max-395",
     "nombre": "Mini PC AMD Ryzen AI Max+ 395 (128 GB)",
     "marca": "AMD",
