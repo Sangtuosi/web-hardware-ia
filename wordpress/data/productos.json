@@ -551,32 +551,32 @@
     "revisado": "2026-11-11"
   },
   {
-    "slug": "apple-mac-studio-m3-ultra",
-    "nombre": "Apple Mac Studio M3 Ultra",
+    "slug": "apple-mac-studio-m5-max",
+    "nombre": "Apple Mac Studio M5 Max",
     "marca": "Apple",
     "tipo": "mac",
     "categorias": [],
-    "asin": "",
-    "vram": 512,
+    "asin": "B0HGRR77MB",
+    "vram": 36,
     "memoria": "Unificada",
-    "anchoBanda": 819,
-    "consumo": 270,
+    "anchoBanda": 460,
+    "consumo": 480,
     "fuente": 0,
     "ecosistema": "Metal",
-    "lanzamiento": 2025,
+    "lanzamiento": 2026,
     "gama": "alta",
-    "resumen": "Hasta 512 GB unificados: corre modelos que ninguna gráfica de consumo mueve.",
+    "resumen": "El Mac de sobremesa para IA en serio: 36 GB de memoria unificada y un ancho de banda que triplica al del Mac mini.",
     "pros": [
-      "Hasta 512 GB: DeepSeek y Qwen gigantes en local",
-      "819 GB/s: rápido incluso con modelos grandes",
-      "Silencioso y muy eficiente"
+      "36 GB unificados de serie: modelos de 32B en Q4 caben enteros",
+      "460 GB/s de ancho de banda: mucho más rápido que un Mac mini",
+      "Silencioso incluso trabajando horas, y listo para MLX, Ollama y LM Studio"
     ],
     "loQueNo": [
-      "Precio muy alto en las configuraciones de mucha memoria",
-      "Sin CUDA: la generación de imagen y vídeo es más lenta que en NVIDIA",
-      "No se puede ampliar: la memoria se elige al comprar"
+      "Con 36 GB, Llama 3.3 70B no cabe: para eso hay que configurar 64 o 128 GB al comprar",
+      "La memoria no se amplía después",
+      "Sin CUDA: parte del software de imagen, vídeo y entrenamiento no funciona o va peor"
     ],
-    "paraQuien": "Para quien necesita modelos enormes en local y prefiere silencio a montar un PC.",
+    "paraQuien": "Para quien quiere un equipo silencioso y sin montaje para modelos de texto de hasta 32B, programación asistida y uso profesional diario.",
     "revisado": "2026-11-11"
   },
   {
