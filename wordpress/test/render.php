@@ -26,7 +26,7 @@ ok(str_contains(inf_amazon_url(['asin' => 'B000TEST01', 'nombre' => 'x']), '/dp/
 $out = $argv[1] ?? sys_get_temp_dir() . '/inferium-out';
 $pags = [['proximamente', '', '/'], ['inicio', '', '/inicio/'], ['catalogo', '', '/hardware/'], ['comparador', '', '/comparador/'], ['calculadora', '', '/calculadora-vram/'], ['como-elegimos', '', '/como-elegimos/'], ['aviso', '', '/aviso-afiliacion/']];
 foreach (inf_categorias() as $c) $pags[] = ['categoria', $c['slug'], '/' . $c['slug'] . '/'];
-foreach (inf_productos() as $p) $pags[] = ['ficha', $p['slug'], '/hardware/' . $p['slug'] . '/'];
+foreach (inf_productos() as $p) $pags[] = ['ficha', $p['slug'], inf_ficha_path($p)];
 foreach ($pags as [$l, $s, $path]) {
     $pag = inf_pagina($l, $s);
     ok($pag !== null, "pagina $l $s");
@@ -35,5 +35,8 @@ foreach ($pags as [$l, $s, $path]) {
     @mkdir($out . $path, 0777, true);
     file_put_contents($out . $path . 'index.html', $html);
 }
+ok(inf_ficha_path(inf_producto('nvidia-rtx-5090')) === '/tarjetas-graficas/nvidia-rtx-5090/', 'ruta por tipo');
+ok(count(inf_de_categoria(inf_categoria('tarjetas-graficas'))) === 9, '9 GPU');
+foreach (inf_categorias() as $c) ok(count(inf_de_categoria($c)) > 0, 'categoria vacia ' . $c['slug']);
 echo count($pags) . " paginas, $fallos fallos\n";
 exit($fallos ? 1 : 0);

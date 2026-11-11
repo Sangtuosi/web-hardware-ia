@@ -4,7 +4,9 @@
     "nombre": "NVIDIA GeForce RTX 5090",
     "marca": "NVIDIA",
     "tipo": "grafica",
-    "categorias": ["graficas-para-ia", "graficas-para-stable-diffusion"],
+    "categorias": [
+      "gpu-para-stable-diffusion"
+    ],
     "asin": "",
     "vram": 32,
     "memoria": "GDDR7",
@@ -33,7 +35,9 @@
     "nombre": "NVIDIA GeForce RTX 5080",
     "marca": "NVIDIA",
     "tipo": "grafica",
-    "categorias": ["graficas-para-ia", "graficas-para-stable-diffusion"],
+    "categorias": [
+      "gpu-para-stable-diffusion"
+    ],
     "asin": "",
     "vram": 16,
     "memoria": "GDDR7",
@@ -62,7 +66,10 @@
     "nombre": "NVIDIA GeForce RTX 5070 Ti",
     "marca": "NVIDIA",
     "tipo": "grafica",
-    "categorias": ["graficas-para-ia", "graficas-para-stable-diffusion", "graficas-ia-baratas"],
+    "categorias": [
+      "gpu-para-stable-diffusion",
+      "gpu-baratas-para-ia"
+    ],
     "asin": "",
     "vram": 16,
     "memoria": "GDDR7",
@@ -90,7 +97,10 @@
     "nombre": "NVIDIA GeForce RTX 5060 Ti 16 GB",
     "marca": "NVIDIA",
     "tipo": "grafica",
-    "categorias": ["graficas-ia-baratas", "graficas-para-stable-diffusion"],
+    "categorias": [
+      "gpu-baratas-para-ia",
+      "gpu-para-stable-diffusion"
+    ],
     "asin": "",
     "vram": 16,
     "memoria": "GDDR7",
@@ -118,7 +128,9 @@
     "nombre": "NVIDIA GeForce RTX 4090",
     "marca": "NVIDIA",
     "tipo": "grafica",
-    "categorias": ["graficas-para-ia", "graficas-para-stable-diffusion"],
+    "categorias": [
+      "gpu-para-stable-diffusion"
+    ],
     "asin": "",
     "vram": 24,
     "memoria": "GDDR6X",
@@ -146,7 +158,9 @@
     "nombre": "NVIDIA GeForce RTX 3090",
     "marca": "NVIDIA",
     "tipo": "grafica",
-    "categorias": ["graficas-ia-baratas", "graficas-para-ia"],
+    "categorias": [
+      "gpu-baratas-para-ia"
+    ],
     "asin": "",
     "vram": 24,
     "memoria": "GDDR6X",
@@ -175,7 +189,9 @@
     "nombre": "AMD Radeon RX 9070 XT",
     "marca": "AMD",
     "tipo": "grafica",
-    "categorias": ["graficas-ia-baratas", "graficas-para-ia"],
+    "categorias": [
+      "gpu-baratas-para-ia"
+    ],
     "asin": "",
     "vram": 16,
     "memoria": "GDDR6",
@@ -203,7 +219,7 @@
     "nombre": "AMD Radeon RX 7900 XTX",
     "marca": "AMD",
     "tipo": "grafica",
-    "categorias": ["graficas-para-ia"],
+    "categorias": [],
     "asin": "",
     "vram": 24,
     "memoria": "GDDR6",
@@ -230,7 +246,9 @@
     "nombre": "Intel Arc B580",
     "marca": "Intel",
     "tipo": "grafica",
-    "categorias": ["graficas-ia-baratas"],
+    "categorias": [
+      "gpu-baratas-para-ia"
+    ],
     "asin": "",
     "vram": 12,
     "memoria": "GDDR6",
@@ -257,7 +275,7 @@
     "nombre": "NVIDIA DGX Spark",
     "marca": "NVIDIA",
     "tipo": "mini-pc",
-    "categorias": ["mini-pc-ia"],
+    "categorias": [],
     "asin": "",
     "vram": 128,
     "memoria": "LPDDR5X unificada",
@@ -286,7 +304,7 @@
     "nombre": "Mini PC AMD Ryzen AI Max+ 395 (128 GB)",
     "marca": "AMD",
     "tipo": "mini-pc",
-    "categorias": ["mini-pc-ia"],
+    "categorias": [],
     "asin": "",
     "vram": 128,
     "memoria": "LPDDR5X unificada",
@@ -315,7 +333,7 @@
     "nombre": "Apple Mac Studio M3 Ultra",
     "marca": "Apple",
     "tipo": "mac",
-    "categorias": ["mac-para-ia"],
+    "categorias": [],
     "asin": "",
     "vram": 512,
     "memoria": "Unificada",
@@ -344,7 +362,7 @@
     "nombre": "Apple Mac mini M4 Pro (64 GB)",
     "marca": "Apple",
     "tipo": "mac",
-    "categorias": ["mac-para-ia", "mini-pc-ia"],
+    "categorias": [],
     "asin": "",
     "vram": 64,
     "memoria": "Unificada",
@@ -372,7 +390,7 @@
     "nombre": "NVIDIA Jetson Orin Nano Super",
     "marca": "NVIDIA",
     "tipo": "edge",
-    "categorias": ["edge-ai"],
+    "categorias": [],
     "asin": "",
     "vram": 8,
     "memoria": "LPDDR5 unificada",

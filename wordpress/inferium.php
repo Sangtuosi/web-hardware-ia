@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) { exit; }
 
 const INF_NOMBRE = 'Inferium';
 const INF_AUTOR = 'Ernesto Santos';
-const INF_VERSION = '1.0.0';
+const INF_VERSION = '1.1.0';
 const INF_REL = 'sponsored nofollow noopener';
 
 /* ---------- Datos ---------- */
@@ -33,6 +33,14 @@ function inf_categorias() { return inf_datos('categorias'); }
 function inf_modelos() { return inf_datos('modelos'); }
 function inf_producto($slug) { foreach (inf_productos() as $p) { if ($p['slug'] === $slug) return $p; } return null; }
 function inf_categoria($slug) { foreach (inf_categorias() as $c) { if ($c['slug'] === $slug) return $c; } return null; }
+
+/** Categoría de tipo (tarjetas-graficas, mini-pc, mac, placas-ia) a la que pertenece un producto: es su carpeta en la URL. */
+function inf_cat_tipo($p) { foreach (inf_categorias() as $c) { if (($c['tipo'] ?? '') === $p['tipo']) return $c; } return null; }
+/** Ruta de la ficha: /<tipo>/<producto>/, por ejemplo /tarjetas-graficas/nvidia-rtx-5090/. */
+function inf_ficha_path($p) { $c = inf_cat_tipo($p); return '/' . ($c ? $c['slug'] : 'hardware') . '/' . $p['slug'] . '/'; }
+/** Una categoría de tipo agrupa todos los productos de ese tipo; una de uso, los que la llevan en `categorias`. */
+function inf_en_categoria($p, $c) { return !empty($c['tipo']) ? $p['tipo'] === $c['tipo'] : in_array($c['slug'], $p['categorias'], true); }
+function inf_de_categoria($c) { return array_values(array_filter(inf_productos(), fn($p) => inf_en_categoria($p, $c))); }
 
 /* ---------- Enlaces ---------- */
 
@@ -110,7 +118,7 @@ function inf_schema_faq($faq) {
 }
 function inf_schema_lista($productos) {
     $items = [];
-    foreach (array_values($productos) as $i => $p) $items[] = ['@type' => 'ListItem', 'position' => $i + 1, 'url' => home_url('/hardware/' . $p['slug'] . '/'), 'name' => $p['nombre']];
+    foreach (array_values($productos) as $i => $p) $items[] = ['@type' => 'ListItem', 'position' => $i + 1, 'url' => home_url(inf_ficha_path($p)), 'name' => $p['nombre']];
     return ['@context' => 'https://schema.org', '@type' => 'ItemList', 'itemListElement' => $items];
 }
 
@@ -144,7 +152,7 @@ function inf_chip_art($p, $grande = false) {
 }
 
 function inf_card($p, $pos = 0) {
-    $url = esc_url(inf_url('/hardware/' . $p['slug'] . '/'));
+    $url = esc_url(inf_url(inf_ficha_path($p)));
     $mayor = inf_mayor_modelo($p);
     $lv = log($p['vram'] / 4, 2) / log(128, 2) * 100;
     $h = '<article class="card surface reveal"><div class="top">' . ($pos ? '<span class="pos copper-text">' . sprintf('%02d', $pos) . '</span>' : '<span></span>')
@@ -187,8 +195,8 @@ function inf_faq($faq, $titulo = 'Preguntas frecuentes') {
 
 function inf_calc() {
     $pasos = [8, 12, 16, 24, 32, 48, 64, 128, 192, 512]; $ini = 3;
-    $prods = array_map(fn($p) => ['slug' => $p['slug'], 'nombre' => $p['nombre'], 'vram' => $p['vram'], 'anchoBanda' => $p['anchoBanda']], inf_productos());
-    $h = '<div class="calc" data-calc data-base="' . esc_url(inf_url('/hardware/')) . '"><div class="panel surface"><p class="eyebrow">Memoria de tu GPU</p>'
+    $prods = array_map(fn($p) => ['url' => inf_url(inf_ficha_path($p)), 'nombre' => $p['nombre'], 'vram' => $p['vram'], 'anchoBanda' => $p['anchoBanda']], inf_productos());
+    $h = '<div class="calc" data-calc><div class="panel surface"><p class="eyebrow">Memoria de tu GPU</p>'
         . '<output class="vram-big"><span data-v>' . $pasos[$ini] . '</span><small>GB</small></output>'
         . '<label class="sr-only" for="vram-range">VRAM disponible</label><div class="slider well"><input id="vram-range" type="range" min="0" max="' . (count($pasos) - 1) . '" step="1" value="' . $ini . '" data-range></div>'
         . '<div class="ticks mono"><span>8</span><span>24</span><span>64</span><span>192</span><span>512</span></div>'
@@ -206,7 +214,7 @@ function inf_calc() {
 /* ---------- Documento ---------- */
 
 function inf_nav() {
-    return [['/graficas-para-ia/', 'Gráficas IA'], ['/mini-pc-ia/', 'Mini PCs'], ['/mac-para-ia/', 'Mac'], ['/comparador/', 'Comparador'], ['/calculadora-vram/', 'Calculadora VRAM']];
+    return [['/tarjetas-graficas/', 'GPU para IA'], ['/mini-pc/', 'Mini PCs'], ['/mac/', 'Mac'], ['/comparador/', 'Comparador'], ['/calculadora-vram/', 'Calculadora VRAM']];
 }
 
 function inf_documento($a) {
@@ -251,19 +259,19 @@ function inf_pag_inicio() {
     usort($prods, fn($a, $b) => inf_nota($b) <=> inf_nota($a));
     $dest = array_slice($prods, 0, 6);
     $faq = [
-        ['¿Qué es lo más importante en una gráfica para IA?', 'La VRAM: decide qué modelos caben. Después, el ancho de banda de memoria, que marca cuántos tokens por segundo genera. Los FPS en juegos no dicen nada sobre IA.'],
+        ['¿Qué es lo más importante en una GPU para IA?', 'La VRAM: decide qué modelos caben. Después, el ancho de banda de memoria, que marca cuántos tokens por segundo genera. Los FPS en juegos no dicen nada sobre IA.'],
         ['¿Por qué no mostráis precios?', 'Porque en Amazon cambian varias veces al día. Preferimos llevarte al precio real en Amazon antes que enseñarte uno viejo.'],
         ['¿Cómo gana dinero ' . INF_NOMBRE . '?', 'Con enlaces de afiliado de Amazon: si compras desde ellos, Amazon nos paga una pequeña comisión sin que tú pagues más. No cobramos a marcas por aparecer.'],
         ['¿De dónde salen los tokens por segundo?', 'Son una estimación propia a partir del ancho de banda y el tamaño del modelo, no un benchmark. La fórmula está publicada en "Cómo elegimos".'],
     ];
     $b = '<header class="hero"><canvas id="die" aria-hidden="true"></canvas><div class="wrap hero-in">'
         . '<h1><span class="neon">Corre la IA</span> en tu propia máquina</h1>'
-        . '<p class="lede">Gráficas, mini PCs y Mac elegidos por lo que importa para la IA: <strong>VRAM, ancho de banda y qué modelo te cabe</strong>. Nada de FPS en juegos.</p>'
-        . '<div class="ctas"><a class="btn btn-copper" href="' . esc_url(inf_url('/calculadora-vram/')) . '">¿Qué modelo cabe en mi GPU?</a><a class="btn" href="' . esc_url(inf_url('/comparador/')) . '">Comparar gráficas</a></div>'
+        . '<p class="lede">GPU, mini PCs y Mac elegidos por lo que importa para la IA: <strong>VRAM, ancho de banda y qué modelo te cabe</strong>. Nada de FPS en juegos.</p>'
+        . '<div class="ctas"><a class="btn btn-copper" href="' . esc_url(inf_url('/calculadora-vram/')) . '">¿Qué modelo cabe en mi GPU?</a><a class="btn" href="' . esc_url(inf_url('/comparador/')) . '">Comparar GPU</a></div>'
         . '</div></header><main>';
     $b .= '<section class="block"><div class="wrap"><div class="sec-head"><h2>Elige por lo que quieres hacer</h2></div><div class="cats">';
     foreach (inf_categorias() as $i => $c) {
-        $n = count(array_filter(inf_productos(), fn($p) => in_array($c['slug'], $p['categorias'], true)));
+        $n = count(inf_de_categoria($c));
         $b .= '<a class="cat surface reveal' . ($i === 0 ? ' cat-principal' : '') . '" href="' . esc_url(inf_url('/' . $c['slug'] . '/')) . '"><h3>' . inf_e($c['nombre']) . '</h3><p class="muted">' . inf_e(explode('. ', $c['intro'])[0]) . '.</p><span class="cuenta mono">' . $n . ' equipos</span></a>';
     }
     $b .= '</div></div></section>';
@@ -279,8 +287,8 @@ function inf_pag_inicio() {
         . '<li><div><b>Revisa "lo que no".</b> Cada ficha te dice qué no hace bien: fuente necesaria, tamaño, software. Léelo antes de comprar.</div></li>'
         . '</ol></div>' . inf_faq($faq) . '</div></section></main>';
     return [
-        'title' => INF_NOMBRE . ' | Tarjetas gráficas y ordenadores para IA local',
-        'description' => 'Comparativa de tarjetas gráficas, mini PCs y Mac para IA local: VRAM, ancho de banda, modelos que caben y lo que no te cuentan. Calculadora de VRAM y comparador.',
+        'title' => INF_NOMBRE . ' | GPU, tarjetas gráficas y ordenadores para IA local',
+        'description' => 'Comparativa de GPU (tarjetas gráficas), mini PCs y Mac para IA local: VRAM, ancho de banda, modelos que caben y lo que no te cuentan. Calculadora de VRAM y comparador.',
         'path' => '/', 'clase' => 'p-inicio', 'body' => $b,
         'schema' => [['@context' => 'https://schema.org', '@type' => 'WebSite', 'name' => INF_NOMBRE, 'url' => home_url('/'), 'inLanguage' => 'es-ES'], inf_schema_lista($dest), inf_schema_faq($faq)],
     ];
@@ -289,7 +297,7 @@ function inf_pag_inicio() {
 function inf_pag_categoria($slug) {
     $cat = inf_categoria($slug);
     if (!$cat) return null;
-    $lista = array_values(array_filter(inf_productos(), fn($p) => in_array($slug, $p['categorias'], true)));
+    $lista = inf_de_categoria($cat);
     usort($lista, fn($a, $b) => [$b['vram'], $b['anchoBanda']] <=> [$a['vram'], $a['anchoBanda']]);
     $migas = [['/', 'Inicio'], ["/$slug/", $cat['nombre']]];
     $rev = max(array_column($lista, 'revisado'));
@@ -317,11 +325,11 @@ function inf_pag_catalogo() {
 function inf_pag_ficha($slug) {
     $p = inf_producto($slug);
     if (!$p) return null;
-    $cat = inf_categoria($p['categorias'][0]);
-    $path = "/hardware/$slug/";
+    $cat = inf_cat_tipo($p);
+    $path = inf_ficha_path($p);
     $migas = [['/', 'Inicio'], ['/' . $cat['slug'] . '/', $cat['nombre']], [$path, $p['nombre']]];
     $radar = inf_puntuaciones($p); $nota = inf_nota($p);
-    $tipo = ['grafica' => 'Tarjeta gráfica', 'mini-pc' => 'Mini PC', 'mac' => 'Mac', 'edge' => 'Placa de IA'][$p['tipo']] ?? 'Equipo';
+    $tipo = ['grafica' => 'Tarjeta gráfica (GPU)', 'mini-pc' => 'Mini PC', 'mac' => 'Mac', 'edge' => 'Placa de IA'][$p['tipo']] ?? 'Equipo';
     $b = '<main class="wrap"><div class="migas-top">' . inf_migas($migas) . '</div><section class="ficha"><div class="visual">' . inf_chip_art($p, true) . '</div><div class="datos">'
         . '<span class="badge badge-copper">' . $tipo . ', ' . inf_e($p['ecosistema']) . '</span><h1>' . inf_e($p['nombre']) . '</h1><p class="resumen">' . inf_e($p['resumen']) . '</p>'
         . '<div class="estrella surface"><div><span class="eyebrow">Memoria para IA</span><div class="gb"><b>' . (int) $p['vram'] . '</b><span>GB ' . inf_e($p['memoria']) . '</span></div></div><div class="nota"><span class="eyebrow">Nota IA</span><b class="copper-text">' . $nota . '</b></div></div>'
@@ -342,12 +350,12 @@ function inf_pag_ficha($slug) {
         . '<div><dt>Ancho de banda</dt><dd>' . (int) $p['anchoBanda'] . ' GB/s</dd></div><div><dt>Consumo</dt><dd>' . (int) $p['consumo'] . ' W' . ($p['tipo'] !== 'grafica' ? ' (equipo completo)' : '') . '</dd></div>'
         . ($p['fuente'] > 0 ? '<div><dt>Fuente recomendada</dt><dd>' . (int) $p['fuente'] . ' W</dd></div>' : '')
         . '<div><dt>Software de IA</dt><dd>' . inf_e($p['ecosistema']) . '</dd></div><div><dt>Lanzamiento</dt><dd>' . (int) $p['lanzamiento'] . '</dd></div><div><dt>Datos revisados</dt><dd>' . inf_fecha($p['revisado']) . '</dd></div></dl></section>';
-    $rel = array_slice(array_values(array_filter(inf_productos(), fn($x) => $x['slug'] !== $slug && array_intersect($x['categorias'], $p['categorias']))), 0, 3);
+    $rel = array_slice(array_values(array_filter(inf_productos(), fn($x) => $x['slug'] !== $slug && $x['tipo'] === $p['tipo'])), 0, 3);
     if ($rel) { $b .= '<section class="block"><div class="sec-head"><h2>Si no te encaja, mira estos</h2></div><div class="grid-cards">'; foreach ($rel as $r) $b .= inf_card($r); $b .= '</div></section>'; }
     $b .= '<p class="mini muted">Enlace de afiliado de Amazon: si compras desde él recibimos una comisión sin coste para ti. Datos revisados el ' . inf_fecha($p['revisado']) . '.</p></main>';
     $prod = ['@context' => 'https://schema.org', '@type' => 'Product', 'name' => $p['nombre'], 'brand' => ['@type' => 'Brand', 'name' => $p['marca']], 'description' => $p['resumen'], 'url' => home_url($path),
         'review' => ['@type' => 'Review', 'author' => ['@type' => 'Person', 'name' => INF_AUTOR], 'datePublished' => $p['revisado'], 'reviewBody' => $p['paraQuien'], 'reviewRating' => ['@type' => 'Rating', 'ratingValue' => $nota, 'bestRating' => 100, 'worstRating' => 0]]];
-    return ['title' => $p['nombre'] . ': ficha para IA, VRAM y modelos que caben | ' . INF_NOMBRE,
+    return ['title' => $p['nombre'] . ($p['tipo'] === 'grafica' ? ': GPU para IA, VRAM y modelos que caben | ' : ': ficha para IA, memoria y modelos que caben | ') . INF_NOMBRE,
         'description' => $p['nombre'] . ' para IA local: ' . $p['vram'] . ' GB de ' . $p['memoria'] . ', ' . $p['anchoBanda'] . ' GB/s. Qué modelos caben, tokens por segundo estimados y lo que no hace bien.',
         'path' => $path, 'clase' => 'p-ficha', 'og' => 'product', 'body' => $b, 'schema' => [inf_schema_migas($migas), $prod]];
 }
@@ -360,14 +368,14 @@ function inf_pag_comparador() {
     $datos = [];
     foreach (inf_productos() as $p) {
         $t = inf_tokens($p, $llama8); $may = inf_mayor_modelo($p);
-        $datos[] = ['slug' => $p['slug'], 'nombre' => $p['nombre'], 'url' => inf_amazon_url($p), 'ficha' => inf_url('/hardware/' . $p['slug'] . '/'), 'celdas' => [
+        $datos[] = ['slug' => $p['slug'], 'nombre' => $p['nombre'], 'url' => inf_amazon_url($p), 'ficha' => inf_url(inf_ficha_path($p)), 'celdas' => [
             ['n' => $p['vram'], 't' => $p['vram'] . ' GB'], ['n' => null, 't' => $p['memoria']], ['n' => $p['anchoBanda'], 't' => $p['anchoBanda'] . ' GB/s'],
             ['n' => $t ?? 0, 't' => $t ? '≈ ' . $t : 'no cabe'], ['n' => $nmod($p), 't' => $may ? $may['nombre'] : 'ninguno'],
             ['n' => $p['consumo'], 't' => $p['consumo'] . ' W'], ['n' => null, 't' => $p['ecosistema']], ['n' => null, 't' => $p['fuente'] ? $p['fuente'] . ' W' : 'Incluida'], ['n' => inf_nota($p), 't' => (string) inf_nota($p)],
         ]];
     }
     $ini = ['nvidia-rtx-5090', 'nvidia-rtx-4090', 'amd-radeon-rx-7900-xtx', 'mini-pc-ryzen-ai-max-395'];
-    $b = '<main class="wrap"><section class="cabecera">' . inf_migas($migas) . '<h1>Comparador de hardware para IA</h1><p class="muted intro">Elige hasta cuatro. En cobre, el mejor valor de cada fila.</p></section><div class="selectores">';
+    $b = '<main class="wrap"><section class="cabecera">' . inf_migas($migas) . '<h1>Comparador de GPU y hardware para IA</h1><p class="muted intro">Elige hasta cuatro. En cobre, el mejor valor de cada fila.</p></section><div class="selectores">';
     for ($i = 0; $i < 4; $i++) {
         $b .= '<label class="well sel"><span class="sr-only">Equipo ' . ($i + 1) . '</span><select data-sel="' . $i . '"><option value="">Ninguno</option>';
         foreach (inf_productos() as $p) $b .= '<option value="' . esc_attr($p['slug']) . '"' . ($p['slug'] === $ini[$i] ? ' selected' : '') . '>' . inf_e($p['nombre']) . '</option>';
@@ -379,7 +387,7 @@ function inf_pag_comparador() {
         . '<noscript><p class="muted">El comparador necesita JavaScript. Puedes ver todas las fichas desde las categorías.</p></noscript>'
         . '<p class="muted mini">Tokens/s: estimación propia a partir del ancho de banda (ver <a href="' . esc_url(inf_url('/como-elegimos/')) . '">Cómo elegimos</a>). Enlaces de afiliado de Amazon.</p>'
         . '<script type="application/json" data-comparador>' . wp_json_encode(['datos' => $datos, 'meta' => $meta, 'rel' => INF_REL]) . '</script></main>';
-    return ['title' => 'Comparador de tarjetas gráficas para IA | ' . INF_NOMBRE, 'description' => 'Compara hasta 4 tarjetas gráficas, mini PCs o Mac para IA: VRAM, ancho de banda, tokens por segundo estimados, consumo y modelo más grande que cabe.',
+    return ['title' => 'Comparador de GPU y tarjetas gráficas para IA | ' . INF_NOMBRE, 'description' => 'Compara hasta 4 GPU (tarjetas gráficas), mini PCs o Mac para IA: VRAM, ancho de banda, tokens por segundo estimados, consumo y modelo más grande que cabe.',
         'path' => '/comparador/', 'clase' => 'p-comparador', 'body' => $b, 'schema' => [inf_schema_migas($migas)]];
 }
 
@@ -396,7 +404,7 @@ function inf_pag_calculadora() {
         . '<p>Un modelo ocupa, en GB, sus miles de millones de parámetros multiplicados por los bits de cada peso y divididos entre 8. A eso le sumamos un 20 % para el contexto de la conversación (la caché KV) y el resto de la memoria que usa el programa.</p>'
         . '<p>Ejemplo: Qwen 2.5 32B en Q4 (unos 4,5 bits reales) ocupa 32 × 4,5 ÷ 8 = 18 GB de pesos, más un 20 %: unos 21,6 GB. Cabe en una gráfica de 24 GB, no en una de 16.</p>'
         . '<p>Para los modelos de imagen usamos el consumo típico: SDXL va bien en 8 GB y Flux.1 dev en FP8 pide 16 GB.</p></section>' . inf_faq($faq) . '</main>';
-    return ['title' => 'Calculadora de VRAM: ¿qué modelo de IA cabe en mi GPU? | ' . INF_NOMBRE, 'description' => 'Calcula qué modelos de IA (Llama, Qwen, DeepSeek, Flux, SDXL) caben en la VRAM de tu tarjeta gráfica según la cuantización, y qué gráfica necesitas.',
+    return ['title' => 'Calculadora de VRAM: ¿qué modelo de IA cabe en mi GPU? | ' . INF_NOMBRE, 'description' => 'Calcula qué modelos de IA (Llama, Qwen, DeepSeek, Flux, SDXL) caben en la VRAM de tu GPU según la cuantización, y qué tarjeta gráfica necesitas.',
         'path' => '/calculadora-vram/', 'clase' => 'p-calculadora', 'body' => $b,
         'schema' => [inf_schema_migas($migas), inf_schema_faq($faq), ['@context' => 'https://schema.org', '@type' => 'WebApplication', 'name' => 'Calculadora de VRAM', 'applicationCategory' => 'UtilityApplication', 'operatingSystem' => 'Web', 'offers' => ['@type' => 'Offer', 'price' => 0, 'priceCurrency' => 'EUR']]]];
 }

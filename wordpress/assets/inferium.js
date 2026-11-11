@@ -58,7 +58,7 @@
         $('.meter i', el).style.setProperty('--w', Math.min(100, n / v * 100) + '%');
       });
       var r = d.productos.filter(function (p) { return p.vram >= v; }).sort(function (a, b) { return a.vram - b.vram || b.anchoBanda - a.anchoBanda; })[0];
-      reco.innerHTML = 'Con ' + v + ' GB corres <b>' + caben + ' de ' + d.modelos.length + '</b> modelos.' + (r ? ' El equipo más ajustado con esa memoria: <a href="' + root.dataset.base + r.slug + '/">' + esc(r.nombre) + '</a>.' : '');
+      reco.innerHTML = 'Con ' + v + ' GB corres <b>' + caben + ' de ' + d.modelos.length + '</b> modelos.' + (r ? ' El equipo más ajustado con esa memoria: <a href="' + r.url + '">' + esc(r.nombre) + '</a>.' : '');
     }
     range.addEventListener('input', pinta);
     $$('[data-bits]', root).forEach(function (b) {
