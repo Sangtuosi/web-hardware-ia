@@ -311,7 +311,8 @@
     "marca": "NVIDIA",
     "tipo": "grafica",
     "categorias": [
-      "gpu-para-stable-diffusion"
+      "gpu-para-stable-diffusion",
+      "gpu-profesionales-para-ia"
     ],
     "asin": "",
     "vram": 32,
@@ -334,6 +335,161 @@
       "Muy grande: comprueba que cabe en tu caja antes de comprar"
     ],
     "paraQuien": "Para quien quiere la máxima velocidad en local con LLM de hasta 32B, Flux o vídeo, y tiene caja y fuente para ella.",
+    "revisado": "2026-11-11"
+  },
+  {
+    "slug": "nvidia-rtx-pro-6000-blackwell",
+    "nombre": "NVIDIA RTX PRO 6000 Blackwell (96 GB)",
+    "marca": "NVIDIA",
+    "tipo": "grafica",
+    "categorias": [
+      "gpu-profesionales-para-ia"
+    ],
+    "asin": "",
+    "vram": 96,
+    "memoria": "GDDR7",
+    "anchoBanda": 1792,
+    "consumo": 600,
+    "fuente": 1000,
+    "ecosistema": "CUDA",
+    "lanzamiento": 2025,
+    "gama": "alta",
+    "resumen": "La GPU profesional más bestia que cabe en un PC: 96 GB de VRAM en una sola tarjeta gráfica.",
+    "pros": [
+      "96 GB de VRAM: Llama 3.3 70B cabe entero y con contexto de sobra",
+      "El mismo ancho de banda que una RTX 5090, con el triple de memoria",
+      "Pensada para trabajar 24 horas: entrenamiento, render 3D y vídeo"
+    ],
+    "loQueNo": [
+      "Cuesta como un coche de segunda mano: solo compensa si le sacas dinero",
+      "Hasta 600 W: pide fuente de 1000 W y una caja bien ventilada",
+      "Para jugar no rinde más que una RTX 5090, que vale mucho menos"
+    ],
+    "paraQuien": "Para estudios, investigadores y profesionales de IA o 3D que necesitan modelos de 70B o entrenar en local sin alquilar servidores.",
+    "revisado": "2026-11-11"
+  },
+  {
+    "slug": "nvidia-rtx-pro-5000-blackwell",
+    "nombre": "NVIDIA RTX PRO 5000 Blackwell (48 GB)",
+    "marca": "NVIDIA",
+    "tipo": "grafica",
+    "categorias": [
+      "gpu-profesionales-para-ia"
+    ],
+    "asin": "",
+    "vram": 48,
+    "memoria": "GDDR7",
+    "anchoBanda": 1344,
+    "consumo": 300,
+    "fuente": 750,
+    "ecosistema": "CUDA",
+    "lanzamiento": 2025,
+    "gama": "alta",
+    "resumen": "El punto dulce de las GPU profesionales: 48 GB de VRAM con solo 300 W.",
+    "pros": [
+      "48 GB de VRAM: modelos de 32B a máxima calidad y 70B muy cuantizados",
+      "Solo 300 W: cabe en una estación de trabajo normal",
+      "Formato de dos ranuras: puedes montar dos en la misma placa"
+    ],
+    "loQueNo": [
+      "Vale bastante más que una RTX 5090, que es más rápida con 32 GB",
+      "Llama 3.3 70B en Q4 no cabe entero: necesitas dos tarjetas",
+      "Ventilador de turbina: más ruidosa que una gráfica de consumo"
+    ],
+    "paraQuien": "Para quien necesita más de 32 GB en una sola tarjeta para LLM grandes, vídeo con IA o render profesional.",
+    "revisado": "2026-11-11"
+  },
+  {
+    "slug": "nvidia-rtx-pro-4500-blackwell",
+    "nombre": "NVIDIA RTX PRO 4500 Blackwell (32 GB)",
+    "marca": "NVIDIA",
+    "tipo": "grafica",
+    "categorias": [
+      "gpu-profesionales-para-ia"
+    ],
+    "asin": "",
+    "vram": 32,
+    "memoria": "GDDR7",
+    "anchoBanda": 896,
+    "consumo": 200,
+    "fuente": 650,
+    "ecosistema": "CUDA",
+    "lanzamiento": 2025,
+    "gama": "alta",
+    "resumen": "Los mismos 32 GB que una RTX 5090 con un tercio del consumo.",
+    "pros": [
+      "32 GB de VRAM con solo 200 W",
+      "Dos ranuras: fácil de combinar en equipos con varias GPU",
+      "Drivers certificados para programas de 3D y CAD"
+    ],
+    "loQueNo": [
+      "La mitad de ancho de banda que una RTX 5090: genera más despacio",
+      "Precio parecido o superior al de la 5090",
+      "Menos disponible en tiendas que las gráficas de consumo"
+    ],
+    "paraQuien": "Para estaciones de trabajo con varias tarjetas o con límite de consumo y de espacio.",
+    "revisado": "2026-11-11"
+  },
+  {
+    "slug": "nvidia-rtx-pro-4000-blackwell",
+    "nombre": "NVIDIA RTX PRO 4000 Blackwell (24 GB)",
+    "marca": "NVIDIA",
+    "tipo": "grafica",
+    "categorias": [
+      "gpu-profesionales-para-ia"
+    ],
+    "asin": "",
+    "vram": 24,
+    "memoria": "GDDR7",
+    "anchoBanda": 672,
+    "consumo": 140,
+    "fuente": 550,
+    "ecosistema": "CUDA",
+    "lanzamiento": 2025,
+    "gama": "alta",
+    "resumen": "24 GB de VRAM en una tarjeta gráfica de una sola ranura y 140 W.",
+    "pros": [
+      "24 GB de VRAM: Qwen 2.5 32B en Q4 cabe",
+      "Una sola ranura y 140 W: entra en casi cualquier equipo",
+      "Ideal para apilar varias en una misma placa"
+    ],
+    "loQueNo": [
+      "Más cara que una RTX 5070 Ti, que es más rápida con 16 GB",
+      "Refrigeración de una ranura: se calienta y suena bajo carga",
+      "No es para jugar: pagas por memoria y certificaciones"
+    ],
+    "paraQuien": "Para quien quiere 24 GB nuevos y con garantía en poco espacio, o montar un equipo con varias GPU.",
+    "revisado": "2026-11-11"
+  },
+  {
+    "slug": "amd-radeon-ai-pro-r9700",
+    "nombre": "AMD Radeon AI PRO R9700 (32 GB)",
+    "marca": "AMD",
+    "tipo": "grafica",
+    "categorias": [
+      "gpu-profesionales-para-ia"
+    ],
+    "asin": "",
+    "vram": 32,
+    "memoria": "GDDR6",
+    "anchoBanda": 640,
+    "consumo": 300,
+    "fuente": 750,
+    "ecosistema": "ROCm",
+    "lanzamiento": 2025,
+    "gama": "alta",
+    "resumen": "Los 32 GB de VRAM más baratos: una GPU profesional de AMD hecha para IA local.",
+    "pros": [
+      "32 GB de VRAM por mucho menos que una RTX 5090",
+      "Dos ranuras con turbina: pensada para montar varias",
+      "Va bien con LLM en Ollama y LM Studio"
+    ],
+    "loQueNo": [
+      "Sin CUDA: imagen, vídeo y entrenamiento dan más trabajo",
+      "Ancho de banda de 640 GB/s: un tercio del de la RTX 5090",
+      "Ruidosa a plena carga por el ventilador de turbina"
+    ],
+    "paraQuien": "Para quien necesita 32 GB para modelos de texto grandes y no quiere pagar el precio de NVIDIA.",
     "revisado": "2026-11-11"
   },
   {

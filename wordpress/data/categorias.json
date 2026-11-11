@@ -108,5 +108,30 @@
       ]
     ],
     "tipo": "edge"
+  },
+  {
+    "slug": "gpu-profesionales-para-ia",
+    "nombre": "GPU profesionales para IA",
+    "titulo": "GPU profesionales para IA: tarjetas gráficas de 24 a 96 GB de VRAM",
+    "descripcion": "Las tarjetas gráficas profesionales para inteligencia artificial, entrenamiento y render 3D: NVIDIA RTX PRO, RTX 5090 y Radeon AI PRO comparadas por VRAM.",
+    "intro": "Son las tarjetas gráficas de 3.000, 5.000 o 10.000 euros que ves en las estaciones de trabajo de IA. Lo que pagas es memoria: con 48 o 96 GB de VRAM corres modelos que en una GPU de consumo no caben, entrenas en local y renderizas escenas 3D enormes. Aquí te decimos cuál compensa y cuándo es tirar el dinero.",
+    "faq": [
+      [
+        "¿Por qué son tan caras las GPU profesionales?",
+        "Por la VRAM y por la demanda. Llevan dos o tres veces más memoria que una gráfica de consumo, y las empresas de IA las compran en cantidad, así que el precio sube."
+      ],
+      [
+        "¿Merece la pena una RTX PRO frente a una RTX 5090?",
+        "Solo si necesitas más de 32 GB en una sola tarjeta, o varias GPU en el mismo equipo. Con 32 GB o menos, la RTX 5090 es más rápida y más barata."
+      ],
+      [
+        "¿Qué GPU necesito para entrenar modelos de IA?",
+        "Para ajustar (fine-tuning) modelos pequeños bastan 24 GB. Para modelos medianos, 48 GB o más. Y siempre NVIDIA, porque casi todo el software de entrenamiento usa CUDA."
+      ],
+      [
+        "¿Sirven estas tarjetas para 3D y render?",
+        "Sí. Blender, Unreal o DaVinci aprovechan la VRAM extra en escenas grandes, y las RTX PRO traen drivers certificados para programas profesionales."
+      ]
+    ]
   }
 ]
