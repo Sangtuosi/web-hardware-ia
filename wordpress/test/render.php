@@ -24,7 +24,7 @@ ok(inf_nota(inf_producto('nvidia-rtx-5090')) === 81, 'nota 5090');
 ok(str_contains(inf_amazon_url(['asin' => 'B000TEST01', 'nombre' => 'x']), '/dp/B000TEST01?tag=PENDIENTE-21'), 'tag en enlace');
 
 $out = $argv[1] ?? sys_get_temp_dir() . '/inferium-out';
-$pags = [['proximamente', '', '/'], ['inicio', '', '/inicio/'], ['catalogo', '', '/hardware/'], ['comparador', '', '/comparador/'], ['calculadora', '', '/calculadora-vram/'], ['como-elegimos', '', '/como-elegimos/'], ['aviso', '', '/aviso-afiliacion/']];
+$pags = [['proximamente', '', '/'], ['inicio', '', '/inicio/'], ['catalogo', '', '/hardware/'], ['comparador', '', '/comparador/'], ['calculadora', '', '/calculadora-vram/'], ['como-elegimos', '', '/como-elegimos/'], ['aviso', '', '/aviso-afiliacion/'], ['cookies', '', '/cookies/']];
 foreach (inf_categorias() as $c) $pags[] = ['categoria', $c['slug'], '/' . $c['slug'] . '/'];
 foreach (inf_productos() as $p) $pags[] = ['ficha', $p['slug'], inf_ficha_path($p)];
 foreach (inf_versus() as $v) $pags[] = ['versus', $v['slug'], '/comparador/' . $v['slug'] . '/'];
@@ -39,5 +39,11 @@ foreach ($pags as [$l, $s, $path]) {
 ok(inf_ficha_path(inf_producto('nvidia-rtx-5090')) === '/tarjetas-graficas/nvidia-rtx-5090/', 'ruta por tipo');
 ok(count(inf_de_categoria(inf_categoria('tarjetas-graficas'))) === 16, '16 GPU');
 foreach (inf_categorias() as $c) ok(count(inf_de_categoria($c)) > 0, 'categoria vacia ' . $c['slug']);
+$GLOBALS['opts'] += ['inferium_gsc' => 'abc_123-XYZ', 'inferium_ga4' => 'G-TEST12345'];
+$pub = inf_documento(inf_pagina('inicio')); $bor = inf_documento(inf_pagina('inicio') + ['borrador' => true]);
+ok(str_contains($pub, 'google-site-verification" content="abc_123-XYZ"') && str_contains($bor, 'google-site-verification'), 'meta search console');
+ok(str_contains($pub, 'G-TEST12345') && str_contains($pub, 'data-cookies-si'), 'analytics con aviso en publicadas');
+ok(!str_contains($bor, 'G-TEST12345'), 'sin analytics en borradores');
+$GLOBALS['opts']['inferium_ga4'] = '"><script>'; ok(!str_contains(inf_documento(inf_pagina('inicio')), 'googletagmanager'), 'ga4 invalido se ignora');
 echo count($pags) . " paginas, $fallos fallos\n";
 exit($fallos ? 1 : 0);

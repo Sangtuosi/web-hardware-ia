@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) { exit; }
 
 const INF_NOMBRE = 'Inferium';
 const INF_AUTOR = 'Ernesto Santos';
-const INF_VERSION = '1.3.0';
+const INF_VERSION = '1.4.0';
 const INF_REL = 'sponsored nofollow noopener';
 
 /* ---------- Datos ---------- */
@@ -235,10 +235,22 @@ function inf_documento($a) {
         . '<link rel="preload" href="' . esc_url(content_url('inferium/assets/fonts/space-grotesk.woff2')) . '" as="font" type="font/woff2" crossorigin>'
         . '<link rel="stylesheet" href="' . esc_url(inf_asset('inferium.css')) . '">'
         . '<script>document.documentElement.classList.add("js")</script>';
+    // Medición: códigos en las opciones inferium_gsc (Search Console) e inferium_ga4 (Analytics). Analytics solo carga con consentimiento y nunca en borradores.
+    $gsc = preg_replace('/[^A-Za-z0-9_-]/', '', (string) get_option('inferium_gsc', ''));
+    $ga4 = (string) get_option('inferium_ga4', ''); if (!preg_match('/^G-[A-Z0-9]{4,}$/', $ga4)) $ga4 = '';
+    if ($gsc) $h .= '<meta name="google-site-verification" content="' . esc_attr($gsc) . '">';
+    $cookies = '';
+    if ($ga4 && !$a['borrador']) {
+        $cookies = '<div class="cookies surface" data-cookies hidden role="dialog" aria-label="Aviso de cookies"><p>Usamos cookies de Google Analytics solo para contar visitas y mejorar la web. <a href="' . esc_url(inf_url('/cookies/')) . '">Más información</a>.</p><div class="cookies-btns"><button class="btn btn-sm" type="button" data-cookies-no>Rechazar</button><button class="btn btn-sm btn-copper" type="button" data-cookies-si>Aceptar</button></div></div>'
+            . '<script>(function(){var K="inf_cookies",id="' . $ga4 . '",b=document.querySelector("[data-cookies]");function get(){try{return localStorage.getItem(K)}catch(e){return null}}function set(v){try{localStorage.setItem(K,v)}catch(e){}}'
+            . 'function ga(){var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id="+id;document.head.appendChild(s);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag("js",new Date());gtag("config",id,{anonymize_ip:true})}'
+            . 'var v=get();if(v==="si")ga();else if(v!=="no"&&b)b.hidden=false;if(b){b.querySelector("[data-cookies-si]").onclick=function(){set("si");b.hidden=true;ga()};b.querySelector("[data-cookies-no]").onclick=function(){set("no");b.hidden=true}}'
+            . 'var r=document.querySelector("[data-cookies-reset]");if(r)r.onclick=function(){try{localStorage.removeItem(K)}catch(e){}location.reload()}})();</script>';
+    }
     foreach (array_merge([$org], $a['schema']) as $s) $h .= '<script type="application/ld+json">' . wp_json_encode($s, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>';
     $h .= '</head><body class="' . esc_attr($a['clase']) . '">';
     if ($a['borrador']) $h .= '<div class="borrador">Borrador: solo lo ves tú con la sesión iniciada. Aún no es público.</div>';
-    if ($a['simple']) return $h . $a['body'] . '<script src="' . esc_url(inf_asset('inferium.js')) . '" defer></script></body></html>';
+    if ($a['simple']) return $h . $a['body'] . $cookies . '<script src="' . esc_url(inf_asset('inferium.js')) . '" defer></script></body></html>';
     $h .= '<header class="topbar"><div class="wrap bar">' . $logo . '<nav aria-label="Principal"><ul class="tabs">';
     foreach (inf_nav() as $n) $h .= '<li><a href="' . esc_url(inf_url($n[0])) . '"' . ($a['path'] === $n[0] ? ' aria-current="page"' : '') . '>' . $n[1] . '</a></li>';
     $h .= '</ul></nav><details class="menu-movil"><summary class="btn btn-sm">Menú</summary><ul class="surface">';
@@ -248,8 +260,8 @@ function inf_documento($a) {
     $h .= '<footer class="pie"><div class="wrap pie-grid"><div>' . $logo . '<p class="muted pie-txt">Hardware para IA local elegido por VRAM, ancho de banda y lo que de verdad cabe. Sin precios copiados: siempre el actual en Amazon.</p></div><div><p class="pie-tit">Categorías</p><ul>';
     foreach (inf_categorias() as $c) $h .= '<li><a href="' . esc_url(inf_url('/' . $c['slug'] . '/')) . '">' . inf_e($c['nombre']) . '</a></li>';
     $h .= '<li><a href="' . esc_url(inf_url('/hardware/')) . '">Todo el catálogo</a></li></ul></div><div><p class="pie-tit">Herramientas</p><ul><li><a href="' . esc_url(inf_url('/comparador/')) . '">Comparador</a></li><li><a href="' . esc_url(inf_url('/calculadora-vram/')) . '">Calculadora de VRAM</a></li></ul>'
-        . '<p class="pie-tit pie-tit2">Confianza</p><ul><li><a href="' . esc_url(inf_url('/como-elegimos/')) . '">Cómo elegimos</a></li><li><a href="' . esc_url(inf_url('/aviso-afiliacion/')) . '">Aviso de afiliación</a></li></ul></div></div>'
-        . '<div class="wrap legal">En calidad de Afiliado de Amazon, ' . INF_NOMBRE . ' obtiene ingresos por las compras adscritas que cumplen los requisitos aplicables. Los precios cambian a diario: consulta siempre el actual en Amazon.</div></footer>'
+        . '<p class="pie-tit pie-tit2">Confianza</p><ul><li><a href="' . esc_url(inf_url('/como-elegimos/')) . '">Cómo elegimos</a></li><li><a href="' . esc_url(inf_url('/aviso-afiliacion/')) . '">Aviso de afiliación</a></li><li><a href="' . esc_url(inf_url('/cookies/')) . '">Privacidad y cookies</a></li></ul></div></div>'
+        . '<div class="wrap legal">En calidad de Afiliado de Amazon, ' . INF_NOMBRE . ' obtiene ingresos por las compras adscritas que cumplen los requisitos aplicables. Los precios cambian a diario: consulta siempre el actual en Amazon.</div></footer>' . $cookies
         . '<script src="' . esc_url(inf_asset('inferium.js')) . '" defer></script></body></html>';
     return $h;
 }
@@ -508,6 +520,15 @@ function inf_pag_texto($layout) {
             . '<h2>Tokens por segundo</h2><p>Al generar texto, cada token obliga a leer todos los pesos de la memoria. Por eso estimamos: tokens/s ≈ ancho de banda × 0,7 ÷ tamaño de los pesos. El 0,7 recoge que ningún equipo aprovecha el 100 % de su ancho de banda. <b>Es una estimación, no un benchmark</b>: cuando tengamos medidas reales lo indicaremos en cada ficha.</p>'
             . '<h2>Lo que no</h2><p>Toda ficha tiene un apartado "Lo que no" con sus limitaciones reales: fuente necesaria, software que no va, versiones con menos memoria y mismo nombre. Si un producto no tiene nada malo que contar, no lo hemos mirado bien.</p>'
             . '<h2>Precios</h2><p>No los copiamos: cambian varias veces al día. Todos los botones llevan al precio actual en Amazon.</p>';
+    } elseif ($layout === 'cookies') {
+        $path = '/cookies/'; $tit = 'Privacidad y cookies';
+        $title = 'Privacidad y cookies | ' . INF_NOMBRE;
+        $desc = 'Qué cookies usa ' . INF_NOMBRE . ', para qué sirven y cómo aceptarlas o rechazarlas.';
+        $txt = '<p>' . INF_NOMBRE . ' no te pide registro ni guarda datos personales tuyos. Solo usamos dos cosas que conviene que conozcas.</p>'
+            . '<h2>Cookies de medición</h2><p>Si las aceptas en el aviso, usamos Google Analytics 4 para saber cuántas visitas tiene cada página y mejorar la web. Si las rechazas, no se carga nada de Google Analytics. Tu elección se guarda en tu navegador.</p>'
+            . '<p><button class="btn btn-sm" type="button" data-cookies-reset>Cambiar mi elección de cookies</button></p>'
+            . '<h2>Enlaces a Amazon</h2><p>Los botones de compra llevan a Amazon.es con nuestro identificador de afiliado. Al llegar allí, Amazon aplica su propia política de privacidad y de cookies.</p>'
+            . '<h2>Responsable</h2><p>El responsable de esta web es ' . INF_AUTOR . '. Puedes ver cómo nos financiamos en el <a href="' . esc_url(inf_url('/aviso-afiliacion/')) . '">aviso de afiliación</a>.</p>';
     } else {
         $path = '/aviso-afiliacion/'; $tit = 'Aviso de afiliación';
         $title = 'Aviso de afiliación | ' . INF_NOMBRE;
@@ -543,7 +564,7 @@ function inf_pagina($layout, $slug = '') {
         case 'comparador': return inf_pag_comparador();
         case 'versus': return inf_pag_versus($slug);
         case 'calculadora': return inf_pag_calculadora();
-        case 'como-elegimos': case 'aviso': return inf_pag_texto($layout);
+        case 'como-elegimos': case 'aviso': case 'cookies': return inf_pag_texto($layout);
     }
     return null;
 }
