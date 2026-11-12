@@ -114,6 +114,12 @@
    [
     "ComfyUI es hoy la herramienta más flexible para trabajar con Stable Diffusion y Flux en local: funciona con nodos y permite flujos de trabajo muy completos. Forge y Automatic1111 tienen una interfaz más sencilla, pensada para empezar. Todos funcionan mejor con tarjetas NVIDIA, y conviene instalarlos en un SSD con espacio, porque los modelos y las imágenes ocupan mucho."
    ]
+  ],
+  [
+   "Generar imágenes con una tarjeta AMD",
+   [
+    "Se puede generar imágenes con una tarjeta AMD, pero cuesta más: algunas extensiones y nodos de ComfyUI están pensados solo para CUDA y hay que buscar alternativas o versiones adaptadas. Si la generación de imágenes es tu uso principal, NVIDIA te ahorra tiempo. Lo comparamos en [NVIDIA o AMD para IA](/guias/nvidia-o-amd-para-ia-cuda-rocm/)."
+   ]
   ]
  ],
  "gpu-profesionales-para-ia": [
@@ -163,6 +169,12 @@
    [
     "Un mini PC ocupa lo que un libro, hace poco ruido y consume mucho menos que un PC con una tarjeta gráfica potente. Eso lo convierte en un buen servidor de IA para casa: puedes dejarlo encendido con Ollama y usarlo desde el portátil o el móvil de toda la familia. Si te interesa este uso, empieza por [qué es Ollama](/guias/que-es-ollama-como-instalarlo-requisitos/)."
    ]
+  ],
+  [
+   "Mini PC para IA o mini PC normal",
+   [
+    "No todos los mini PC sirven para IA. Un mini PC de oficina con gráfica integrada y 16 GB de RAM puede ejecutar modelos muy pequeños, pero despacio. Los que tienen sentido para IA local son los que combinan mucha memoria unificada y un buen ancho de banda, como los Ryzen AI Max+ 395, o los que llevan un chip pensado para IA como el DGX Spark de NVIDIA. La guía [mejor mini PC para IA](/guias/mejor-mini-pc-para-ia/) explica por qué un mini PC barato de oficina no es buena idea para esto."
+   ]
   ]
  ],
  "mac": [
@@ -191,6 +203,12 @@
    [
     "Un Mac gana en silencio, tamaño y consumo, y es muy cómodo para tener un modelo siempre disponible. Un PC con tarjeta gráfica NVIDIA gana en velocidad con modelos que caben en su VRAM y en generación de imágenes, donde el ecosistema CUDA es el estándar. Además, los Mac con chip Apple no admiten tarjetas gráficas externas. Si dudas, compara un Mac con una tarjeta gráfica en el [comparador](/comparador/)."
    ]
+  ],
+  [
+   "Qué Mac elegir según tu uso",
+   [
+    "Si vas a probar modelos de 8B y usar la IA de vez en cuando, un Mac mini M6 de base es suficiente. Si quieres programar con un asistente local o trabajar a diario con modelos de 14B a 24B, el Mac mini M5 Pro con 24 GB es mucho más rápido gracias a su ancho de banda. Y si quieres modelos de 32B o 70B, el Mac Studio con chip Max y mucha memoria es el equipo adecuado. Puedes enfrentar los dos Mac mini en [Mac mini M6 vs Mac mini M5 Pro](/comparador/mac-mini-m6-vs-mac-mini-m5-pro/)."
+   ]
   ]
  ],
  "placas-ia": [
@@ -212,6 +230,32 @@
    "Qué necesitas para empezar",
    [
     "Además de la placa, necesitarás una tarjeta microSD o un SSD para el sistema, una fuente de alimentación adecuada y, según el proyecto, una cámara o un micrófono. NVIDIA ofrece su propio sistema y ejemplos para empezar. Si lo que buscas es chatear con modelos de lenguaje medianos o grandes, una [tarjeta gráfica para IA](/tarjetas-graficas/) o un [Mac](/mac/) te darán mucho más margen."
+   ]
+  ],
+  [
+   "Placa de IA, Raspberry Pi o mini PC",
+   [
+    "Una Raspberry Pi normal puede ejecutar modelos de IA muy pequeños, pero sin aceleración y muy despacio. Una placa Jetson incluye una GPU de NVIDIA con núcleos para IA y el mismo ecosistema CUDA que las tarjetas gráficas de sobremesa, así que puedes usar herramientas y modelos pensados para NVIDIA. Un mini PC con mucha memoria, en cambio, es mejor para modelos de lenguaje medianos, pero consume más y es menos práctico para meterlo en un robot o junto a una cámara.",
+    "Dicho de forma sencilla: la placa de IA es para que un aparato vea, oiga o reaccione por sí solo; el mini PC o la tarjeta gráfica, para chatear con modelos de lenguaje con soltura."
+   ]
+  ],
+  [
+   "Lo que no te cuentan de las placas de IA",
+   [
+    "Trabajar con una placa de IA exige algo más de experiencia que instalar Ollama en un PC: hay que preparar el sistema, conectar sensores y a veces adaptar los modelos para que ocupen poco. A cambio, aprenderás cómo funciona la IA por dentro. Si buscas algo que funcione nada más sacarlo de la caja para conversar con un modelo, empieza mejor por un [mini PC para IA](/mini-pc/)."
+   ]
+  ],
+  [
+   "Ideas de proyectos con una placa de IA",
+   [
+    "Algunos proyectos habituales para empezar: un timbre o una cámara que avisa solo cuando ve a una persona y no cuando pasa un gato, un contador de coches para la entrada de casa, un asistente de voz para la cocina que funciona sin internet, o un robot pequeño que sigue una línea y esquiva obstáculos. Todos se pueden hacer con modelos pequeños de visión o de voz que caben con holgura en la memoria de la placa.",
+    "Si te gusta la electrónica y la programación, una placa de IA es una forma excelente de aprender cómo funciona la IA por dentro, con un coste y un consumo mucho menores que un PC con tarjeta gráfica."
+   ]
+  ],
+  [
+   "Consumo y uso continuo",
+   [
+    "Una de las grandes ventajas de las placas de IA es que pueden estar encendidas todo el año con un gasto eléctrico muy bajo, mucho menor que el de un PC con tarjeta gráfica. Por eso encajan en proyectos de vigilancia, domótica o sensores que tienen que funcionar sin descanso. Ponles una buena fuente de alimentación y una caja con ventilación para que trabajen estables."
    ]
   ]
  ],
@@ -235,6 +279,18 @@
     "Un error habitual es gastar en un procesador muy potente y quedarse corto en la tarjeta gráfica. Para IA local, el reparto del presupuesto debe favorecer claramente a la GPU, que es la que decide qué modelos puedes usar y a qué velocidad. El procesador puede ser de gama media, y la memoria RAM y el SSD deben ser suficientes pero sin excesos.",
     "Un ejemplo de equilibrio para empezar en serio sería una tarjeta de 16 GB, 32 GB de RAM DDR5, un SSD NVMe de 2 TB y una fuente de 650 a 750 W. Si apuntas a modelos de 32B con una tarjeta de 32 GB, sube a 64 GB de RAM y a una fuente de 1000 W o más."
    ]
+  ],
+  [
+   "Si ya tienes un PC",
+   [
+    "Cambiar solo la tarjeta gráfica es la forma más barata de tener IA local con soltura. Antes de comprar, revisa la potencia y los conectores de tu fuente, la longitud de tarjeta que admite tu caja y que tengas al menos 32 GB de RAM. Si alguna de las tres cosas falla, en esta sección tienes las opciones más vendidas de cada una, elegidas para acompañar a las tarjetas gráficas de nuestro catálogo."
+   ]
+  ],
+  [
+   "Montaje paso a paso",
+   [
+    "El orden más cómodo para montar un PC de IA es: procesador, memoria y SSD en la placa fuera de la caja; después la placa dentro de la caja; luego la fuente y su cableado; y por último la tarjeta gráfica con su soporte. Antes de cerrar, arranca una vez para comprobar que todo se reconoce. Con el sistema instalado, el siguiente paso es [instalar Ollama](/guias/que-es-ollama-como-instalarlo-requisitos/) y probar tu primer modelo."
+   ]
   ]
  ],
  "grupo-fuentes-de-alimentacion": [
@@ -249,6 +305,19 @@
    "Por qué no conviene ir justo de potencia",
    [
     "Cuando un modelo de IA genera texto o imágenes, la tarjeta gráfica trabaja al máximo durante minutos u horas. Una fuente con margen trabaja más fría, hace menos ruido y aguanta mejor los picos de consumo de las GPU modernas. Una certificación 80 Plus Gold o superior es una buena referencia. Elige primero tu tarjeta en [tarjetas gráficas para IA](/tarjetas-graficas/) y luego la fuente que cubra su consumo."
+   ]
+  ],
+  [
+   "Cómo calcular la potencia de la fuente",
+   [
+    "Un cálculo rápido: suma el consumo de la tarjeta gráfica, unos 150 a 250 W para el procesador y el resto del equipo, y añade un 30 % de margen. Por ejemplo, una tarjeta de 180 W con un procesador de gama media se queda cómoda con una fuente de 550 a 650 W. Una tarjeta de 360 W pide unos 850 W, y una de 575 W, 1000 W o más. En cada ficha de tarjeta gráfica tienes la potencia recomendada.",
+    "Las fuentes modulares, en las que solo conectas los cables que usas, facilitan el montaje y dejan la caja más despejada, lo que también ayuda a la ventilación."
+   ]
+  ],
+  [
+   "Qué significa la certificación 80 Plus",
+   [
+    "La certificación 80 Plus indica cuánta energía de la que toma la fuente del enchufe llega de verdad al ordenador. Una fuente Gold desperdicia menos energía en forma de calor que una Bronze, y eso se nota en un equipo que pasa muchas horas trabajando con modelos de IA. No hace falta ir a Platinum o Titanium para un PC doméstico, pero una Gold es una buena compra a largo plazo."
    ]
   ]
  ],
@@ -265,6 +334,19 @@
    [
     "Los ordenadores de sobremesa usan módulos DIMM y los portátiles y muchos mini PC usan SO-DIMM, que son más cortos. No son intercambiables: revisa qué tipo admite tu equipo y su capacidad máxima antes de comprar. Recuerda que los mini PC con memoria unificada, como los Ryzen AI Max+ 395, y los Mac llevan la memoria soldada y no se pueden ampliar."
    ]
+  ],
+  [
+   "Velocidad y latencia de la RAM",
+   [
+    "Para IA en tarjeta gráfica, la velocidad de la RAM apenas cambia el resultado: lo importante es la cantidad. La velocidad sí importa si vas a ejecutar parte del modelo en el procesador, porque entonces la RAM hace el papel de la VRAM y su ancho de banda limita las palabras por segundo. En ese caso, un kit DDR5 rápido en doble canal ayuda.",
+    "Compra la memoria en kits de dos módulos iguales para aprovechar el doble canal, y comprueba en la web de tu placa base qué kits y velocidades admite."
+   ]
+  ],
+  [
+   "Cuándo tiene sentido ir a 128 GB",
+   [
+    "Un kit de 128 GB tiene sentido si quieres probar modelos de 70B o más repartidos entre la tarjeta gráfica y la RAM, o si trabajas con muchos programas pesados a la vez. Ten en cuenta que, con cuatro módulos, muchas placas bajan la velocidad de la memoria, así que es mejor usar dos módulos grandes que cuatro pequeños. Si lo que buscas es mover modelos grandes con soltura, un equipo con memoria unificada como un [mini PC para IA](/mini-pc/) o un [Mac](/mac/) puede ser mejor opción."
+   ]
   ]
  ],
  "grupo-ssd-nvme": [
@@ -279,6 +361,25 @@
    "Qué mirar al elegir un SSD",
    [
     "Comprueba que tu placa base o tu mini PC tiene una ranura M.2 libre y qué generación de PCIe admite. Un SSD PCIe 4.0 es más que suficiente para cargar modelos; los PCIe 5.0 son más rápidos pero también más caros y calientes. Si tu equipo es un Mac, el almacenamiento interno no se amplía, así que puede interesarte un SSD externo rápido."
+   ]
+  ],
+  [
+   "Cuánto espacio ocupan los modelos de IA",
+   [
+    "Como referencia, en Q4 un modelo de 8B ocupa unos 5 GB, uno de 14B unos 9 GB, uno de 32B unos 20 GB y uno de 70B unos 40 GB. Los modelos de imagen como Flux ocupan otros 10 a 20 GB cada uno, y a eso se suman extensiones, LoRA y las imágenes que generes. Con 1 TB puedes empezar, pero si te engancha probar modelos, 2 TB te evitarán borrar cada semana.",
+    "Ollama y LM Studio permiten cambiar la carpeta donde guardan los modelos, así que puedes tener el sistema en un disco y los modelos en otro más grande."
+   ]
+  ],
+  [
+   "Disipador y temperatura del SSD",
+   [
+    "Los SSD NVMe rápidos se calientan cuando leen o escriben mucho seguido, y al calentarse pueden bajar su velocidad. Muchas placas base traen un disipador para la ranura M.2; si la tuya no lo tiene, elige un SSD con disipador incluido. En un mini PC o un portátil, revisa que el SSD sea de tamaño 2280, el más habitual, y de una sola cara si el espacio es justo."
+   ]
+  ],
+  [
+   "SSD interno o externo",
+   [
+    "Un SSD interno NVMe es la opción más rápida para cargar modelos. Un SSD externo por USB4 o Thunderbolt es una buena solución para portátiles y Mac, donde no puedes ampliar el disco interno, y para llevar tus modelos de un equipo a otro. Para el uso diario, la diferencia de tiempo al cargar un modelo es de unos segundos, nada que afecte a la velocidad una vez cargado."
    ]
   ]
  ],
@@ -295,6 +396,26 @@
    [
     "El procesador tiene que ser compatible con el zócalo de la placa base: los AMD Ryzen recientes usan AM5 y los Intel Core recientes, LGA 1851. Elige primero la tarjeta gráfica, después el procesador y por último una [placa base](/componentes/placas-base/) que encaje con él."
    ]
+  ],
+  [
+   "AMD Ryzen o Intel Core para IA",
+   [
+    "Para un PC de IA con tarjeta gráfica, tanto AMD como Intel sirven. Los Ryzen recientes usan el zócalo AM5, que AMD mantiene durante varias generaciones, y eso facilita cambiar de procesador más adelante sin cambiar la placa. Los Intel Core recientes usan LGA 1851. Elige según el precio del conjunto de procesador y placa y según tus otros usos, porque para la IA en la GPU la diferencia es pequeña.",
+    "Algunos procesadores incluyen una NPU, un pequeño acelerador de IA. Hoy por hoy sirve para funciones concretas de Windows y algunas aplicaciones, pero no para ejecutar modelos de lenguaje grandes: para eso sigue mandando la tarjeta gráfica."
+   ]
+  ],
+  [
+   "Cuántos núcleos necesitas",
+   [
+    "Seis u ocho núcleos son suficientes para un PC de IA centrado en la tarjeta gráfica. Más núcleos ayudan si vas a ejecutar modelos en el procesador, compilar programas, editar vídeo o jugar a la vez que usas la IA. Lo que más se nota en ese caso es la memoria: un procesador potente con poca RAM se queda corto antes que uno modesto con 64 GB.",
+    "Si el procesador no trae gráfica integrada, necesitarás la tarjeta gráfica también para la imagen del monitor, algo normal en un PC para IA."
+   ]
+  ],
+  [
+   "Disipador incluido o aparte",
+   [
+    "Algunos procesadores traen un disipador en la caja y otros no. Si el tuyo no lo trae, necesitarás uno de aire o una [refrigeración líquida](/componentes/refrigeracion-liquida/). Para procesadores de gama media basta un buen disipador de aire; para los de gama alta que trabajan muchas horas, una líquida de 240 o 360 mm mantiene mejor la temperatura y el ruido."
+   ]
   ]
  ],
  "grupo-placas-base": [
@@ -303,6 +424,37 @@
    [
     "Lo más importante de una placa base para IA es que tenga una ranura PCIe x16 para la tarjeta gráfica y espacio físico para tarjetas grandes de tres ranuras. Si piensas montar dos GPU, revisa la separación entre ranuras y cómo se reparten las líneas PCIe, porque muchas placas bajan la velocidad de la segunda ranura.",
     "Fíjate también en el número de ranuras M.2 para SSD, la memoria máxima que admite (64 o 128 GB si quieres margen) y que el zócalo coincida con tu [procesador](/componentes/procesadores/)."
+   ]
+  ],
+  [
+   "Placa base para un servidor de IA en casa",
+   [
+    "Si piensas dejar el PC encendido como servidor de IA para el resto de equipos de casa, busca una placa con red de 2,5 Gb, buena refrigeración en la zona de alimentación del procesador y opción de encendido automático tras un corte de luz. Son detalles que no salen en la portada de la caja pero que se agradecen cuando el equipo trabaja día y noche."
+   ]
+  ],
+  [
+   "Chipset: qué cambia entre placas",
+   [
+    "Dentro de un mismo zócalo hay placas con distintos chipsets. En AMD AM5, las B650 y B850 son las más equilibradas para un PC de IA con una tarjeta gráfica; las X670 y X870 añaden más líneas PCIe, más ranuras M.2 y más conexiones, útiles si vas a montar dos tarjetas o muchos discos. En Intel pasa lo mismo con las series B y Z. Para una sola GPU, una placa de gama media es suficiente.",
+    "Revisa también que la placa tenga suficientes puertos USB, red de 2,5 Gb si vas a usar el PC como servidor de IA para otros equipos de casa, y wifi si no tienes cable cerca."
+   ]
+  ],
+  [
+   "Tamaño de la placa: ATX, micro ATX y mini ITX",
+   [
+    "Las placas ATX son las más habituales y dejan espacio para varias tarjetas y SSD. Las micro ATX son algo más pequeñas y suelen bastar para una sola tarjeta gráfica. Las mini ITX permiten montar PC muy compactos, pero solo tienen una ranura PCIe, menos memoria máxima y menos espacio para refrigerar: con una tarjeta gráfica grande el montaje se complica. El tamaño de la placa tiene que encajar con tu [caja de PC](/componentes/cajas-pc/)."
+   ]
+  ],
+  [
+   "Ranuras M.2 y memoria máxima",
+   [
+    "Cada modelo de IA ocupa decenas de GB, así que tener dos o tres ranuras M.2 para [SSD NVMe](/componentes/ssd-nvme/) es muy práctico. Fíjate en cuál comparte líneas con la ranura de la tarjeta gráfica, porque en algunas placas usar ciertas ranuras M.2 reduce la velocidad de la PCIe x16. Y si quieres margen para el futuro, elige una placa con cuatro ranuras de memoria que admita al menos 128 GB."
+   ]
+  ],
+  [
+   "Actualizar la BIOS",
+   [
+    "Antes de montar un procesador de última generación en una placa que lleva tiempo a la venta, comprueba si necesita una actualización de BIOS. Muchas placas actuales permiten actualizarla desde un USB sin procesador instalado, una función muy útil si tu placa no reconoce el procesador al primer arranque."
    ]
   ]
  ],
@@ -313,6 +465,31 @@
     "Las tarjetas gráficas de gama alta superan a menudo los 30 cm de largo y ocupan tres ranuras. Antes de comprar, compara la longitud máxima de GPU que admite la caja con la medida de tu tarjeta. Una caja con buen flujo de aire, ventiladores delanteros y salida trasera mantiene la tarjeta más fría y silenciosa cuando trabaja durante horas generando texto o imágenes.",
     "Si vas a usar una RTX 5090 o una GPU profesional, elige una caja amplia y una [fuente de alimentación](/componentes/fuentes-de-alimentacion/) con la potencia recomendada. Para tarjetas largas y pesadas, un [soporte para la GPU](/componentes/accesorios-para-gpu/) evita que se doble con el tiempo."
    ]
+  ],
+  [
+   "Ruido: cómo tener un PC de IA silencioso",
+   [
+    "Si el PC va a estar en el salón o en el despacho, el ruido importa. Ventiladores grandes de 140 mm mueven el mismo aire que los de 120 mm girando más despacio, así que hacen menos ruido. Configura en la BIOS curvas de ventilador suaves y deja que suban solo cuando la tarjeta gráfica se calienta. Una caja amplia con buen flujo de aire es, al final, la forma más barata de tener un equipo de IA fresco y silencioso."
+   ]
+  ],
+  [
+   "Flujo de aire: lo que de verdad importa",
+   [
+    "Una caja con frontal de malla deja entrar mucho más aire que una con frontal de cristal o cerrado. Para un PC de IA, en el que la tarjeta gráfica puede trabajar al máximo durante horas, el frontal de malla y al menos dos o tres ventiladores delanteros marcan la diferencia en temperatura y ruido. Las cajas con cristal en el frontal y el lateral, muy de moda, necesitan ventiladores laterales o inferiores para compensar.",
+    "La regla general es meter aire fresco por delante y por abajo, y sacarlo por detrás y por arriba. Así el aire caliente de la tarjeta gráfica sale de la caja en lugar de quedarse dando vueltas."
+   ]
+  ],
+  [
+   "Qué medir antes de comprar",
+   [
+    "Compara tres medidas con las de tus componentes: la longitud máxima de tarjeta gráfica, la altura máxima del disipador del procesador y el tamaño de radiador que admite si vas a usar refrigeración líquida. Comprueba también el tamaño de placa base (ATX, micro ATX o mini ITX) y el de la fuente de alimentación. La mayoría de cajas medianas actuales admiten tarjetas de más de 35 cm, pero las cajas compactas pueden quedarse cortas."
+   ]
+  ],
+  [
+   "Montaje vertical de la tarjeta",
+   [
+    "Algunas cajas permiten montar la tarjeta gráfica en vertical con un cable riser, para lucirla a través del cristal. Queda muy vistosa, pero si la tarjeta queda muy pegada al cristal respira peor y se calienta más, algo poco recomendable en un equipo que va a pasar horas generando texto o imágenes. Para IA, el montaje horizontal clásico con un [soporte](/componentes/accesorios-para-gpu/) suele ser la opción más fresca."
+   ]
   ]
  ],
  "grupo-refrigeracion-liquida": [
@@ -321,6 +498,31 @@
    [
     "En un PC para IA, quien más calor genera es la tarjeta gráfica, y ella lleva su propia refrigeración. La refrigeración líquida de esta página es para el procesador: mantiene la temperatura baja con menos ruido, algo útil si el equipo va a pasar muchas horas trabajando o si usas un procesador potente.",
     "Antes de comprar, comprueba que la caja admite el tamaño del radiador (240, 280 o 360 mm) y que la refrigeración es compatible con el zócalo de tu procesador. Si tu procesador es de gama media y la caja ventila bien, un buen disipador de aire también es suficiente."
+   ]
+  ],
+  [
+   "Compatibilidad con tu procesador",
+   [
+    "Las refrigeraciones líquidas actuales incluyen anclajes para los zócalos más comunes, como AM5 de AMD y LGA 1700 y 1851 de Intel, pero conviene comprobarlo en la ficha antes de comprar. Revisa también la longitud de los tubos si vas a montar el radiador delante en una caja grande, y que los ventiladores incluidos se puedan controlar desde la placa base para ajustar el ruido."
+   ]
+  ],
+  [
+   "Radiador de 240, 280 o 360 mm",
+   [
+    "Cuanto más grande es el radiador, más calor disipa y más despacio pueden girar los ventiladores, con menos ruido. Un radiador de 240 mm es suficiente para procesadores de gama media; uno de 360 mm es la opción tranquila para procesadores de gama alta que trabajan muchas horas. Antes de elegir, comprueba en tu caja dónde cabe el radiador, delante o arriba, y de qué tamaño.",
+    "Si montas el radiador delante, el aire que entra a la caja pasa por él y llega algo más templado a la tarjeta gráfica. Si lo montas arriba, el calor sale directamente fuera, lo que suele favorecer a la GPU, que en un PC de IA es la pieza que más importa mantener fresca."
+   ]
+  ],
+  [
+   "Líquida o disipador de aire",
+   [
+    "Un buen disipador de aire de doble torre enfría casi como una líquida de 240 mm, cuesta menos, no tiene bomba que pueda fallar y dura muchos años. Una líquida ocupa menos alrededor del procesador, deja ver mejor el interior y rinde más con procesadores muy potentes. Para un PC de IA centrado en la tarjeta gráfica, las dos opciones son válidas: elige la líquida si tu procesador es de gama alta o si quieres el equipo más silencioso posible."
+   ]
+  ],
+  [
+   "Mantenimiento",
+   [
+    "Las refrigeraciones líquidas de esta página son de circuito cerrado: vienen rellenas de fábrica y no hay que tocar el líquido. Basta con limpiar el polvo del radiador de vez en cuando y comprobar que la bomba funciona, algo que se ve en la temperatura del procesador. Con el paso de los años el rendimiento puede bajar un poco; cuando llegue ese momento, se cambia la unidad entera."
    ]
   ]
  ],
@@ -331,6 +533,26 @@
     "Una eGPU es una caja o dock donde se monta una tarjeta gráfica de sobremesa para conectarla a un portátil o a un mini PC. Se conecta por OCuLink, Thunderbolt o USB4. OCuLink ofrece más ancho de banda, pero solo lo traen algunos equipos; Thunderbolt es más común y no hay que abrir nada.",
     "Para IA, la conexión importa menos que en juegos: una vez el modelo está cargado en la VRAM de la tarjeta, casi no pasan datos por el cable. Lo explicamos con detalle en la guía de [tarjeta gráfica externa para portátil](/guias/tarjeta-grafica-externa-egpu-portatil/). Recuerda que los Mac con chip Apple no admiten tarjetas gráficas externas."
    ]
+  ],
+  [
+   "OCuLink, Thunderbolt o USB4",
+   [
+    "OCuLink es una conexión directa a PCIe que ofrece el mejor rendimiento, pero solo la traen algunos mini PC y portátiles, y el cable no admite conectar y desconectar en caliente. Thunderbolt 4 y 5 y USB4 son más cómodos: un solo cable, conexión en caliente y compatibilidad con muchos portátiles. Para juegos, OCuLink rinde claramente mejor; para IA local, una vez cargado el modelo, la diferencia es mucho menor porque apenas viajan datos por el cable.",
+    "Donde sí notarás la conexión es al cargar el modelo en la tarjeta, que tarda algo más por Thunderbolt, y si usas modelos que no caben enteros en la VRAM, porque entonces los datos van y vienen constantemente."
+   ]
+  ],
+  [
+   "Qué necesitas además del dock",
+   [
+    "Una eGPU no es solo la caja: necesitas la tarjeta gráfica de sobremesa y, en muchos docks, una fuente de alimentación de PC aparte, porque la caja no la incluye. Revisa qué fuente admite el dock y qué potencia pide tu tarjeta. Las tarjetas muy largas o de tres ranuras pueden no caber en los docks más compactos, así que mide antes de comprar.",
+    "Para IA, la tarjeta ideal en una eGPU es una de 16 GB con consumo moderado, como las de gama media de nuestro catálogo de [tarjetas gráficas para IA](/tarjetas-graficas/): suficiente VRAM para modelos de 14B y una fuente razonable."
+   ]
+  ],
+  [
+   "Compatibilidad: lo que hay que comprobar",
+   [
+    "Antes de comprar una eGPU, comprueba que tu portátil o mini PC tiene un puerto Thunderbolt, USB4 u OCuLink de verdad, no solo un USB-C normal, y que el fabricante permite usar tarjetas gráficas externas. En Windows y Linux funciona con tarjetas NVIDIA y AMD. Los Mac con chip Apple no admiten eGPU, así que en un Mac la única forma de tener más memoria para IA es elegir más memoria unificada al comprarlo."
+   ]
   ]
  ],
  "grupo-accesorios-para-gpu": [
@@ -339,6 +561,26 @@
    [
     "Las tarjetas gráficas actuales son grandes y pesadas, y con el tiempo pueden doblarse en la ranura PCIe. Un soporte vertical o una escuadra de apoyo lo evita y cuesta poco. Si tu fuente de alimentación no trae el conector de 16 pines que piden muchas tarjetas NVIDIA recientes, un cable de calidad de la propia marca de la fuente es más seguro que un adaptador genérico.",
     "Monta la tarjeta, conecta bien todos los cables de alimentación hasta el fondo y revisa las temperaturas las primeras veces que la uses con un modelo de IA durante horas."
+   ]
+  ],
+  [
+   "Por qué se doblan las tarjetas gráficas",
+   [
+    "Las tarjetas gráficas de gama media y alta pesan más de un kilo y solo se sujetan por la ranura PCIe y los tornillos del lateral de la caja. Con el tiempo y el calor, la tarjeta se va inclinando, algo que se conoce como GPU sag. Además de verse mal, puede forzar la ranura y el propio circuito de la tarjeta. Un soporte de apoyo bajo el extremo libre de la tarjeta lo evita por muy poco dinero, y muchas tarjetas de gama alta ya lo traen en la caja.",
+    "Hay soportes de columna, que se apoyan en el suelo de la caja, y escuadras que se atornillan a los huecos de expansión. Los de columna son los más universales; ajusta la altura hasta que la tarjeta quede recta, sin forzarla hacia arriba."
+   ]
+  ],
+  [
+   "El conector de 16 pines, con cuidado",
+   [
+    "Muchas tarjetas NVIDIA recientes se alimentan con un único conector de 16 pines, llamado 12V-2x6 en su versión actual. Es fiable si se conecta bien: hay que meterlo hasta el fondo, hasta que haga clic, y evitar doblar el cable justo a la salida del conector. Si tu fuente es ATX 3.0 o 3.1, lo más seguro es usar el cable nativo que trae. Si no, un cable de la propia marca de la fuente es mejor opción que un adaptador genérico de varios conectores.",
+    "Revisa también que la tapa lateral de la caja no presione el cable. Si queda muy justo, existen cables con salida en ángulo que ahorran espacio."
+   ]
+  ],
+  [
+   "Ventilación extra",
+   [
+    "Si tu tarjeta se calienta mucho durante las sesiones largas de IA, antes de comprar nada revisa el polvo de los filtros y de la propia tarjeta. Unos ventiladores de caja adicionales, bien orientados para meter aire fresco hacia la tarjeta, suelen bajar varios grados la temperatura. Lo tienes explicado en [cajas de PC](/componentes/cajas-pc/)."
    ]
   ]
  ],
@@ -355,6 +597,13 @@
    [
     "En un portátil con tarjeta gráfica NVIDIA, lo que decide qué modelos de IA puedes usar es, como siempre, la VRAM de la GPU. Ten en cuenta que las GPU de portátil suelen llevar menos memoria que sus equivalentes de sobremesa con el mismo nombre, así que revisa los GB de la gráfica en la ficha de cada modelo antes de comprar.",
     "Un portátil con 8 GB de VRAM mueve modelos de 8B; con 12 a 16 GB, modelos de 14B. Si necesitas más, puedes conectarle una [tarjeta gráfica externa](/guias/tarjeta-grafica-externa-egpu-portatil/) si tiene Thunderbolt u OCuLink. Los MacBook con chip Apple usan memoria unificada y conviene elegirlos con mucha memoria, porque no se amplía. Tienes más detalle en [mejor Mac para IA local](/guias/mejor-mac-para-ia-local/)."
+   ]
+  ],
+  [
+   "Lo que no te cuentan de los portátiles para IA",
+   [
+    "Muchos portátiles bajan la potencia de la tarjeta gráfica cuando funcionan con batería, así que para IA conviene usarlos enchufados. También es normal que los ventiladores suenen bastante durante sesiones largas de generación de texto o imágenes. Y la memoria de la gráfica no se puede ampliar nunca: lo que traiga es lo que tendrás durante toda la vida del portátil.",
+    "Por eso, para elegir, ordena así: primero la VRAM de la gráfica, después la RAM del sistema (32 GB o más), luego la refrigeración y por último el resto. Un portátil con una gráfica de 16 GB te dará años de margen para modelos de 14B; uno de 8 GB se quedará corto antes."
    ]
   ]
  ]

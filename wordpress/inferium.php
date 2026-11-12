@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) { exit; }
 
 const INF_NOMBRE = 'Inferium';
 const INF_AUTOR = 'Ernesto Santos';
-const INF_VERSION = '1.9.4';
+const INF_VERSION = '1.9.5';
 const INF_REL = 'sponsored nofollow noopener';
 
 /* ---------- Datos ---------- */
@@ -576,6 +576,7 @@ function inf_pag_versus($slug) {
     $bd .= '<section class="surface pad"><h2>' . inf_e($na . ' o ' . $nb) . ': nuestro veredicto</h2>';
     foreach ($v1 as $t) $bd .= '<p>' . inf_e($t) . '</p>';
     $bd .= '<p><strong>' . inf_e($fin) . '</strong></p></section>';
+    $bd .= inf_versus_extra($a, $b2, $na, $nb, $esGpu);
     $bd .= '<section class="bloques">';
     foreach ([$a, $b2] as $p) {
         $bd .= '<div class="surface pad"><h2>Lo que no te cuentan de la ' . inf_e(inf_corto($p)) . '</h2><ul class="lista no">';
@@ -587,6 +588,9 @@ function inf_pag_versus($slug) {
         ['¿Cuál es mejor para IA, la ' . $na . ' o la ' . $nb . '?', $fin],
         ['¿Cuál consume menos?', $a['consumo'] === $b2['consumo'] ? 'Consumen lo mismo: ' . $a['consumo'] . ' W.' : 'La ' . ($a['consumo'] < $b2['consumo'] ? $na : $nb) . ', con ' . min($a['consumo'], $b2['consumo']) . ' W frente a ' . max($a['consumo'], $b2['consumo']) . ' W.'],
         ['¿Cuál es más barata?', 'Los precios cambian cada día, por eso no los copiamos: mira el precio actual de las dos en Amazon con los botones de la tabla.'],
+        ['¿Cuál es más rápida para IA?', $a['anchoBanda'] === $b2['anchoBanda'] ? 'Van igual de rápido con los modelos que caben en las dos, porque tienen el mismo ancho de banda (' . $a['anchoBanda'] . ' GB/s).' : 'La ' . ($a['anchoBanda'] > $b2['anchoBanda'] ? $na : $nb) . ', porque tiene más ancho de banda (' . max($a['anchoBanda'], $b2['anchoBanda']) . ' frente a ' . min($a['anchoBanda'], $b2['anchoBanda']) . ' GB/s). Con un modelo de 8B estimamos unos ' . ($ta ?? 0) . ' tokens por segundo en la ' . $na . ' y unos ' . ($tb ?? 0) . ' en la ' . $nb . '.'],
+        ['¿Qué modelo de IA más grande cabe en cada una?', 'En la ' . $na . ', ' . ($ma ? $ma['nombre'] : 'ninguno de nuestra lista') . '; en la ' . $nb . ', ' . ($mb ? $mb['nombre'] : 'ninguno de nuestra lista') . '. Calculado en Q4 con un 20 % extra para el contexto.'],
+        ['¿Sirven para generar imágenes?', inf_versus_imagen($a, $b2, $na, $nb)],
     ];
     $bd .= inf_faq($faq) . '<section class="block"><div class="sec-head"><h2>Las dos, frente a frente</h2><p>¿Quieres añadir una tercera? Usa el <a href="' . esc_url(inf_url('/comparador/')) . '">comparador de GPU</a> o la <a href="' . esc_url(inf_url('/calculadora-vram/')) . '">calculadora de VRAM</a>.</p></div><div class="grid-cards">' . inf_card($a) . inf_card($b2) . '</div></section>'
         . '<p class="mini muted">Tokens/s: estimación propia. Enlaces de afiliado de Amazon.</p></main>';
@@ -595,7 +599,7 @@ function inf_pag_versus($slug) {
         // Equipos (Mac, mini PC): concordancia en masculino.
         $m = [];
         foreach (array_unique([$a['nombre'], $b2['nombre'], $na, $nb]) as $n) { $m['de la ' . $n] = 'del ' . $n; $m['la ' . $n] = 'el ' . $n; $m['La ' . $n] = 'El ' . $n; }
-        $m += ['gana la ' => 'gana el ', 'quedamos con la ' => 'quedamos con el ', 'Las dos' => 'Los dos', 'las dos' => 'los dos', 'La otra' => 'El otro', 'la otra' => 'el otro', 'cada una' => 'cada uno', 'elige la que' => 'elige el que', 'más barata' => 'más barato', 'con ella llegas' => 'con él llegas'];
+        $m += ['gana la ' => 'gana el ', 'quedamos con la ' => 'quedamos con el ', 'Las dos' => 'Los dos', 'las dos' => 'los dos', 'La otra' => 'El otro', 'la otra' => 'el otro', 'cada una' => 'cada uno', 'elige la que' => 'elige el que', 'más barata' => 'más barato', 'más rápida para IA' => 'más rápido para IA', ' rápida.' => ' rápido.', 'con ella llegas' => 'con él llegas'];
         $fx = fn($t) => strtr($t, $m);
         $bd = $fx($bd); $desc = $fx($desc);
         $faq = array_map(fn($q) => [$fx($q[0]), $fx($q[1])], $faq);
@@ -603,6 +607,74 @@ function inf_pag_versus($slug) {
     return ['title' => $na . ' vs ' . $nb . ': comparativa y cuál comprar | ' . INF_NOMBRE,
         'description' => $desc,
         'path' => $path, 'clase' => 'p-comparador p-versus', 'body' => $bd, 'schema' => [inf_schema_migas($migas), inf_schema_faq($faq)]];
+}
+
+/** Respuesta sobre generación de imágenes en un versus. */
+function inf_versus_imagen($a, $b, $na, $nb) {
+    $flux = null; foreach (inf_modelos() as $m) { if ($m['nombre'] === 'Flux.1 dev') $flux = $m; }
+    $fa = $flux && inf_cabe($flux, $a['vram']); $fb = $flux && inf_cabe($flux, $b['vram']);
+    $t = $fa && $fb ? 'Las dos tienen memoria suficiente para Flux.1 dev y SDXL.' : ($fa || $fb ? 'Para Flux.1 dev solo llega la ' . ($fa ? $na : $nb) . '; SDXL funciona en las dos.' : 'Les llega para SDXL, pero se quedan cortas para Flux.1 dev, que pide unos 16 GB.');
+    if ($a['ecosistema'] !== $b['ecosistema']) $t .= ' Además, la generación de imágenes funciona mejor con CUDA (NVIDIA), donde están casi todos los tutoriales y extensiones.';
+    return $t;
+}
+
+/** Bloques extra de un versus, escritos a partir de los datos de las fichas. */
+function inf_versus_extra($a, $b, $na, $nb, $esGpu) {
+    $mods = inf_modelos();
+    $h = '<section class="surface pad prose"><h2>Qué modelos de IA puede usar cada una</h2>'
+        . '<p>La memoria decide qué modelos caben y el ancho de banda, a qué velocidad responden. Esta tabla cruza los modelos más usados con las dos, en cuantización Q4 (la habitual en Ollama y LM Studio) y dejando un 20 % para el contexto de la conversación.</p>'
+        . '<div class="tabla-wrap"><table class="tabla tabla-g"><thead><tr><th scope="col">Modelo</th><th scope="col">' . inf_e($na) . '</th><th scope="col">' . inf_e($nb) . '</th></tr></thead><tbody>';
+    $solo = [[], []];
+    foreach ($mods as $m) {
+        $ca = inf_cabe($m, $a['vram']); $cb = inf_cabe($m, $b['vram']);
+        if (!$ca && !$cb && $m['params'] > 100) continue;
+        $txt = function ($p, $c) use ($m) { if (!$c) return 'No cabe'; $t = inf_tokens($p, $m); return $t ? 'Cabe, ≈ ' . $t . ' tokens/s' : 'Cabe'; };
+        if ($ca && !$cb) $solo[0][] = $m['nombre']; if ($cb && !$ca) $solo[1][] = $m['nombre'];
+        $h .= '<tr><th scope="row">' . inf_e($m['nombre']) . ($m['tipo'] === 'imagen' ? ' <span class="mini muted">(imagen)</span>' : '') . '</th><td' . ($ca ? ' class="mejor"' : '') . '>' . inf_e($txt($a, $ca)) . '</td><td' . ($cb ? ' class="mejor"' : '') . '>' . inf_e($txt($b, $cb)) . '</td></tr>';
+    }
+    $h .= '</tbody></table></div>';
+    if ($solo[0] || $solo[1]) {
+        $g = $solo[0] ? [$na, $solo[0], $nb] : [$nb, $solo[1], $na];
+        $h .= '<p>La diferencia práctica está aquí: con la ' . inf_e($g[0]) . ' puedes usar ' . inf_e(count($g[1]) > 1 ? implode(', ', array_slice($g[1], 0, -1)) . ' y ' . end($g[1]) : $g[1][0]) . ', que en la ' . inf_e($g[2]) . ' no cabe' . (count($g[1]) > 1 ? 'n' : '') . ' entero' . (count($g[1]) > 1 ? 's' : '') . ' en memoria. Si el modelo no cabe, programas como Ollama pasan una parte a la RAM del ordenador y la velocidad cae a pocas palabras por segundo.</p>';
+    } else {
+        $h .= '<p>Las dos cargan los mismos modelos de nuestra lista, así que la elección va de velocidad, consumo y software, no de qué puedes ejecutar.</p>';
+    }
+    $h .= '<p class="mini muted">Tokens/s: estimación propia (ancho de banda × 0,7 ÷ tamaño del modelo), no una prueba medida. Sirve para comparar.</p></section>';
+
+    // Velocidad
+    $m14 = null; foreach ($mods as $m) { if ($m['params'] == 14) $m14 = $m; }
+    $t14a = $m14 ? inf_tokens($a, $m14) : null; $t14b = $m14 ? inf_tokens($b, $m14) : null;
+    $h .= '<section class="surface pad prose"><h2>Velocidad: cuánto se nota en el día a día</h2>';
+    if ($a['anchoBanda'] !== $b['anchoBanda']) {
+        $r = max($a['anchoBanda'], $b['anchoBanda']) / min($a['anchoBanda'], $b['anchoBanda']);
+        $rap = $a['anchoBanda'] > $b['anchoBanda'] ? $na : $nb;
+        $h .= '<p>Al generar texto, un modelo de IA lee todos sus pesos de la memoria por cada palabra que escribe. Por eso la velocidad depende sobre todo del ancho de banda, y ahí la ' . inf_e($rap) . ' es ' . ($r >= 1.9 && $r < 2.1 ? 'el doble de' : ($r >= 2.1 ? 'unas ' . number_format($r, 1, ',', '') . ' veces más' : 'un ' . round(($r - 1) * 100) . ' % más')) . ' rápida.</p>';
+    } else {
+        $h .= '<p>Al generar texto, un modelo de IA lee todos sus pesos de la memoria por cada palabra que escribe. Como las dos tienen el mismo ancho de banda, con un mismo modelo responden prácticamente a la misma velocidad.</p>';
+    }
+    if ($t14a || $t14b) $h .= '<p>Con un modelo de 14B, que es el tamaño que mejor equilibra calidad y velocidad en casa, estimamos ' . ($t14a ? 'unos ' . $t14a . ' tokens por segundo en la ' . inf_e($na) : 'que no cabe en la ' . inf_e($na)) . ' y ' . ($t14b ? 'unos ' . $t14b . ' en la ' . inf_e($nb) : 'que no cabe en la ' . inf_e($nb)) . '. A partir de unos 15 tokens por segundo la respuesta se lee con comodidad, como si alguien escribiera rápido.</p>';
+    $h .= '</section>';
+
+    // Consumo y montaje
+    $h .= '<section class="surface pad prose"><h2>' . ($esGpu ? 'Consumo, fuente y montaje' : 'Consumo y uso diario') . '</h2>';
+    if ($esGpu) {
+        $h .= '<p>La ' . inf_e($na) . ' consume hasta ' . (int) $a['consumo'] . ' W y pide una fuente de ' . (int) $a['fuente'] . ' W; la ' . inf_e($nb) . ', hasta ' . (int) $b['consumo'] . ' W con una fuente de ' . (int) $b['fuente'] . ' W. ';
+        $h .= $a['fuente'] !== $b['fuente'] ? 'Si tu fuente actual se queda por debajo de lo que pide la que elijas, súmala al presupuesto: las tienes en <a href="' . esc_url(inf_url('/componentes/fuentes-de-alimentacion/')) . '">fuentes de alimentación</a>.</p>' : 'Las dos piden la misma fuente, así que en ese punto no hay diferencia.</p>';
+        $h .= '<p>En IA la tarjeta puede pasar horas trabajando, no picos cortos como en un juego. Una caja con buena ventilación y una fuente con margen alargan su vida y evitan reinicios. Comprueba también la longitud de la tarjeta en la ficha del fabricante antes de comprar.</p>';
+    } else {
+        $h .= '<p>Según los datos del fabricante, la ' . inf_e($na) . ' consume como máximo ' . (int) $a['consumo'] . ' W y la ' . inf_e($nb) . ' ' . (int) $b['consumo'] . ' W, el equipo completo. Es muy poco comparado con un PC con una tarjeta gráfica potente, y por eso son buenos equipos para tener un modelo de IA siempre encendido en casa.</p>';
+        $h .= '<p>La memoria de estos equipos no se puede ampliar después de comprarlos, así que elige pensando en los modelos que quieras usar dentro de un par de años. La <a href="' . esc_url(inf_url('/calculadora-vram/')) . '">calculadora de VRAM</a> te dice cuánta necesitas.</p>';
+    }
+    $h .= '</section>';
+
+    // Para quién
+    $h .= '<section class="bloques">';
+    foreach ([[$a, $na], [$b, $nb]] as [$p, $n]) {
+        $h .= '<div class="surface pad"><h2>Para quién es la ' . inf_e($n) . '</h2><p>' . inf_e($p['paraQuien']) . '</p><ul class="lista">';
+        foreach (array_slice($p['pros'], 0, 3) as $x) $h .= '<li>' . inf_e($x) . '</li>';
+        $h .= '</ul></div>';
+    }
+    return $h . '</section>';
 }
 
 /** Tarjeta sencilla de un accesorio o componente (sin puntuación de IA). */
@@ -640,13 +712,13 @@ function inf_pag_grupo($slug) {
         . '<section class="surface pad"><h2>Cómo elegir</h2><p>' . inf_e($g['consejo']) . '</p></section>'
         . '<section class="block"><div class="sec-head"><h2>Los más vendidos en Amazon</h2><p>Elegidos entre los más vendidos de Amazon.es. Revisado el ' . inf_fecha('2026-11-11') . '.</p></div><div class="grid-cards">';
     foreach ($g['items'] as $i) $b .= inf_item_card($i);
-    $b .= '</div></section>' . inf_texto_seo('grupo-' . $slug) . '<section class="block"><div class="sec-head"><h2>Sigue montando tu equipo de IA</h2></div><ul class="lista enlaces">'
+    $b .= '</div></section>' . inf_texto_seo('grupo-' . $slug) . (!empty($g['faq']) ? '<section class="block">' . inf_faq($g['faq']) . '</section>' : '') . '<section class="block"><div class="sec-head"><h2>Sigue montando tu equipo de IA</h2></div><ul class="lista enlaces">'
         . '<li><a href="' . esc_url(inf_url('/tarjetas-graficas/')) . '">Tarjetas gráficas (GPU) para IA</a></li>';
     foreach (inf_grupos() as $x) { if ($x['slug'] !== $slug) $b .= '<li><a href="' . esc_url(inf_url(inf_grupo_path($x))) . '">' . inf_e($x['nombre']) . '</a></li>'; }
     $b .= '<li><a href="' . esc_url(inf_url('/calculadora-vram/')) . '">Calculadora de VRAM</a></li></ul></section>'
         . '<p class="aviso muted">Enlaces de afiliado de Amazon: si compras desde ellos recibimos una comisión sin coste para ti. No mostramos precios porque cambian a diario.</p></main>';
     $lista = ['@context' => 'https://schema.org', '@type' => 'ItemList', 'name' => $g['titulo'], 'itemListElement' => array_map(fn($i, $k) => ['@type' => 'ListItem', 'position' => $k + 1, 'name' => $i['nombre']], $g['items'], array_keys($g['items']))];
-    return ['title' => $g['titulo'] . ' | ' . INF_NOMBRE, 'description' => $g['descripcion'], 'path' => $path, 'clase' => 'p-grupo', 'body' => $b, 'schema' => [inf_schema_migas($migas), $lista]];
+    return ['title' => $g['titulo'] . ' | ' . INF_NOMBRE, 'description' => $g['descripcion'], 'path' => $path, 'clase' => 'p-grupo', 'body' => $b, 'schema' => array_merge([inf_schema_migas($migas), $lista], !empty($g['faq']) ? [inf_schema_faq($g['faq'])] : [])];
 }
 
 function inf_pag_componentes() {

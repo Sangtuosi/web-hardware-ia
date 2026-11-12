@@ -42,6 +42,20 @@
         "nota": "Para una RTX 5090 o una RTX PRO 6000, que piden 1000 W o más.",
         "w": 1200
       }
+    ],
+    "faq": [
+      [
+        "¿Qué fuente necesito para una RTX 5060 Ti o una RX 9060 XT?",
+        "Con una fuente de calidad de 550 a 650 W vas sobrado con cualquiera de las dos y un procesador de gama media. En la ficha de cada tarjeta tienes la potencia recomendada exacta."
+      ],
+      [
+        "¿Qué fuente necesito para una RTX 5090?",
+        "Una de 1000 W o más, de buena calidad y con conector de 16 pines nativo. La tarjeta consume hasta 575 W por sí sola y tiene picos de consumo muy rápidos."
+      ],
+      [
+        "¿Sirve mi fuente antigua para una tarjeta nueva?",
+        "Si tiene la potencia necesaria, buena calidad y los conectores que pide la tarjeta, sí. Si tiene muchos años, es de una marca desconocida o le falta potencia, es el momento de cambiarla."
+      ]
     ]
   },
   {
@@ -88,6 +102,20 @@
         "asin": "B0C34D1BBT",
         "nota": "128 GB para estaciones de trabajo que reparten modelos enormes entre GPU y RAM. Necesita una placa con cuatro ranuras."
       }
+    ],
+    "faq": [
+      [
+        "¿Cuánta RAM necesito para IA con una tarjeta de 16 GB?",
+        "32 GB es la cifra cómoda. Con 16 GB funciona, pero vas justo si el modelo no cabe entero en la tarjeta o si usas otros programas a la vez."
+      ],
+      [
+        "¿Puedo usar la RAM en lugar de la VRAM?",
+        "Sí, Ollama y LM Studio pueden cargar parte del modelo en la RAM, pero la velocidad cae mucho porque la RAM tiene bastante menos ancho de banda que la VRAM."
+      ],
+      [
+        "¿Es mejor DDR5 que DDR4 para IA?",
+        "Las placas y procesadores actuales usan DDR5, que es más rápida. Si tu equipo es DDR4, no compensa cambiar de plataforma solo por la memoria: invierte antes en la tarjeta gráfica."
+      ]
     ]
   },
   {
@@ -128,6 +156,20 @@
         "asin": "B0DC8VPSHV",
         "nota": "Opción económica de 1 TB entre las más vendidas."
       }
+    ],
+    "faq": [
+      [
+        "¿Cuánto espacio necesito para modelos de IA?",
+        "Para empezar, 1 TB. Si vas a probar muchos modelos de texto y de imagen, 2 TB es un tamaño cómodo, porque cada modelo ocupa de 5 a más de 40 GB."
+      ],
+      [
+        "¿Hace falta un SSD PCIe 5.0?",
+        "No. Un SSD PCIe 4.0 carga los modelos en pocos segundos. El PCIe 5.0 es más rápido en pruebas, pero en el uso diario con IA la diferencia es pequeña."
+      ],
+      [
+        "¿Puedo guardar los modelos en un disco externo?",
+        "Sí. Ollama y LM Studio permiten elegir la carpeta de modelos. Un SSD externo rápido por USB4 o Thunderbolt funciona bien; un disco duro mecánico, en cambio, hará las cargas muy lentas."
+      ]
     ]
   },
   {
@@ -174,6 +216,20 @@
         "asin": "B0CQ3142LB",
         "nota": "Opción barata de Intel para montar un PC con gráfica dedicada."
       }
+    ],
+    "faq": [
+      [
+        "¿El procesador influye en la velocidad de la IA?",
+        "Muy poco si el modelo cabe entero en la tarjeta gráfica. Influye bastante si una parte del modelo se ejecuta en la RAM, porque esa parte la calcula el procesador."
+      ],
+      [
+        "¿Sirve la NPU del procesador para ejecutar modelos?",
+        "Hoy por hoy, solo para funciones concretas y modelos pequeños. Para chatear con modelos de lenguaje con soltura, la pieza clave sigue siendo la tarjeta gráfica."
+      ],
+      [
+        "¿AMD o Intel para un PC de IA?",
+        "Los dos sirven. Elige el conjunto de procesador y placa que mejor te encaje en precio y en tus otros usos, y dedica la mayor parte del presupuesto a la tarjeta gráfica."
+      ]
     ]
   },
   {
@@ -208,6 +264,20 @@
         "asin": "B0F4H61PLX",
         "nota": "Formato pequeño (microATX) y la más barata de la lista."
       }
+    ],
+    "faq": [
+      [
+        "¿Qué placa base necesito para una tarjeta gráfica de IA?",
+        "Cualquier placa moderna con una ranura PCIe x16 sirve. Comprueba que el zócalo coincide con tu procesador, que admite la memoria que quieres y que tiene ranuras M.2 suficientes."
+      ],
+      [
+        "¿Puedo montar dos tarjetas gráficas?",
+        "Sí, si la placa tiene dos ranuras PCIe x16 bien separadas y tu caja y tu fuente tienen espacio y potencia. Revisa a qué velocidad funciona la segunda ranura."
+      ],
+      [
+        "¿Importa PCIe 4.0 o 5.0 para la tarjeta?",
+        "Para IA apenas se nota: el modelo se carga una vez en la VRAM y después casi no pasan datos por la ranura. Solo influye en la carga inicial."
+      ]
     ]
   },
   {
@@ -248,6 +318,20 @@
         "asin": "B0GDFFSFTF",
         "nota": "Caja panorámica con buena puntuación de los compradores."
       }
+    ],
+    "faq": [
+      [
+        "¿Cabe una RTX 5090 en cualquier caja?",
+        "No. Es una tarjeta muy grande, así que compara su longitud y su grosor con las medidas máximas que indica la caja antes de comprar."
+      ],
+      [
+        "¿Frontal de cristal o de malla?",
+        "Para un PC de IA, mejor malla: entra más aire y la tarjeta gráfica trabaja más fresca y silenciosa durante las sesiones largas."
+      ],
+      [
+        "¿Cuántos ventiladores necesito?",
+        "Con dos o tres delante metiendo aire y uno detrás sacándolo, la mayoría de equipos van bien. Con tarjetas de más de 300 W, añadir uno o dos arriba ayuda."
+      ]
     ]
   },
   {
@@ -288,6 +372,20 @@
         "asin": "B0D6BCSFNC",
         "nota": "Gama alta para procesadores muy exigentes."
       }
+    ],
+    "faq": [
+      [
+        "¿Necesito refrigeración líquida para un PC de IA?",
+        "No es obligatoria. La tarjeta gráfica tiene su propia refrigeración; la líquida es para el procesador y conviene sobre todo con procesadores de gama alta o si buscas el mínimo ruido."
+      ],
+      [
+        "¿Qué tamaño de radiador elijo?",
+        "240 mm para procesadores de gama media y 360 mm para los de gama alta. Comprueba antes qué tamaños admite tu caja y en qué posición."
+      ],
+      [
+        "¿La refrigeración líquida puede tener fugas?",
+        "Las de circuito cerrado vienen selladas de fábrica y las fugas son muy raras. Revisa que la bomba funciona y limpia el radiador de polvo de vez en cuando."
+      ]
     ]
   },
   {
@@ -322,6 +420,20 @@
         "asin": "B0G1M9DLRB",
         "nota": "Alternativa económica solo OCuLink."
       }
+    ],
+    "faq": [
+      [
+        "¿Sirve una eGPU para IA?",
+        "Sí, y mejor de lo que parece: una vez el modelo está cargado en la VRAM de la tarjeta, casi no pasan datos por el cable, así que la velocidad de generación es muy parecida a la de un sobremesa."
+      ],
+      [
+        "¿Mi portátil admite una eGPU?",
+        "Necesita un puerto Thunderbolt, USB4 u OCuLink. Un USB-C normal no sirve. Consulta las especificaciones de tu modelo exacto."
+      ],
+      [
+        "¿Puedo usar una eGPU con un Mac?",
+        "No con los Mac con chip Apple, que no admiten tarjetas gráficas externas. En un Mac, la memoria para IA se elige al comprarlo."
+      ]
     ]
   },
   {
@@ -362,6 +474,20 @@
         "asin": "B0FBGNYY5J",
         "nota": "Adaptador para fuentes sin conector de 16 pines. Comprueba la compatibilidad con tu fuente."
       }
+    ],
+    "faq": [
+      [
+        "¿Hace falta un soporte para la tarjeta gráfica?",
+        "Con tarjetas grandes y pesadas, sí es recomendable: evita que la tarjeta se incline con el tiempo y fuerce la ranura PCIe. Cuesta poco y se instala en un minuto."
+      ],
+      [
+        "¿Es seguro un adaptador para el conector de 16 pines?",
+        "Funciona, pero es más seguro el cable nativo de una fuente ATX 3.0 o 3.1, o un cable de la propia marca de tu fuente. Conéctalo siempre hasta el fondo."
+      ],
+      [
+        "¿Cómo sé si mi tarjeta se calienta demasiado?",
+        "Con programas gratuitos de monitorización puedes ver la temperatura mientras usas un modelo de IA. Si sube mucho, limpia el polvo y mejora la ventilación de la caja antes de nada."
+      ]
     ]
   },
   {
@@ -415,6 +541,20 @@
         "asin": "B0GR1QGFN5",
         "nota": "La versión de 15 pulgadas."
       }
+    ],
+    "faq": [
+      [
+        "¿Qué portátil necesito para IA local?",
+        "Uno con tarjeta gráfica NVIDIA con al menos 8 GB de VRAM para modelos de 8B, o con 16 GB para modelos de 14B, y 32 GB de RAM. O un MacBook con mucha memoria unificada."
+      ],
+      [
+        "¿Una RTX de portátil es igual que la de sobremesa?",
+        "No. Con el mismo nombre suele llevar menos VRAM y menos potencia. Revisa los GB de la gráfica en la ficha de cada portátil."
+      ],
+      [
+        "¿Puedo ampliar un portátil para IA?",
+        "La gráfica no se puede cambiar, pero si tiene Thunderbolt, USB4 u OCuLink puedes conectarle una tarjeta gráfica externa (eGPU)."
+      ]
     ]
   }
 ]
