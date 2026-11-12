@@ -226,14 +226,15 @@ function inf_nav() {
 
 function inf_documento($a) {
     $a += ['title' => INF_NOMBRE, 'description' => '', 'path' => '/', 'schema' => [], 'body' => '', 'clase' => '', 'borrador' => false, 'og' => 'website', 'simple' => false];
-    $noindex = $a['borrador'] || !get_option('blog_public');
+    $solo_legal = !empty($a['noindex']);
+    $noindex = $a['borrador'] || !get_option('blog_public') || $solo_legal;
     $canon = home_url($a['path']);
     $org = ['@context' => 'https://schema.org', '@type' => 'Organization', 'name' => INF_NOMBRE, 'url' => home_url('/'), 'founder' => ['@type' => 'Person', 'name' => INF_AUTOR]];
     $logo = '<a class="logo" href="' . esc_url(inf_url('/')) . '" aria-label="' . INF_NOMBRE . ', inicio"><span class="logo-mark" aria-hidden="true"></span>' . INF_NOMBRE . '</a>';
     $h = '<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
         . '<title>' . inf_e($a['title']) . '</title><meta name="description" content="' . esc_attr($a['description']) . '">'
         . '<link rel="canonical" href="' . esc_url($canon) . '">'
-        . '<meta name="robots" content="' . ($noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large') . '">'
+        . '<meta name="robots" content="' . ($noindex ? ($solo_legal && !$a['borrador'] && get_option('blog_public') ? 'noindex, follow' : 'noindex, nofollow') : 'index, follow, max-image-preview:large') . '">'
         . '<meta property="og:type" content="' . esc_attr($a['og']) . '"><meta property="og:title" content="' . esc_attr($a['title']) . '"><meta property="og:description" content="' . esc_attr($a['description']) . '"><meta property="og:url" content="' . esc_url($canon) . '"><meta property="og:locale" content="es_ES"><meta property="og:site_name" content="' . INF_NOMBRE . '">'
         . '<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#141414">'
         . '<link rel="icon" href="' . esc_url(inf_asset('favicon.svg')) . '" type="image/svg+xml">'
@@ -804,6 +805,7 @@ add_action('template_redirect', function () {
     $pag = inf_pagina($layout, (string) get_post_meta($post->ID, '_inferium_slug', true));
     if (!$pag) return;
     $pag['borrador'] = $post->post_status !== 'publish';
+    if (in_array($layout, ['legal', 'privacidad', 'cookies'], true)) $pag['noindex'] = true;
     if ($layout === 'inicio' && is_front_page()) $pag['path'] = '/';
     if ($pag['borrador']) nocache_headers();
     status_header(200);
