@@ -33,8 +33,12 @@ function inf_categorias() { return inf_datos('categorias'); }
 function inf_modelos() { return inf_datos('modelos'); }
 function inf_versus() { return inf_datos('versus'); }
 function inf_grupos() { return inf_datos('accesorios'); }
-function inf_guias() { return inf_datos('guias'); }
-function inf_guia($slug) { foreach (inf_guias() as $g) { if ($g['slug'] === $slug) return $g; } return null; }
+/** Guías visibles en listados y enlaces: las programadas ("publicar": "AAAA-MM-DD HH:MM", hora de Madrid) no salen hasta su hora. */
+function inf_guias() {
+    $ahora = new DateTime('now', new DateTimeZone('Europe/Madrid'));
+    return array_values(array_filter(inf_datos('guias'), fn($g) => empty($g['publicar']) || new DateTime($g['publicar'], new DateTimeZone('Europe/Madrid')) <= $ahora));
+}
+function inf_guia($slug) { foreach (inf_datos('guias') as $g) { if ($g['slug'] === $slug) return $g; } return null; }
 function inf_grupo_path($g) { return !empty($g['raiz']) ? '/' . $g['slug'] . '/' : '/componentes/' . $g['slug'] . '/'; }
 function inf_item($id) { foreach (inf_grupos() as $g) { foreach ($g['items'] as $i) { if ($i['id'] === $id) return $i + ['grupo' => $g]; } } return null; }
 function inf_corto($p) { return trim(preg_replace('/^(NVIDIA GeForce|AMD Radeon|NVIDIA|Apple|AMD)\s+|\s*\(.*\)$/u', '', $p['nombre'])); }
