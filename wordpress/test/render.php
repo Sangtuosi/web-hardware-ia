@@ -24,7 +24,7 @@ ok(inf_nota(inf_producto('nvidia-rtx-5090')) === 81, 'nota 5090');
 ok(str_contains(inf_amazon_url(['asin' => 'B000TEST01', 'nombre' => 'x']), '/dp/B000TEST01?tag=PENDIENTE-21'), 'tag en enlace');
 
 $out = $argv[1] ?? sys_get_temp_dir() . '/inferium-out';
-$pags = [['proximamente', '', '/'], ['inicio', '', '/inicio/'], ['catalogo', '', '/hardware/'], ['comparador', '', '/comparador/'], ['calculadora', '', '/calculadora-vram/'], ['como-elegimos', '', '/como-elegimos/'], ['aviso', '', '/aviso-afiliacion/'], ['cookies', '', '/cookies/']];
+$pags = [['proximamente', '', '/'], ['inicio', '', '/inicio/'], ['catalogo', '', '/hardware/'], ['comparador', '', '/comparador/'], ['calculadora', '', '/calculadora-vram/'], ['como-elegimos', '', '/como-elegimos/'], ['aviso', '', '/aviso-afiliacion/'], ['cookies', '', '/cookies/'], ['legal', '', '/aviso-legal/'], ['privacidad', '', '/politica-de-privacidad/']];
 foreach (inf_categorias() as $c) $pags[] = ['categoria', $c['slug'], '/' . $c['slug'] . '/'];
 foreach (inf_productos() as $p) $pags[] = ['ficha', $p['slug'], inf_ficha_path($p)];
 $pags[] = ['componentes', '', '/componentes/'];

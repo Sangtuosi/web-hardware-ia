@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) { exit; }
 
 const INF_NOMBRE = 'Inferium';
 const INF_AUTOR = 'Ernesto Santos';
-const INF_VERSION = '1.6.0';
+const INF_VERSION = '1.7.0';
 const INF_REL = 'sponsored nofollow noopener';
 
 /* ---------- Datos ---------- */
@@ -264,7 +264,7 @@ function inf_documento($a) {
     $h .= '<footer class="pie"><div class="wrap pie-grid"><div>' . $logo . '<p class="muted pie-txt">Hardware para IA local elegido por VRAM, ancho de banda y lo que de verdad cabe. Sin precios copiados: siempre el actual en Amazon.</p></div><div><p class="pie-tit">Categorías</p><ul>';
     foreach (inf_categorias() as $c) $h .= '<li><a href="' . esc_url(inf_url('/' . $c['slug'] . '/')) . '">' . inf_e($c['nombre']) . '</a></li>';
     $h .= '<li><a href="' . esc_url(inf_url('/portatiles-para-ia/')) . '">Portátiles para IA</a></li><li><a href="' . esc_url(inf_url('/componentes/')) . '">Componentes</a></li><li><a href="' . esc_url(inf_url('/hardware/')) . '">Todo el catálogo</a></li></ul></div><div><p class="pie-tit">Herramientas</p><ul><li><a href="' . esc_url(inf_url('/comparador/')) . '">Comparador</a></li><li><a href="' . esc_url(inf_url('/calculadora-vram/')) . '">Calculadora de VRAM</a></li></ul>'
-        . '<p class="pie-tit pie-tit2">Confianza</p><ul><li><a href="' . esc_url(inf_url('/como-elegimos/')) . '">Cómo elegimos</a></li><li><a href="' . esc_url(inf_url('/aviso-afiliacion/')) . '">Aviso de afiliación</a></li><li><a href="' . esc_url(inf_url('/cookies/')) . '">Privacidad y cookies</a></li></ul></div></div>'
+        . '<p class="pie-tit pie-tit2">Confianza</p><ul><li><a href="' . esc_url(inf_url('/como-elegimos/')) . '">Cómo elegimos</a></li><li><a href="' . esc_url(inf_url('/aviso-afiliacion/')) . '">Aviso de afiliación</a></li><li><a href="' . esc_url(inf_url('/aviso-legal/')) . '">Aviso legal</a></li><li><a href="' . esc_url(inf_url('/politica-de-privacidad/')) . '">Política de privacidad</a></li><li><a href="' . esc_url(inf_url('/cookies/')) . '">Cookies</a></li></ul></div></div>'
         . '<div class="wrap legal">En calidad de Afiliado de Amazon, ' . INF_NOMBRE . ' obtiene ingresos por las compras adscritas que cumplen los requisitos aplicables. Los precios cambian a diario: consulta siempre el actual en Amazon.</div></footer>' . $cookies
         . '<script src="' . esc_url(inf_asset('inferium.js')) . '" defer></script></body></html>';
     return $h;
@@ -579,6 +579,32 @@ function inf_pag_texto($layout) {
             . '<h2>Tokens por segundo</h2><p>Al generar texto, cada token obliga a leer todos los pesos de la memoria. Por eso estimamos: tokens/s ≈ ancho de banda × 0,7 ÷ tamaño de los pesos. El 0,7 recoge que ningún equipo aprovecha el 100 % de su ancho de banda. <b>Es una estimación, no un benchmark</b>: cuando tengamos medidas reales lo indicaremos en cada ficha.</p>'
             . '<h2>Lo que no</h2><p>Toda ficha tiene un apartado "Lo que no" con sus limitaciones reales: fuente necesaria, software que no va, versiones con menos memoria y mismo nombre. Si un producto no tiene nada malo que contar, no lo hemos mirado bien.</p>'
             . '<h2>Precios</h2><p>No los copiamos: cambian varias veces al día. Todos los botones llevan al precio actual en Amazon.</p>';
+    } elseif ($layout === 'legal') {
+        $path = '/aviso-legal/'; $tit = 'Aviso legal';
+        $title = 'Aviso legal | ' . INF_NOMBRE;
+        $desc = 'Titular, condiciones de uso y responsabilidad de ' . INF_NOMBRE . '.';
+        $txt = '<h2>Titular del sitio web</h2><p>El titular de ' . INF_NOMBRE . ' (inferium.es) es ' . INF_AUTOR . '. Puedes escribirle a <a href="mailto:contacto@inferium.es">contacto@inferium.es</a>.</p>'
+            . '<h2>Qué es este sitio</h2><p>' . INF_NOMBRE . ' es una web informativa sobre hardware para inteligencia artificial en local: tarjetas gráficas, mini PC, Mac y componentes. Ofrece fichas, comparativas y herramientas de cálculo. No vende productos: te lleva a Amazon.es para que los compres allí.</p>'
+            . '<h2>Enlaces de afiliado</h2><p>' . INF_NOMBRE . ' participa en el Programa de Afiliados de Amazon EU. Los enlaces a Amazon llevan nuestro identificador de afiliado y, si compras desde ellos, recibimos una comisión sin coste adicional para ti. Más detalles en el <a href="' . esc_url(inf_url('/aviso-afiliacion/')) . '">aviso de afiliación</a>.</p>'
+            . '<h2>Uso del sitio</h2><p>Al navegar por esta web aceptas usarla de forma lícita y sin dañar su funcionamiento. El contenido es informativo: las especificaciones proceden de fuentes oficiales y las cifras de velocidad (tokens por segundo) son estimaciones propias, no pruebas medidas. Antes de comprar, comprueba siempre las características y el precio en la ficha del producto en Amazon.</p>'
+            . '<h2>Responsabilidad</h2><p>Hacemos lo posible por mantener los datos al día, pero no garantizamos que no haya errores ni que un producto siga disponible o mantenga su precio en Amazon. No nos hacemos responsables de las decisiones de compra ni de los contenidos de webs de terceros a las que enlazamos.</p>'
+            . '<h2>Propiedad intelectual</h2><p>Los textos, el diseño, las ilustraciones y el código de ' . INF_NOMBRE . ' son de su titular. Las marcas y nombres de productos pertenecen a sus propietarios y se citan solo con fines informativos. Puedes citar fragmentos enlazando a la página original.</p>'
+            . '<h2>Ley aplicable</h2><p>Este aviso se rige por la legislación española. Para cualquier conflicto serán competentes los juzgados y tribunales que correspondan según la normativa vigente.</p>'
+            . '<p class="muted">Última actualización: 12/11/2026.</p>';
+    } elseif ($layout === 'privacidad') {
+        $path = '/politica-de-privacidad/'; $tit = 'Política de privacidad';
+        $title = 'Política de privacidad | ' . INF_NOMBRE;
+        $desc = 'Qué datos trata ' . INF_NOMBRE . ', con qué finalidad y cómo ejercer tus derechos.';
+        $txt = '<h2>Responsable</h2><p>' . INF_AUTOR . ', titular de ' . INF_NOMBRE . ' (inferium.es). Contacto: <a href="mailto:contacto@inferium.es">contacto@inferium.es</a>.</p>'
+            . '<h2>Qué datos tratamos</h2><p>La web no tiene registro ni formularios. Solo tratamos datos en dos casos:</p><ul>'
+            . '<li><b>Medición de visitas</b>, si aceptas las cookies. Usamos <b>Google Analytics 4</b> (Google) para saber qué páginas se visitan y de dónde llegan, y <b>Microsoft Clarity</b> (Microsoft) para ver dónde se hace clic y hasta dónde se lee, con mapas de calor y grabaciones de la sesión. Clarity oculta por defecto el contenido sensible. En Analytics anonimizamos la dirección IP.</li>'
+            . '<li><b>Correo electrónico</b>, si nos escribes a contacto@inferium.es. Lo usamos solo para responderte.</li></ul>'
+            . '<h2>Base legal</h2><p>Para la medición, tu consentimiento, que das al aceptar el aviso de cookies y puedes retirar cuando quieras. Para responder a tu correo, tu propia petición.</p>'
+            . '<h2>Quién más recibe datos</h2><p>Google y Microsoft actúan como proveedores de las herramientas de medición. Pueden tratar datos fuera del Espacio Económico Europeo con las garantías que indican en sus propias políticas de privacidad. Si compras en Amazon desde uno de nuestros enlaces, Amazon aplica su política de privacidad y de cookies.</p>'
+            . '<h2>Cuánto tiempo los conservamos</h2><p>Los datos de Analytics se conservan como máximo 14 meses. Los de Clarity, según los plazos de la herramienta. Tu correo, el tiempo necesario para atender tu consulta.</p>'
+            . '<h2>Tus derechos</h2><p>Puedes pedir acceso, rectificación, supresión, oposición, limitación o portabilidad de tus datos escribiendo a <a href="mailto:contacto@inferium.es">contacto@inferium.es</a>. Si crees que no hemos tratado bien tus datos, puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es).</p>'
+            . '<h2>Cookies</h2><p>En la página de <a href="' . esc_url(inf_url('/cookies/')) . '">privacidad y cookies</a> puedes ver cuáles usamos y cambiar tu elección.</p>'
+            . '<p class="muted">Última actualización: 12/11/2026.</p>';
     } elseif ($layout === 'cookies') {
         $path = '/cookies/'; $tit = 'Privacidad y cookies';
         $title = 'Privacidad y cookies | ' . INF_NOMBRE;
@@ -587,7 +613,7 @@ function inf_pag_texto($layout) {
             . '<h2>Cookies de medición</h2><p>Si las aceptas en el aviso, usamos Google Analytics 4 y Microsoft Clarity para saber qué páginas se visitan, en qué se hace clic y hasta dónde se lee, y así mejorar la web. Si las rechazas, no se carga ninguna de las dos. Tu elección se guarda en tu navegador.</p>'
             . '<p><button class="btn btn-sm" type="button" data-cookies-reset>Cambiar mi elección de cookies</button></p>'
             . '<h2>Enlaces a Amazon</h2><p>Los botones de compra llevan a Amazon.es con nuestro identificador de afiliado. Al llegar allí, Amazon aplica su propia política de privacidad y de cookies.</p>'
-            . '<h2>Responsable</h2><p>El responsable de esta web es ' . INF_AUTOR . '. Puedes ver cómo nos financiamos en el <a href="' . esc_url(inf_url('/aviso-afiliacion/')) . '">aviso de afiliación</a>.</p>';
+            . '<h2>Responsable</h2><p>El responsable de esta web es ' . INF_AUTOR . '. Más datos en la <a href="' . esc_url(inf_url('/politica-de-privacidad/')) . '">política de privacidad</a> y en el <a href="' . esc_url(inf_url('/aviso-legal/')) . '">aviso legal</a>.</p>';
     } else {
         $path = '/aviso-afiliacion/'; $tit = 'Aviso de afiliación';
         $title = 'Aviso de afiliación | ' . INF_NOMBRE;
@@ -625,7 +651,7 @@ function inf_pagina($layout, $slug = '') {
         case 'grupo': return inf_pag_grupo($slug);
         case 'componentes': return inf_pag_componentes();
         case 'calculadora': return inf_pag_calculadora();
-        case 'como-elegimos': case 'aviso': case 'cookies': return inf_pag_texto($layout);
+        case 'como-elegimos': case 'aviso': case 'cookies': case 'legal': case 'privacidad': return inf_pag_texto($layout);
     }
     return null;
 }
