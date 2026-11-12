@@ -804,6 +804,7 @@ add_action('template_redirect', function () {
     $pag = inf_pagina($layout, (string) get_post_meta($post->ID, '_inferium_slug', true));
     if (!$pag) return;
     $pag['borrador'] = $post->post_status !== 'publish';
+    if ($layout === 'inicio' && is_front_page()) $pag['path'] = '/';
     if ($pag['borrador']) nocache_headers();
     status_header(200);
     header('Content-Type: text/html; charset=utf-8');
