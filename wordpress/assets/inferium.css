@@ -433,3 +433,22 @@ table.modelos tr.no td { opacity: 0.5; }
   .p-comparador:not(.p-versus) .tabla-wrap { position: relative; }
   .p-comparador:not(.p-versus) .tabla-wrap::after { content: 'Desliza para ver más →'; position: sticky; left: 0; display: block; padding: 8px 4px 0; font: 500 12px var(--f-mono); color: var(--copper-hi); }
 }
+
+/* Fotos en listados: guías, componentes y versus */
+.item:hover .foto-prod img { transform: scale(1.05) translateY(-2px); }
+.guia-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.guia-mini { display: block; aspect-ratio: 16 / 9; overflow: hidden; }
+.guia-mini img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(.92) contrast(1.03); transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+.guia-card:hover .guia-mini img { transform: scale(1.06); }
+.guia-cuerpo { padding: 20px 22px 22px; display: grid; gap: 10px; flex: 1; align-content: start; }
+.guia-cuerpo .btn { margin-top: 6px; }
+.guia-meta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.mosaico { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+.mosaico span { position: relative; aspect-ratio: 1; border-radius: var(--r-md); background: radial-gradient(circle at 50% 30%, #fff, #f1ede6 80%); box-shadow: 0 8px 18px #0007; overflow: hidden; }
+.mosaico img { position: absolute; inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); object-fit: contain; mix-blend-mode: multiply; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+.item:hover .mosaico img { transform: scale(1.07); }
+.vs-fotos { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; margin: 8px 0 28px; }
+.vs-fotos a { display: grid; gap: 10px; text-align: center; text-decoration: none; color: var(--text, inherit); font-weight: 600; min-width: 0; }
+.vs-fotos .foto-prod { aspect-ratio: 4 / 3; --pad: 16px; }
+.vs-x { font-size: 22px; color: var(--copper-hi); text-shadow: 0 0 18px #c8794a88; }
+@media (max-width: 600px) { .vs-fotos { gap: 8px; } .vs-fotos .foto-prod { --pad: 8px; } .vs-x { font-size: 16px; } .vs-fotos a { font-size: 14px; } }

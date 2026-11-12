@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) { exit; }
 
 const INF_NOMBRE = 'Inferium';
 const INF_AUTOR = 'Ernesto Santos';
-const INF_VERSION = '1.9.2';
+const INF_VERSION = '1.9.3';
 const INF_REL = 'sponsored nofollow noopener';
 
 /* ---------- Datos ---------- */
@@ -554,7 +554,8 @@ function inf_pag_versus($slug) {
     $fin = $gan ? 'Para IA nos quedamos con la ' . inf_corto($gan) . ' (nota ' . max($nta, $ntb) . ' frente a ' . min($nta, $ntb) . '). Si la diferencia de precio en Amazon es grande, la otra sigue siendo una compra sensata.'
         : 'Para IA es un empate técnico (nota ' . $nta . ' las dos): elige la que esté más barata hoy en Amazon.';
     $h1 = $na . ' vs ' . $nb . ': cuál comprar';
-    $bd = '<main class="wrap"><section class="cabecera">' . inf_migas($migas) . '<h1>' . inf_e($h1) . '</h1><p class="muted intro">Comparativa de la ' . inf_e($a['nombre']) . ' y la ' . inf_e($b2['nombre']) . ' pensando en inteligencia artificial en local: memoria, velocidad, consumo y qué modelos mueve cada ' . ($esGpu ? 'tarjeta gráfica' : 'equipo') . '.</p></section>';
+    $bd = '<main class="wrap"><section class="cabecera">' . inf_migas($migas) . '<h1>' . inf_e($h1) . '</h1><p class="muted intro">Comparativa de la ' . inf_e($a['nombre']) . ' y la ' . inf_e($b2['nombre']) . ' pensando en inteligencia artificial en local: memoria, velocidad, consumo y qué modelos mueve cada ' . ($esGpu ? 'tarjeta gráfica' : 'equipo') . '.</p></section>'
+        . '<section class="vs-fotos"><a href="' . esc_url(inf_url(inf_ficha_path($a))) . '">' . inf_foto_prod($a, true, false) . '<span>' . inf_e($na) . '</span></a><b class="vs-x mono" aria-hidden="true">VS</b><a href="' . esc_url(inf_url(inf_ficha_path($b2))) . '">' . inf_foto_prod($b2, true, false) . '<span>' . inf_e($nb) . '</span></a></section>';
     $bd .= '<div class="tabla-wrap surface"><table class="tabla"><thead><tr><th scope="col">Dato</th><th scope="col"><a href="' . esc_url(inf_url(inf_ficha_path($a))) . '">' . inf_e($na) . '</a></th><th scope="col"><a href="' . esc_url(inf_url(inf_ficha_path($b2))) . '">' . inf_e($nb) . '</a></th></tr></thead><tbody>';
     foreach ($filas as $f) {
         $ma1 = $mb1 = false;
@@ -579,8 +580,18 @@ function inf_pag_versus($slug) {
     ];
     $bd .= inf_faq($faq) . '<section class="block"><div class="sec-head"><h2>Las dos, frente a frente</h2><p>¿Quieres añadir una tercera? Usa el <a href="' . esc_url(inf_url('/comparador/')) . '">comparador de GPU</a> o la <a href="' . esc_url(inf_url('/calculadora-vram/')) . '">calculadora de VRAM</a>.</p></div><div class="grid-cards">' . inf_card($a) . inf_card($b2) . '</div></section>'
         . '<p class="mini muted">Tokens/s: estimación propia. Enlaces de afiliado de Amazon.</p></main>';
+    $desc = $na . ' vs ' . $nb . ': comparativa de memoria, velocidad, consumo y modelos de IA que mueve cada una. Veredicto claro y precio actual en Amazon.';
+    if (!$esGpu) {
+        // Equipos (Mac, mini PC): concordancia en masculino.
+        $m = [];
+        foreach (array_unique([$a['nombre'], $b2['nombre'], $na, $nb]) as $n) { $m['de la ' . $n] = 'del ' . $n; $m['la ' . $n] = 'el ' . $n; $m['La ' . $n] = 'El ' . $n; }
+        $m += ['gana la ' => 'gana el ', 'quedamos con la ' => 'quedamos con el ', 'Las dos' => 'Los dos', 'las dos' => 'los dos', 'La otra' => 'El otro', 'la otra' => 'el otro', 'cada una' => 'cada uno', 'elige la que' => 'elige el que', 'más barata' => 'más barato', 'con ella llegas' => 'con él llegas'];
+        $fx = fn($t) => strtr($t, $m);
+        $bd = $fx($bd); $desc = $fx($desc);
+        $faq = array_map(fn($q) => [$fx($q[0]), $fx($q[1])], $faq);
+    }
     return ['title' => $na . ' vs ' . $nb . ': comparativa y cuál comprar | ' . INF_NOMBRE,
-        'description' => $na . ' vs ' . $nb . ': comparativa de memoria, velocidad, consumo y modelos de IA que mueve cada una. Veredicto claro y precio actual en Amazon.',
+        'description' => $desc,
         'path' => $path, 'clase' => 'p-comparador p-versus', 'body' => $bd, 'schema' => [inf_schema_migas($migas), inf_schema_faq($faq)]];
 }
 
@@ -632,7 +643,9 @@ function inf_pag_componentes() {
     $migas = [['/', 'Inicio'], ['/componentes/', 'Componentes']];
     $b = '<main class="wrap"><section class="cabecera">' . inf_migas($migas) . '<h1>Componentes para montar un PC de IA</h1><p class="muted intro">La tarjeta gráfica es la pieza clave, pero no trabaja sola. Aquí tienes lo que la acompaña: fuente de alimentación, memoria RAM, disco SSD, procesador, placa base, caja y refrigeración, además de las GPU externas para portátil y mini PC. Todo elegido entre los más vendidos de Amazon.</p></section>' . inf_foto_amb_html(inf_foto_amb('componentes', 'hero'), 'sec-portada', false) . '<div class="grid-cards">';
     foreach (inf_grupos() as $g) {
-        $b .= '<article class="surface pad item reveal"><h2><a href="' . esc_url(inf_url(inf_grupo_path($g))) . '">' . inf_e($g['nombre']) . '</a></h2><p class="muted">' . inf_e($g['descripcion']) . '</p><a class="btn btn-sm" href="' . esc_url(inf_url(inf_grupo_path($g))) . '">Ver ' . count($g['items']) . ' opciones</a></article>';
+        $mos = ''; $k = 0;
+        foreach ($g['items'] as $i) { if ($k < 3 && inf_foto_url($i['asin'] ?? '')) { $mos .= '<span><img src="' . esc_url(inf_foto_url($i['asin'])) . '" alt="" loading="lazy" decoding="async"></span>'; $k++; } }
+        $b .= '<article class="surface pad item reveal">' . ($mos ? '<a class="mosaico" href="' . esc_url(inf_url(inf_grupo_path($g))) . '" tabindex="-1" aria-hidden="true">' . $mos . '</a>' : '') . '<h2><a href="' . esc_url(inf_url(inf_grupo_path($g))) . '">' . inf_e($g['nombre']) . '</a></h2><p class="muted">' . inf_e($g['descripcion']) . '</p><a class="btn btn-sm" href="' . esc_url(inf_url(inf_grupo_path($g))) . '">Ver ' . count($g['items']) . ' opciones</a></article>';
     }
     $b .= '</div>' . inf_texto_seo('componentes') . '</main>';
     return ['title' => 'Componentes para un PC de IA: fuente, RAM, SSD y más | ' . INF_NOMBRE, 'description' => 'Todo lo que acompaña a la tarjeta gráfica en un PC de IA: fuentes de alimentación, memoria RAM, SSD, procesadores, placas base, cajas y GPU externas.', 'path' => '/componentes/', 'clase' => 'p-grupo', 'body' => $b, 'schema' => [inf_schema_migas($migas)]];
@@ -766,6 +779,13 @@ function inf_pag_guia($slug) {
     return ['title' => $g['seoTitulo'] . ' | ' . INF_NOMBRE, 'description' => $g['descripcion'], 'path' => $path, 'clase' => 'p-guia', 'og' => 'article', 'imagen' => $art['image'] ?? '', 'body' => $b, 'schema' => [inf_schema_migas($migas), $art, inf_schema_faq($g['faq'])]];
 }
 
+/** Minutos de lectura de una guía (unas 220 palabras por minuto). */
+function inf_guia_minutos($g) {
+    $t = wp_json_encode([$g['entradilla'] ?? '', $g['resumen'] ?? [], $g['secciones'] ?? [], $g['faq'] ?? []], JSON_UNESCAPED_UNICODE);
+    $n = count(preg_split('/\s+/u', trim(preg_replace('/[\[\]{}",:]+/u', ' ', $t)), -1, PREG_SPLIT_NO_EMPTY));
+    return max(3, (int) round($n / 220));
+}
+
 function inf_pag_guias() {
     $migas = [['/', 'Inicio'], ['/guias/', 'Guías']];
     $b = '<main class="wrap"><section class="cabecera">' . inf_migas($migas) . '<h1>Guías de hardware para IA local</h1><p class="muted intro">Explicaciones claras y comparativas honestas para elegir tarjeta gráfica, mini PC o Mac si quieres ejecutar inteligencia artificial en tu propio ordenador. Sin jerga innecesaria: cuando hay que ser técnico lo somos, y cuando basta con decirlo fácil, también.</p></section><div class="grid-cards">';
@@ -773,7 +793,10 @@ function inf_pag_guias() {
     usort($gs, fn($x, $y) => [$x['tipo'] === 'comparativa' ? 0 : 1, $y['fecha']] <=> [$y['tipo'] === 'comparativa' ? 0 : 1, $x['fecha']]);
     foreach ($gs as $g) {
         $u = esc_url(inf_url('/guias/' . $g['slug'] . '/'));
-        $b .= '<article class="surface pad item reveal"><span class="badge badge-copper">' . ($g['tipo'] === 'comparativa' ? 'Comparativa' : 'Guía') . '</span><h2><a href="' . $u . '">' . inf_e($g['titulo']) . '</a></h2><p class="muted">' . inf_md($g['descripcion']) . '</p><a class="btn btn-sm" href="' . $u . '">Leer</a></article>';
+        $f = inf_foto_amb($g['slug'], 'hero');
+        $min = inf_guia_minutos($g);
+        $b .= '<article class="surface item guia-card reveal">' . ($f ? '<a class="guia-mini" href="' . $u . '" tabindex="-1" aria-hidden="true"><img src="' . esc_url(content_url('/inferium/img/a/' . $f['archivo'])) . '" alt="" width="' . (int) $f['w'] . '" height="' . (int) $f['h'] . '" loading="lazy" decoding="async"></a>' : '')
+            . '<div class="guia-cuerpo"><div class="guia-meta"><span class="badge badge-copper">' . ($g['tipo'] === 'comparativa' ? 'Comparativa' : 'Guía') . '</span><span class="mini muted mono">' . $min . ' min de lectura</span></div><h2><a href="' . $u . '">' . inf_e($g['titulo']) . '</a></h2><p class="muted">' . inf_md($g['descripcion']) . '</p><a class="btn btn-sm" href="' . $u . '">Leer la guía</a></div></article>';
     }
     $b .= '</div></main>';
     return ['title' => 'Guías de hardware para IA local: GPU, mini PC y Mac | ' . INF_NOMBRE, 'description' => 'Guías y comparativas para elegir tarjeta gráfica, mini PC o Mac para ejecutar inteligencia artificial en local: VRAM, Ollama, eGPU y más.', 'path' => '/guias/', 'clase' => 'p-guias', 'body' => $b, 'schema' => [inf_schema_migas($migas)]];
@@ -895,7 +918,8 @@ function inf_pagina($layout, $slug = '') {
 /* ---------- Enganche con WordPress ---------- */
 
 /** Fichas retiradas: redirección permanente a su sustituta. */
-function inf_retiradas() { return ['/tarjetas-graficas/amd-radeon-rx-7600-xt-16gb/' => '/tarjetas-graficas/amd-radeon-rx-9060-xt-16gb/']; }
+function inf_retiradas() { return ['/tarjetas-graficas/amd-radeon-rx-7600-xt-16gb/' => '/tarjetas-graficas/amd-radeon-rx-9060-xt-16gb/',
+        '/mac/apple-mac-mini-m4/' => '/mac/apple-mac-mini-m5-pro/', '/comparador/mac-mini-m4-vs-mac-mini-m6/' => '/comparador/mac-mini-m6-vs-mac-mini-m5-pro/']; }
 
 add_action('template_redirect', function () {
     $ruta = trailingslashit((string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH));

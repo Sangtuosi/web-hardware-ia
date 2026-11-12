@@ -502,7 +502,7 @@
     "vram": 16,
     "memoria": "Unificada",
     "anchoBanda": 153,
-    "consumo": 155,
+    "consumo": 70,
     "fuente": 0,
     "ecosistema": "Metal",
     "lanzamiento": 2026,
@@ -519,36 +519,36 @@
       "Con 153 GB/s es más lento que una gráfica dedicada"
     ],
     "paraQuien": "Para empezar con IA local sin montar un PC: modelos de 8B, asistentes de código ligeros y uso diario.",
-    "revisado": "2026-11-11"
+    "revisado": "2026-11-12"
   },
   {
-    "slug": "apple-mac-mini-m4",
-    "nombre": "Apple Mac mini M4",
+    "slug": "apple-mac-mini-m5-pro",
+    "nombre": "Apple Mac mini M5 Pro",
     "marca": "Apple",
     "tipo": "mac",
     "categorias": [],
-    "asin": "B0DLBVTSQ7",
-    "vram": 16,
+    "asin": "B0HGGL3M5N",
+    "vram": 24,
     "memoria": "Unificada",
-    "anchoBanda": 120,
-    "consumo": 155,
+    "anchoBanda": 307,
+    "consumo": 145,
     "fuente": 0,
     "ecosistema": "Metal",
-    "lanzamiento": 2024,
-    "gama": "entrada",
-    "resumen": "La forma más barata de entrar en la IA local con un Mac: 16 GB unificados y precio de mini PC.",
+    "lanzamiento": 2026,
+    "gama": "media",
+    "resumen": "El Mac mini rápido: chip M5 Pro con 24 GB de memoria unificada y el doble de ancho de banda que el Mac mini M6.",
     "pros": [
-      "El Mac más barato que mueve modelos de 8B con soltura",
-      "16 GB unificados de serie y cero ruido",
-      "Mismo software que los Mac caros: MLX, Ollama, LM Studio"
+      "24 GB unificados de serie: modelos de 14B con holgura y de 24B en Q4",
+      "307 GB/s de ancho de banda: genera texto mucho más rápido que el Mac mini M6",
+      "Tamaño de Mac mini y casi sin ruido, con MLX, Ollama y LM Studio"
     ],
     "loQueNo": [
-      "120 GB/s de ancho de banda: el más lento de los Mac actuales",
-      "16 GB sin posibilidad de ampliar después",
-      "Ya tiene sucesor, el Mac mini M6, algo más rápido"
+      "Con 24 GB, los modelos de 32B no caben con holgura: para eso hay que configurar 48 o 64 GB al comprar",
+      "La memoria no se amplía después",
+      "Sin CUDA: parte del software de imagen y entrenamiento no funciona o va peor"
     ],
-    "paraQuien": "Para quien quiere probar la IA local gastando lo mínimo y de paso tener un ordenador de diario.",
-    "revisado": "2026-11-11"
+    "paraQuien": "Para quien quiere un Mac pequeño y silencioso que vaya rápido con modelos de 8B a 24B, por ejemplo para programar con un asistente local.",
+    "revisado": "2026-11-12"
   },
   {
     "slug": "apple-mac-studio-m5-max",

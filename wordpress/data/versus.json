@@ -8,5 +8,5 @@
   { "slug": "rtx-5070-ti-vs-rtx-5080", "a": "nvidia-rtx-5070-ti", "b": "nvidia-rtx-5080" },
   { "slug": "rtx-5080-vs-rtx-5090", "a": "nvidia-rtx-5080", "b": "nvidia-rtx-5090" },
   { "slug": "rtx-5090-vs-rtx-pro-6000", "a": "nvidia-rtx-5090", "b": "nvidia-rtx-pro-6000-blackwell" },
-  { "slug": "mac-mini-m4-vs-mac-mini-m6", "a": "apple-mac-mini-m4", "b": "apple-mac-mini-m6" }
+  { "slug": "mac-mini-m6-vs-mac-mini-m5-pro", "a": "apple-mac-mini-m6", "b": "apple-mac-mini-m5-pro" }
 ]

@@ -83,7 +83,7 @@ T["mac"] = [
   "La memoria del Mac no se puede ampliar después, así que es la decisión más importante al comprarlo. Con 16 GB usas modelos de 8B, con 24 a 32 GB modelos de 14B a 24B, y con 64 a 128 GB modelos de 32B a 70B. Lo detallamos en [mejor Mac para IA local](/guias/mejor-mac-para-ia-local/).",
  ]],
  ["Mac mini o Mac Studio para IA", [
-  "El Mac mini es la opción de entrada: pequeño, barato dentro del mundo Apple y suficiente para modelos pequeños y medianos. El Mac Studio con chip Max multiplica el ancho de banda y admite mucha más memoria, así que es el que tiene sentido para modelos grandes. Puedes comparar el [Mac mini M4 con el Mac mini M6](/comparador/mac-mini-m4-vs-mac-mini-m6/) o ver los datos de cada uno en sus fichas.",
+  "El Mac mini es la opción de entrada: pequeño, barato dentro del mundo Apple y suficiente para modelos pequeños y medianos. El Mac Studio con chip Max multiplica el ancho de banda y admite mucha más memoria, así que es el que tiene sentido para modelos grandes. Entre medias está el Mac mini con M5 Pro, que casi duplica el ancho de banda del M6 sin dejar de ser un mini. Puedes comparar el [Mac mini M6 con el Mac mini M5 Pro](/comparador/mac-mini-m6-vs-mac-mini-m5-pro/) o ver los datos de cada uno en sus fichas.",
  ]],
 ]
 T["placas-ia"] = [
