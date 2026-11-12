@@ -42,7 +42,7 @@ T["tarjetas-graficas"] = [
 T["gpu-baratas-para-ia"] = [
  ["Qué es una GPU barata para IA", [
   "Una tarjeta gráfica barata para IA no es la que menos cuesta, sino la que más **VRAM** te da por cada euro. Para usar modelos de lenguaje en tu ordenador, una tarjeta modesta con 12 o 16 GB rinde mucho más que una tarjeta de juegos con 8 GB, porque los modelos tienen que caber en la memoria para ir rápido.",
-  "En esta lista están las tarjetas gráficas asequibles que mejor equilibran memoria, consumo y compatibilidad: desde la RTX 3060 de 12 GB, que sigue siendo de las más vendidas, hasta las de 16 GB como la RTX 5060 Ti, la RX 9060 XT o la RX 7600 XT.",
+  "En esta lista están las tarjetas gráficas asequibles que mejor equilibran memoria, consumo y compatibilidad: desde la RTX 3060 de 12 GB, que sigue siendo de las más vendidas, hasta las de 16 GB como la RTX 5060 Ti o la RX 9060 XT.",
  ]],
  ["Cuánta VRAM necesitas si tienes poco presupuesto", [
   "Con 8 GB puedes probar la IA local con modelos de 7 a 8B. Con 12 GB ya usas modelos de 14B en Q4, algo justos, y generas imágenes con SDXL. Con 16 GB trabajas cómodo con modelos de 14B con contexto largo y también con Flux. Si tu presupuesto lo permite, **16 GB es el mejor punto de partida**. Comprueba qué modelos te caben en la [calculadora de VRAM](/calculadora-vram/).",

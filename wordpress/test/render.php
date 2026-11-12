@@ -53,7 +53,7 @@ foreach ($pags as [$l, $s, $path]) {
     file_put_contents($out . $path . 'index.html', $html);
 }
 ok(inf_ficha_path(inf_producto('nvidia-rtx-5090')) === '/tarjetas-graficas/nvidia-rtx-5090/', 'ruta por tipo');
-ok(count(inf_de_categoria(inf_categoria('tarjetas-graficas'))) === 17, '17 GPU');
+ok(count(inf_de_categoria(inf_categoria('tarjetas-graficas'))) === 16, '16 GPU');
 foreach (inf_categorias() as $c) ok(count(inf_de_categoria($c)) > 0, 'categoria vacia ' . $c['slug']);
 $GLOBALS['opts'] += ['inferium_gsc' => 'abc_123-XYZ', 'inferium_ga4' => 'G-TEST12345'];
 $pub = inf_documento(inf_pagina('inicio')); $bor = inf_documento(inf_pagina('inicio') + ['borrador' => true]);

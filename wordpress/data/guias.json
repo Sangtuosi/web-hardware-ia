@@ -1746,7 +1746,6 @@
             "ul": [
               "**RTX 5080 (16 GB).** Muy rápida y muy vendida, pero con la misma VRAM que opciones más baratas. Es una tarjeta potente pensada más para jugar que para IA; solo compensa si necesitas velocidad pura con modelos que ya caben en 16 GB.",
               "**RTX 5070 (12 GB).** Rápida, pero 12 GB se quedan justos para modelos de 14B con contexto largo.",
-              "**RX 7600 XT (16 GB).** Una forma muy económica de tener 16 GB con AMD. Va más lenta que la RX 9060 XT.",
               "**RTX 5060 (8 GB) y RTX 3050 (6 GB).** Aparecen mucho en las más vendidas por su precio, pero 8 y 6 GB limitan a modelos de 8B o menos. Solo para probar.",
               "**Tarjetas profesionales (RTX PRO, Radeon AI PRO).** Mucha más VRAM, de 24 a 96 GB, para modelos de 32B a 70B. Están en [GPU profesionales para IA](/gpu-profesionales-para-ia/)."
             ]

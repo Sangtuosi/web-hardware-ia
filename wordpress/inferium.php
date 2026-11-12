@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) { exit; }
 
 const INF_NOMBRE = 'Inferium';
 const INF_AUTOR = 'Ernesto Santos';
-const INF_VERSION = '1.9.1';
+const INF_VERSION = '1.9.2';
 const INF_REL = 'sponsored nofollow noopener';
 
 /* ---------- Datos ---------- */
@@ -893,6 +893,15 @@ function inf_pagina($layout, $slug = '') {
 }
 
 /* ---------- Enganche con WordPress ---------- */
+
+/** Fichas retiradas: redirección permanente a su sustituta. */
+function inf_retiradas() { return ['/tarjetas-graficas/amd-radeon-rx-7600-xt-16gb/' => '/tarjetas-graficas/amd-radeon-rx-9060-xt-16gb/']; }
+
+add_action('template_redirect', function () {
+    $ruta = trailingslashit((string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH));
+    $ret = inf_retiradas();
+    if (isset($ret[$ruta])) { wp_safe_redirect(home_url($ret[$ruta]), 301); exit; }
+}, 0);
 
 add_action('template_redirect', function () {
     if (!is_page()) return;
