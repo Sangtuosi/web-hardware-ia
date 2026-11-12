@@ -28,7 +28,7 @@
           var frag = document.createDocumentFragment();
           n.textContent.split(/(\s+)/).forEach(function (w) {
             if (!w || /^\s+$/.test(w)) { frag.appendChild(document.createTextNode(w)); return; }
-            var s = document.createElement('span'); s.className = 'ch'; s.style.animationDelay = (k++ * 60) + 'ms'; s.textContent = w; frag.appendChild(s);
+            var s = document.createElement('span'); s.className = 'ch'; s.style.animationDelay = (k++ * 35) + 'ms'; s.textContent = w; frag.appendChild(s);
           });
           n.parentNode.replaceChild(frag, n);
         } else if (n.nodeType === 1) split(n);
@@ -207,4 +207,16 @@
 (function () {
   var d = document.querySelector('.toc details');
   if (d && window.matchMedia && matchMedia('(min-width: 900px)').matches) d.open = true;
+})();
+(function () {
+  var cs = document.querySelectorAll('[data-cuenta]');
+  if (!cs.length || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return; io.unobserve(e.target);
+      var el = e.target, fin = +el.dataset.cuenta, t0 = performance.now();
+      (function paso(t) { var p = Math.min(1, (t - t0) / 1200); el.textContent = Math.round(fin * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(paso); })(t0);
+    });
+  }, { threshold: 0.6 });
+  cs.forEach(function (c) { io.observe(c); });
 })();

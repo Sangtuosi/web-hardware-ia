@@ -157,7 +157,7 @@ function inf_foto_amb($clave, $uso) {
 }
 function inf_foto_amb_html($f, $clase = '', $lazy = true) {
     if (!$f) return '';
-    return '<figure class="foto-amb ' . $clase . ' reveal"><img src="' . esc_url(content_url('/inferium/img/a/' . $f['archivo'])) . '" alt="' . esc_attr($f['alt']) . '" width="' . (int) $f['w'] . '" height="' . (int) $f['h'] . '"' . ($lazy ? ' loading="lazy" decoding="async"' : ' fetchpriority="high"') . '>'
+    return '<figure class="foto-amb ' . $clase . ($lazy ? ' reveal' : '') . '"><img src="' . esc_url(content_url('/inferium/img/a/' . $f['archivo'])) . '" alt="' . esc_attr($f['alt']) . '" width="' . (int) $f['w'] . '" height="' . (int) $f['h'] . '"' . ($lazy ? ' loading="lazy" decoding="async"' : ' fetchpriority="high"') . '>'
         . '<figcaption class="mini muted">Foto: <a href="' . esc_url($f['pagina']) . '" rel="noopener" target="_blank">' . inf_e($f['autor']) . ' / ' . inf_e($f['sitio']) . '</a></figcaption></figure>';
 }
 
@@ -217,6 +217,15 @@ function inf_migas($migas) {
     $h = '<nav aria-label="Migas de pan" class="migas"><ol>';
     foreach ($migas as $i => $m) $h .= '<li>' . ($i < count($migas) - 1 ? '<a href="' . esc_url(inf_url($m[0])) . '">' . inf_e($m[1]) . '</a>' : '<span aria-current="page">' . inf_e($m[1]) . '</span>') . '</li>';
     return $h . '</ol></nav>';
+}
+
+/** Texto largo de posicionamiento (data/textos.json), con H2 y enlaces internos. */
+function inf_texto_seo($clave, $clase = '') {
+    $T = inf_datos('textos');
+    if (empty($T[$clave])) return '';
+    $h = '<section class="seo-texto ' . $clase . '">';
+    foreach ($T[$clave] as [$h2, $ps]) { $h .= '<div class="seo-bloque reveal"><h2>' . inf_md($h2) . '</h2>'; foreach ($ps as $x) $h .= '<p>' . inf_md($x) . '</p>'; $h .= '</div>'; }
+    return $h . '</section>';
 }
 
 function inf_faq($faq, $titulo = 'Preguntas frecuentes') {
@@ -310,11 +319,19 @@ function inf_pag_inicio() {
         ['¿Cómo gana dinero ' . INF_NOMBRE . '?', 'Con enlaces de afiliado de Amazon: si compras desde ellos, Amazon nos paga una pequeña comisión sin que tú pagues más. No cobramos a marcas por aparecer.'],
         ['¿De dónde salen los tokens por segundo?', 'Son una estimación propia a partir del ancho de banda y el tamaño del modelo, no un benchmark. La fórmula está publicada en "Cómo elegimos".'],
     ];
-    $b = '<header class="hero"><canvas id="die" aria-hidden="true"></canvas><div class="wrap hero-in">'
-        . '<h1><span class="neon">Corre la IA</span> en tu propia máquina</h1>'
-        . '<p class="lede">GPU, mini PCs y Mac elegidos por lo que importa para la IA: <strong>VRAM, ancho de banda y qué modelo te cabe</strong>. Nada de FPS en juegos.</p>'
-        . '<div class="ctas"><a class="btn btn-copper" href="' . esc_url(inf_url('/calculadora-vram/')) . '">¿Qué modelo cabe en mi GPU?</a><a class="btn" href="' . esc_url(inf_url('/comparador/')) . '">Comparar GPU</a></div>'
-        . '</div></header><main>';
+    $n = ['gpu' => count(inf_de_categoria(inf_categoria('tarjetas-graficas'))), 'eq' => count(inf_productos()), 'gu' => count(inf_guias()), 'vs' => count(inf_versus())];
+    $b = '<header class="hero hero-inicio"><canvas id="die" aria-hidden="true"></canvas><div class="wrap hero-grid"><div class="hero-in">'
+        . '<span class="badge badge-copper">Hardware para IA local · ' . date('Y') . '</span>'
+        . '<h1><span class="neon">IA local</span> <span class="h1-sub">Tarjetas gráficas, mini PC y Mac para correr la IA en tu ordenador</span></h1>'
+        . '<p class="lede">Las GPU y los ordenadores más vendidos de Amazon.es comparados por lo que importa para la IA: <strong>VRAM, ancho de banda y qué modelo te cabe</strong>. Nada de FPS en juegos.</p>'
+        . '<div class="ctas"><a class="btn btn-copper" href="' . esc_url(inf_url('/calculadora-vram/')) . '">¿Qué modelo cabe en mi GPU?</a><a class="btn" href="' . esc_url(inf_url('/tarjetas-graficas/')) . '">Ver tarjetas gráficas</a></div>'
+        . '</div><div class="escena" aria-hidden="true"><div class="gpu3d"><i class="pcb2"></i><i class="pcb"></i><i class="mem"></i><i class="base2"></i><i class="base"></i><i class="die2"></i><i class="die"></i><i class="luz"></i><i class="sello">IA</i></div></div></div>'
+        . '<div class="wrap"><ul class="contadores">'
+        . '<li class="surface"><b data-cuenta="' . $n['gpu'] . '">' . $n['gpu'] . '</b><span>tarjetas gráficas analizadas</span></li>'
+        . '<li class="surface"><b data-cuenta="' . $n['eq'] . '">' . $n['eq'] . '</b><span>equipos con nota IA</span></li>'
+        . '<li class="surface"><b data-cuenta="' . $n['vs'] . '">' . $n['vs'] . '</b><span>comparativas cara a cara</span></li>'
+        . '<li class="surface"><b data-cuenta="' . $n['gu'] . '">' . $n['gu'] . '</b><span>guías para empezar</span></li>'
+        . '</ul></div></header><main>';
     $b .= '<section class="block"><div class="wrap"><div class="sec-head"><h2>Elige por lo que quieres hacer</h2></div><div class="cats">';
     foreach (inf_categorias() as $i => $c) {
         $n = count(inf_de_categoria($c));
@@ -329,6 +346,7 @@ function inf_pag_inicio() {
     $b .= '<section class="block sin-top"><div class="wrap"><div class="sec-head"><h2>Los más completos para IA</h2><p>Ordenados por lo que más pesa en IA: VRAM, ancho de banda y ecosistema de software. <a href="' . esc_url(inf_url('/como-elegimos/')) . '">Así puntuamos</a>.</p></div><div class="grid-cards">';
     foreach ($dest as $i => $p) $b .= inf_card($p, $i + 1);
     $b .= '</div></div></section>';
+    $b .= '<div class="wrap">' . inf_texto_seo('inicio', 'seo-inicio') . '</div>';
     $b .= '<section class="block sin-top"><div class="wrap pasos-wrap"><div><h2>Cómo elegir en cinco pasos</h2><ol class="pasos">'
         . '<li><div><b>Decide qué modelo quieres correr.</b> Un chatbot de 8B, uno de 70B o generar imágenes con Flux piden máquinas muy distintas.</div></li>'
         . '<li><div><b>Calcula la VRAM.</b> Usa la <a href="' . esc_url(inf_url('/calculadora-vram/')) . '">calculadora</a>: en Q4, un modelo ocupa en GB algo más de la mitad de sus miles de millones de parámetros.</div></li>'
@@ -337,7 +355,7 @@ function inf_pag_inicio() {
         . '<li><div><b>Revisa "lo que no".</b> Cada ficha te dice qué no hace bien: fuente necesaria, tamaño, software. Léelo antes de comprar.</div></li>'
         . '</ol></div>' . inf_faq($faq) . '</div></section></main>';
     return [
-        'title' => INF_NOMBRE . ' | GPU, tarjetas gráficas y ordenadores para IA local',
+        'title' => 'Tarjetas gráficas (GPU) y ordenadores para IA local en ' . date('Y') . ' | ' . INF_NOMBRE,
         'description' => 'Comparativa de GPU (tarjetas gráficas), mini PCs y Mac para IA local: VRAM, ancho de banda, modelos que caben y lo que no te cuentan. Calculadora de VRAM y comparador.',
         'path' => '/', 'clase' => 'p-inicio', 'body' => $b,
         'schema' => [['@context' => 'https://schema.org', '@type' => 'WebSite', 'name' => INF_NOMBRE, 'url' => home_url('/'), 'inLanguage' => 'es-ES'], inf_schema_lista($dest), inf_schema_faq($faq)],
@@ -354,7 +372,7 @@ function inf_pag_categoria($slug) {
     $b = '<main class="wrap"><section class="cabecera">' . inf_migas($migas) . '<h1>' . inf_e($cat['titulo']) . '</h1><p class="intro">' . inf_e($cat['intro']) . '</p>'
         . '<div class="meta"><span class="badge">' . count($lista) . ' equipos</span><span class="badge">Datos revisados el ' . inf_fecha($rev) . '</span><a class="badge badge-copper" href="' . esc_url(inf_url('/comparador/')) . '">Comparar</a></div></section>' . inf_foto_amb_html(inf_foto_amb($slug, 'hero'), 'sec-portada', false) . '<div class="grid-cards">';
     foreach ($lista as $i => $p) $b .= inf_card($p, $i + 1);
-    $b .= '</div><section class="block">' . inf_faq($cat['faq']) . '</section><section class="otras"><h2>Otras categorías</h2><div class="chips">';
+    $b .= '</div>' . inf_texto_seo($slug) . '<section class="block">' . inf_faq($cat['faq']) . '</section><section class="otras"><h2>Otras categorías</h2><div class="chips">';
     foreach (inf_categorias() as $c) { if ($c['slug'] !== $slug) $b .= '<a class="chip" href="' . esc_url(inf_url('/' . $c['slug'] . '/')) . '">' . inf_e($c['nombre']) . '</a>'; }
     $b .= '</div></section><p class="aviso muted">Enlaces de afiliado de Amazon: si compras desde ellos recibimos una comisión sin coste para ti. No mostramos precios porque cambian a diario.</p></main>';
     return ['title' => $cat['titulo'] . ' | ' . INF_NOMBRE, 'description' => $cat['descripcion'], 'path' => "/$slug/", 'clase' => 'p-categoria', 'body' => $b,
@@ -372,6 +390,47 @@ function inf_pag_catalogo() {
         'schema' => [inf_schema_migas($migas), inf_schema_lista($lista)]];
 }
 
+/** Análisis en texto de cada ficha, escrito a partir de sus datos (sin inventar nada). */
+function inf_analisis($p) {
+    $c = inf_corto($p); $mem = $p['tipo'] === 'grafica' ? 'VRAM' : 'memoria unificada'; $la = $p['tipo'] === 'grafica' ? 'la' : 'el';
+    $caben = []; $nocaben = [];
+    foreach (inf_modelos() as $m) { if ($m['tipo'] !== 'texto') continue; if (inf_cabe($m, $p['vram'])) $caben[] = $m['nombre']; else $nocaben[] = $m['nombre']; }
+    $img = array_values(array_filter(inf_modelos(), fn($m) => $m['tipo'] === 'imagen' && inf_cabe($m, $p['vram'])));
+    $m8 = null; foreach (inf_modelos() as $m) { if (($m['params'] ?? 0) == 8 && $m['tipo'] === 'texto') $m8 = $m; }
+    $tps = $m8 ? inf_tokens($p, $m8) : null;
+    $mismos = array_values(array_filter(inf_productos(), fn($x) => $x['tipo'] === $p['tipo']));
+    $bws = array_column($mismos, 'anchoBanda'); sort($bws); $pos = array_search($p['anchoBanda'], $bws);
+    $tramo = $pos === false || count($bws) < 3 ? '' : ($pos >= count($bws) * 2 / 3 ? 'de los más altos' : ($pos < count($bws) / 3 ? 'de los más bajos' : 'intermedio'));
+    $tipoN = ['grafica' => 'las tarjetas gráficas', 'mini-pc' => 'los mini PC', 'mac' => 'los Mac', 'edge' => 'las placas de IA'][$p['tipo']] ?? 'los equipos';
+    $h = '<section class="surface pad analisis"><h2>' . inf_e($c) . ' para IA: análisis</h2>';
+    $h .= '<h3>Qué modelos de IA puedes usar</h3><p>' . ucfirst($la) . ' ' . inf_e($p['nombre']) . ' tiene ' . (int) $p['vram'] . ' GB de ' . $mem . (strcasecmp($p['memoria'], 'unificada') ? ' ' . inf_e($p['memoria']) : '') . '. '
+        . ($caben ? 'En cuantización Q4, con margen para el contexto, caben ' . inf_e(implode(', ', $caben)) . '. ' : 'Con esta memoria solo caben modelos muy pequeños. ')
+        . ($nocaben ? 'Se quedan fuera ' . inf_e(implode(', ', $nocaben)) . ', que necesitan más memoria. ' : '')
+        . ($img ? 'Para generar imágenes, caben ' . inf_e(implode(' y ', array_column($img, 'nombre'))) . '.' : 'Para generar imágenes con SDXL o Flux se queda corta de memoria.') . '</p>';
+    $h .= '<h3>Velocidad estimada</h3><p>Su ancho de banda es de ' . (int) $p['anchoBanda'] . ' GB/s' . ($tramo ? ', ' . $tramo . ' entre ' . $tipoN . ' de nuestro catálogo' : '') . '. '
+        . ($tps ? 'Con Llama 3.1 de 8B estimamos unos ' . $tps . ' tokens por segundo' . ($tps >= 40 ? ', una velocidad muy cómoda para chatear y programar.' : ($tps >= 15 ? ', suficiente para leer la respuesta a medida que se escribe.' : ', algo lento para uso diario.')) : '')
+        . ' Es una estimación propia a partir del ancho de banda, no una prueba medida, pero sirve para comparar equipos entre sí.</p>';
+    if ($p['tipo'] === 'grafica') {
+        $h .= '<h3>Consumo y fuente de alimentación</h3><p>Consume hasta ' . (int) $p['consumo'] . ' W y la fuente recomendada es de ' . (int) $p['fuente'] . ' W. Si tu fuente actual no llega, tienes las más vendidas en <a href="' . esc_url(inf_url('/componentes/fuentes-de-alimentacion/')) . '">fuentes de alimentación</a>. Comprueba también que la tarjeta cabe en tu caja antes de comprar.</p>';
+    } else {
+        $h .= '<h3>Consumo</h3><p>El equipo completo consume como máximo unos ' . (int) $p['consumo'] . ' W, muy por debajo de un PC con una tarjeta gráfica potente. Es una buena opción para tener un modelo de IA siempre encendido.</p>';
+    }
+    $soft = ['CUDA' => 'Funciona con CUDA, el ecosistema de NVIDIA, así que Ollama, LM Studio, ComfyUI y casi cualquier herramienta de IA la reconocen sin configuración extra.',
+        'ROCm' => 'Usa ROCm, la plataforma de AMD. Con Ollama y LM Studio los modelos de texto funcionan en las tarjetas compatibles; para generar imágenes hay que configurar algo más. Revisa la lista de compatibles del programa que vayas a usar.',
+        'Metal' => 'Usa Metal, la plataforma de Apple. Ollama y LM Studio funcionan en macOS y aprovechan la memoria unificada del chip.'][$p['ecosistema']] ?? '';
+    if ($soft) $h .= '<h3>Software compatible</h3><p>' . $soft . ' Si estás empezando, lee <a href="' . esc_url(inf_url('/guias/que-es-ollama-como-instalarlo-requisitos/')) . '">qué es Ollama y cómo instalarlo</a>.</p>';
+    usort($mismos, fn($a, $b) => [$a['vram'], $a['anchoBanda']] <=> [$b['vram'], $b['anchoBanda']]);
+    $i = array_search($p['slug'], array_column($mismos, 'slug'));
+    $menos = $i > 0 ? $mismos[$i - 1] : null; $mas = $i < count($mismos) - 1 ? $mismos[$i + 1] : null;
+    if ($menos || $mas) {
+        $h .= '<h3>Alternativas</h3><p>';
+        if ($mas) $h .= 'Si necesitas más memoria o velocidad, mira ' . $la . ' <a href="' . esc_url(inf_url(inf_ficha_path($mas))) . '">' . inf_e($mas['nombre']) . '</a> (' . (int) $mas['vram'] . ' GB). ';
+        if ($menos) $h .= 'Si te sobra con menos, ' . $la . ' <a href="' . esc_url(inf_url(inf_ficha_path($menos))) . '">' . inf_e($menos['nombre']) . '</a> (' . (int) $menos['vram'] . ' GB) es una opción más modesta. ';
+        $h .= 'Puedes enfrentarlas en el <a href="' . esc_url(inf_url('/comparador/')) . '">comparador</a>.</p>';
+    }
+    return $h . '</section>';
+}
+
 function inf_pag_ficha($slug) {
     $p = inf_producto($slug);
     if (!$p) return null;
@@ -381,7 +440,7 @@ function inf_pag_ficha($slug) {
     $radar = inf_puntuaciones($p); $nota = inf_nota($p);
     $tipo = ['grafica' => 'Tarjeta gráfica (GPU)', 'mini-pc' => 'Mini PC', 'mac' => 'Mac', 'edge' => 'Placa de IA'][$p['tipo']] ?? 'Equipo';
     $b = '<main class="wrap"><div class="migas-top">' . inf_migas($migas) . '</div><section class="ficha"><div class="visual">' . inf_chip_art($p, true) . '</div><div class="datos">'
-        . '<span class="badge badge-copper">' . $tipo . ', ' . inf_e($p['ecosistema']) . '</span><h1>' . inf_e($p['nombre']) . '</h1><p class="resumen">' . inf_e($p['resumen']) . '</p>'
+        . '<span class="badge badge-copper">' . $tipo . ', ' . inf_e($p['ecosistema']) . '</span><h1>' . inf_e($p['nombre']) . ' <span class="h1-ia">para IA</span></h1><p class="resumen">' . inf_e($p['resumen']) . '</p>'
         . '<div class="estrella surface"><div><span class="eyebrow">Memoria para IA</span><div class="gb"><b>' . (int) $p['vram'] . '</b><span>GB ' . inf_e($p['memoria']) . '</span></div></div><div class="nota"><span class="eyebrow">Nota IA</span><b class="copper-text">' . $nota . '</b></div></div>'
         . inf_btn_amazon($p) . '<p class="mini muted">Precio y disponibilidad en Amazon. Cambian a diario.</p></div></section>';
     $b .= '<section class="bloques"><div class="surface pad"><h2>Puntuación</h2>' . inf_radar($radar) . '<p class="mini muted">Fórmulas publicadas en <a href="' . esc_url(inf_url('/como-elegimos/')) . '">Cómo elegimos</a>.</p></div>'
@@ -400,6 +459,7 @@ function inf_pag_ficha($slug) {
         . '<div><dt>Ancho de banda</dt><dd>' . (int) $p['anchoBanda'] . ' GB/s</dd></div><div><dt>Consumo</dt><dd>' . (int) $p['consumo'] . ' W' . ($p['tipo'] !== 'grafica' ? ' (equipo completo)' : '') . '</dd></div>'
         . ($p['fuente'] > 0 ? '<div><dt>Fuente recomendada</dt><dd>' . (int) $p['fuente'] . ' W</dd></div>' : '')
         . '<div><dt>Software de IA</dt><dd>' . inf_e($p['ecosistema']) . '</dd></div><div><dt>Lanzamiento</dt><dd>' . (int) $p['lanzamiento'] . '</dd></div><div><dt>Datos revisados</dt><dd>' . inf_fecha($p['revisado']) . '</dd></div></dl></section>';
+    $b .= inf_analisis($p);
     $b .= inf_cruzada($p);
     $vs = array_values(array_filter(inf_versus(), fn($v) => $v['a'] === $slug || $v['b'] === $slug));
     if ($vs) {
@@ -413,7 +473,7 @@ function inf_pag_ficha($slug) {
     $prod = ['@context' => 'https://schema.org', '@type' => 'Product', 'image' => inf_foto_url($p['asin'] ?? '') ?: null, 'name' => $p['nombre'], 'brand' => ['@type' => 'Brand', 'name' => $p['marca']], 'description' => $p['resumen'], 'url' => home_url($path),
         'review' => ['@type' => 'Review', 'author' => ['@type' => 'Person', 'name' => INF_AUTOR], 'datePublished' => $p['revisado'], 'reviewBody' => $p['paraQuien'], 'reviewRating' => ['@type' => 'Rating', 'ratingValue' => $nota, 'bestRating' => 100, 'worstRating' => 0]]];
     if (empty($prod['image'])) unset($prod['image']);
-    return ['title' => inf_corto($p) . ': precio, opiniones y qué IA mueve' . ($p['tipo'] === 'grafica' ? ' esta GPU | ' : ' | ') . INF_NOMBRE,
+    return ['title' => inf_corto($p) . ' para IA: análisis, ' . ($p['tipo'] === 'grafica' ? 'VRAM' : 'memoria') . ' y qué modelos mueve | ' . INF_NOMBRE,
         'description' => $p['nombre'] . ' para IA local: ' . $p['vram'] . ' GB de ' . $p['memoria'] . ', ' . $p['anchoBanda'] . ' GB/s. Qué modelos caben, tokens por segundo estimados y lo que no hace bien.',
         'path' => $path, 'clase' => 'p-ficha', 'og' => 'product', 'imagen' => inf_foto_url($p['asin'] ?? ''), 'body' => $b, 'schema' => [inf_schema_migas($migas), $prod]];
 }
@@ -574,7 +634,7 @@ function inf_pag_componentes() {
     foreach (inf_grupos() as $g) {
         $b .= '<article class="surface pad item reveal"><h2><a href="' . esc_url(inf_url(inf_grupo_path($g))) . '">' . inf_e($g['nombre']) . '</a></h2><p class="muted">' . inf_e($g['descripcion']) . '</p><a class="btn btn-sm" href="' . esc_url(inf_url(inf_grupo_path($g))) . '">Ver ' . count($g['items']) . ' opciones</a></article>';
     }
-    $b .= '</div></main>';
+    $b .= '</div>' . inf_texto_seo('componentes') . '</main>';
     return ['title' => 'Componentes para un PC de IA: fuente, RAM, SSD y más | ' . INF_NOMBRE, 'description' => 'Todo lo que acompaña a la tarjeta gráfica en un PC de IA: fuentes de alimentación, memoria RAM, SSD, procesadores, placas base, cajas y GPU externas.', 'path' => '/componentes/', 'clase' => 'p-grupo', 'body' => $b, 'schema' => [inf_schema_migas($migas)]];
 }
 

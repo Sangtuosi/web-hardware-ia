@@ -1,0 +1,168 @@
+{
+ "inicio": [
+  [
+   "Qué hardware necesitas para usar IA en tu ordenador",
+   [
+    "Usar inteligencia artificial en local significa ejecutar modelos como Llama, Qwen, Mistral o Gemma en tu propio equipo, sin suscripciones, sin límites de mensajes y sin enviar tus datos a ninguna nube. Para que funcione con fluidez no hace falta un superordenador, pero sí elegir bien una pieza: la **tarjeta gráfica (GPU)** o, si prefieres un equipo compacto, un **mini PC** o un **Mac** con mucha memoria.",
+    "En Inferium comparamos ese hardware con los datos que de verdad importan para la IA. No hablamos de fotogramas por segundo en juegos, sino de **cuánta VRAM tiene cada tarjeta, qué ancho de banda de memoria ofrece y qué modelos de IA caben en ella**. Con esos tres datos puedes saber antes de comprar si una GPU te sirve para chatear con un modelo de 8B, programar con uno de 32B o generar imágenes con Flux."
+   ]
+  ],
+  [
+   "La VRAM: el dato que decide qué modelos de IA puedes usar",
+   [
+    "La VRAM es la memoria de la tarjeta gráfica. Un modelo de lenguaje tiene que cargarse entero en ella para ir rápido; si no cabe, el ordenador tira de la RAM normal y la velocidad cae en picado. Por eso, para IA, una tarjeta gráfica modesta con 16 GB suele ser mejor compra que una tarjeta de juegos muy rápida con 8 GB.",
+    "Una regla sencilla: en cuantización Q4, la más habitual, un modelo ocupa en GB unas dos terceras partes de sus miles de millones de parámetros, más un margen para la conversación. Un modelo de 8B necesita unos 5,4 GB; uno de 14B, unos 9,5 GB; uno de 32B, unos 21,6 GB; y uno de 70B, unos 47 GB. Lo explicamos con calma en la guía [qué es la VRAM y cuánta necesitas](/guias/que-es-la-vram-cuanta-necesitas-ia/) y puedes comprobarlo con tu tarjeta en la [calculadora de VRAM](/calculadora-vram/)."
+   ]
+  ],
+  [
+   "Tarjetas gráficas para IA: NVIDIA, AMD y GPU profesionales",
+   [
+    "La forma más rápida de ejecutar IA en casa es un PC de sobremesa con una buena tarjeta gráfica. **NVIDIA** es la opción más compatible gracias a CUDA: casi todo el software de IA funciona a la primera, y es la recomendada si vas a generar imágenes con Stable Diffusion o Flux. **AMD** suele ofrecer más VRAM por el mismo dinero y funciona bien con modelos de texto en Ollama y LM Studio, aunque conviene comprobar la compatibilidad. Te lo contamos en [NVIDIA o AMD para IA](/guias/nvidia-o-amd-para-ia-cuda-rocm/).",
+    "Para empezar en serio, el punto dulce está en las tarjetas de **16 GB**, como la RTX 5060 Ti o la RX 9060 XT, que están entre las más vendidas de Amazon.es. Si necesitas modelos de 32B, la RTX 5090 llega a 32 GB. Y si trabajas con modelos de 70B, las [GPU profesionales para IA](/gpu-profesionales-para-ia/) ofrecen de 24 a 96 GB. Tienes todas ordenadas en [tarjetas gráficas para IA](/tarjetas-graficas/) y las más asequibles en [GPU baratas para IA](/gpu-baratas-para-ia/)."
+   ]
+  ],
+  [
+   "Mini PC y Mac para IA: mucha memoria en poco espacio",
+   [
+    "Si no quieres un PC grande, hay otra vía. Los **mini PC con Ryzen AI Max+ 395** y los **Mac con chip Apple** usan memoria unificada: el procesador y la gráfica comparten la misma memoria, así que un equipo con 64 o 128 GB puede cargar modelos que no caben en ninguna tarjeta gráfica de consumo. A cambio, suelen generar texto más despacio que una GPU potente.",
+    "Son equipos silenciosos, de bajo consumo y perfectos para tener un asistente de IA siempre encendido. Compáralos en [mini PC para IA](/mini-pc/) y [Mac para IA](/mac/), o lee las comparativas [mejor mini PC para IA](/guias/mejor-mini-pc-para-ia/) y [mejor Mac para IA local](/guias/mejor-mac-para-ia-local/)."
+   ]
+  ],
+  [
+   "Cómo elegimos y por qué no ponemos precios",
+   [
+    "Elegimos los productos entre los **más vendidos de Amazon.es**, porque es la mejor señal de lo que de verdad compra la gente, y los ordenamos con nuestra **nota IA**, que combina VRAM, ancho de banda y ecosistema de software. Las velocidades en tokens por segundo son estimaciones propias a partir del ancho de banda, no pruebas de laboratorio, y lo indicamos siempre. Puedes ver la fórmula en [cómo elegimos](/como-elegimos/).",
+    "No mostramos precios porque en Amazon cambian varias veces al día: el botón de cada producto te lleva al precio actual. Si compras desde nuestros enlaces, Amazon nos paga una pequeña comisión sin que tú pagues más, y eso nos permite seguir comparando hardware sin cobrar a las marcas."
+   ]
+  ],
+  [
+   "Empieza aquí si es tu primera vez",
+   [
+    "Si es tu primer contacto con la IA local, el camino más corto es este: instala [Ollama](/guias/que-es-ollama-como-instalarlo-requisitos/) o [LM Studio](/guias/lm-studio-o-ollama/), prueba un modelo pequeño de 8B y mira con `ollama ps` si cabe entero en tu tarjeta. Si se te queda corto, la [mejor tarjeta gráfica calidad precio para IA](/guias/mejor-tarjeta-grafica-calidad-precio-ia/) te dice qué comprar según lo que quieras hacer. Y si tienes un portátil, quizá te interese una [tarjeta gráfica externa](/guias/tarjeta-grafica-externa-egpu-portatil/)."
+   ]
+  ]
+ ],
+ "tarjetas-graficas": [
+  [
+   "Cómo elegir una tarjeta gráfica para IA",
+   [
+    "Elegir una tarjeta gráfica para inteligencia artificial no se parece a elegir una para jugar. Lo primero es la **VRAM**, porque decide qué modelos caben: con 8 GB te mueves en modelos de 8B, con 12 a 16 GB llegas a modelos de 14B con margen, con 24 a 32 GB a modelos de 24B y 32B, y para modelos de 70B necesitas 48 GB o más. Lo segundo es el **ancho de banda**, que marca cuántas palabras por segundo genera el modelo. Y lo tercero, el **ecosistema de software**: CUDA en NVIDIA o ROCm en AMD.",
+    "Por eso en esta lista las tarjetas gráficas están ordenadas por memoria y ancho de banda, no por rendimiento en juegos. Una RTX 5080 muy rápida en juegos tiene los mismos 16 GB que una RTX 5060 Ti, así que carga los mismos modelos; la diferencia está en la velocidad. Si tienes dudas sobre cuánta memoria necesitas, usa la [calculadora de VRAM](/calculadora-vram/) o lee [qué es la VRAM](/guias/que-es-la-vram-cuanta-necesitas-ia/)."
+   ]
+  ],
+  [
+   "GPU NVIDIA o AMD para inteligencia artificial",
+   [
+    "Las tarjetas gráficas NVIDIA (la serie GeForce RTX y las RTX PRO) son la opción más compatible para IA gracias a CUDA, y la más cómoda si vas a generar imágenes con Stable Diffusion, ComfyUI o Flux. Las tarjetas AMD Radeon suelen dar más VRAM por el mismo presupuesto y funcionan bien con modelos de texto en Ollama y LM Studio en los modelos compatibles. Lo comparamos con detalle en [NVIDIA o AMD para IA](/guias/nvidia-o-amd-para-ia-cuda-rocm/)."
+   ]
+  ],
+  [
+   "Las tarjetas gráficas más vendidas, con datos de IA",
+   [
+    "Todas las GPU de esta página aparecen entre las más vendidas o mejor valoradas de Amazon.es. En cada ficha tienes la VRAM, el ancho de banda, el consumo, la fuente de alimentación recomendada, el modelo de IA más grande que cabe y una estimación de tokens por segundo, además de un apartado de **lo que no te cuentan**: lo que esa tarjeta no hace bien. Para decidir entre dos, usa el [comparador de GPU](/comparador/) o mira nuestras comparativas directas como [RTX 5060 Ti vs RX 9060 XT](/comparador/rx-9060-xt-vs-rtx-5060-ti/).",
+    "Antes de comprar revisa tres cosas: que la versión exacta tenga la VRAM que buscas (algunas tarjetas existen en 8 y 16 GB con casi el mismo nombre), que tu [fuente de alimentación](/componentes/fuentes-de-alimentacion/) tenga potencia suficiente y que la tarjeta quepa en tu caja. Si buscas una recomendación directa según tu presupuesto, la tienes en [mejor tarjeta gráfica calidad precio para IA](/guias/mejor-tarjeta-grafica-calidad-precio-ia/)."
+   ]
+  ]
+ ],
+ "gpu-baratas-para-ia": [
+  [
+   "Qué es una GPU barata para IA",
+   [
+    "Una tarjeta gráfica barata para IA no es la que menos cuesta, sino la que más **VRAM** te da por cada euro. Para usar modelos de lenguaje en tu ordenador, una tarjeta modesta con 12 o 16 GB rinde mucho más que una tarjeta de juegos con 8 GB, porque los modelos tienen que caber en la memoria para ir rápido.",
+    "En esta lista están las tarjetas gráficas asequibles que mejor equilibran memoria, consumo y compatibilidad: desde la RTX 3060 de 12 GB, que sigue siendo de las más vendidas, hasta las de 16 GB como la RTX 5060 Ti, la RX 9060 XT o la RX 7600 XT."
+   ]
+  ],
+  [
+   "Cuánta VRAM necesitas si tienes poco presupuesto",
+   [
+    "Con 8 GB puedes probar la IA local con modelos de 7 a 8B. Con 12 GB ya usas modelos de 14B en Q4, algo justos, y generas imágenes con SDXL. Con 16 GB trabajas cómodo con modelos de 14B con contexto largo y también con Flux. Si tu presupuesto lo permite, **16 GB es el mejor punto de partida**. Comprueba qué modelos te caben en la [calculadora de VRAM](/calculadora-vram/).",
+    "Las tarjetas baratas suelen consumir poco y funcionan con fuentes de 550 a 650 W, así que en muchos casos no tendrás que cambiar nada más del ordenador. Si dudas entre marcas, lee [NVIDIA o AMD para IA](/guias/nvidia-o-amd-para-ia-cuda-rocm/), y si quieres la recomendación final, la tienes en [mejor tarjeta gráfica calidad precio](/guias/mejor-tarjeta-grafica-calidad-precio-ia/)."
+   ]
+  ]
+ ],
+ "gpu-para-stable-diffusion": [
+  [
+   "Qué tarjeta gráfica necesitas para Stable Diffusion y Flux",
+   [
+    "Generar imágenes con IA tiene necesidades algo distintas a chatear con un modelo de texto. **SDXL** funciona bien con 8 GB de VRAM, mientras que **Flux.1 dev** en FP8 pide unos 16 GB para ir con soltura. Además, casi todas las herramientas de imagen (ComfyUI, Forge, Automatic1111) y sus extensiones están pensadas para CUDA, por eso en esta lista predominan las tarjetas gráficas NVIDIA.",
+    "La potencia de cálculo sí importa aquí más que en los modelos de texto: una tarjeta más rápida genera cada imagen en menos segundos. Por eso, a igual VRAM, una RTX 5070 Ti o una RTX 5080 generan imágenes bastante más deprisa que una RTX 5060 Ti."
+   ]
+  ],
+  [
+   "Consejos para generar imágenes en local",
+   [
+    "Si vas a trabajar con resoluciones altas, varios modelos LoRA o vídeo, apunta a 16 GB o más. Con 12 GB puedes empezar con SDXL sin problema. Comprueba también que tu ordenador tiene al menos 32 GB de RAM y un SSD rápido, porque los modelos de imagen pesan varios GB y se cargan a menudo. Tienes la [memoria RAM](/componentes/memoria-ram-ddr5/) y los [SSD NVMe](/componentes/ssd-nvme/) más vendidos en componentes.",
+    "Si aún dudas entre NVIDIA y AMD, lee [NVIDIA o AMD para IA](/guias/nvidia-o-amd-para-ia-cuda-rocm/): para imagen, NVIDIA te ahorra muchas horas de configuración."
+   ]
+  ]
+ ],
+ "gpu-profesionales-para-ia": [
+  [
+   "Para quién son las GPU profesionales",
+   [
+    "Las tarjetas gráficas profesionales, como las NVIDIA RTX PRO Blackwell o la AMD Radeon AI PRO R9700, están pensadas para estaciones de trabajo: llevan entre 24 y 96 GB de VRAM y están diseñadas para trabajar muchas horas seguidas. Son las que compran estudios de 3D, empresas que ejecutan modelos de IA en sus propios servidores y desarrolladores que trabajan con modelos de 70B o más.",
+    "Su gran ventaja es la memoria. Con 48 GB cabe Llama 3.3 de 70B en Q4, y con 96 GB caben modelos aún mayores o varios modelos a la vez. Si solo necesitas modelos de hasta 32B, una RTX 5090 de consumo suele ser mejor compra."
+   ]
+  ],
+  [
+   "Qué mirar antes de comprar una GPU profesional",
+   [
+    "Fíjate en la VRAM y en el formato: algunas son de tipo turbina, que expulsan el aire por detrás y permiten montar varias en el mismo equipo. Revisa la [fuente de alimentación](/componentes/fuentes-de-alimentacion/) y la ventilación de la caja. Si quieres ver cómo se compara con la gama de consumo, tienes [RTX 5090 vs RTX PRO 6000](/comparador/rtx-5090-vs-rtx-pro-6000/)."
+   ]
+  ]
+ ],
+ "mini-pc": [
+  [
+   "Qué mini PC sirve para IA y cuál no",
+   [
+    "La mayoría de los mini PC más vendidos son equipos de oficina con procesadores sencillos, perfectos para navegar o trabajar con documentos, pero **no para ejecutar modelos de IA medianos**. Los mini PC que sí sirven llevan un procesador con gráfica integrada potente y mucha memoria unificada, como los que usan el **AMD Ryzen AI Max+ 395** con 64 o 128 GB, o el **NVIDIA DGX Spark**.",
+    "Gracias a esa memoria compartida, un mini PC de 128 GB puede cargar un modelo de 70B que no cabe en ninguna tarjeta gráfica de consumo. A cambio, genera el texto más despacio que una GPU potente, porque su ancho de banda es menor. Lo explicamos en la comparativa [mejor mini PC para IA](/guias/mejor-mini-pc-para-ia/)."
+   ]
+  ],
+  [
+   "Mini PC o PC con tarjeta gráfica",
+   [
+    "Si quieres velocidad con modelos de hasta 14B, una tarjeta gráfica de 16 GB en un PC de sobremesa suele ser mejor opción. Si quieres modelos grandes en un equipo pequeño, silencioso y de bajo consumo, un mini PC con mucha memoria es difícil de batir. Y si tu mini PC tiene OCuLink o Thunderbolt, puedes ampliarlo después con una [tarjeta gráfica externa](/guias/tarjeta-grafica-externa-egpu-portatil/)."
+   ]
+  ]
+ ],
+ "mac": [
+  [
+   "Por qué un Mac sirve para IA local",
+   [
+    "Los Mac con chip Apple usan memoria unificada: el procesador y la gráfica comparten la memoria, así que un Mac con 36, 64 o 128 GB puede usar buena parte de ella para cargar modelos de IA. Son silenciosos, consumen poco y funcionan con Ollama y LM Studio, por eso el **Mac mini** se ha convertido en uno de los ordenadores favoritos para tener un asistente de IA en casa.",
+    "La memoria del Mac no se puede ampliar después, así que es la decisión más importante al comprarlo. Con 16 GB usas modelos de 8B, con 24 a 32 GB modelos de 14B a 24B, y con 64 a 128 GB modelos de 32B a 70B. Lo detallamos en [mejor Mac para IA local](/guias/mejor-mac-para-ia-local/)."
+   ]
+  ],
+  [
+   "Mac mini o Mac Studio para IA",
+   [
+    "El Mac mini es la opción de entrada: pequeño, barato dentro del mundo Apple y suficiente para modelos pequeños y medianos. El Mac Studio con chip Max multiplica el ancho de banda y admite mucha más memoria, así que es el que tiene sentido para modelos grandes. Puedes comparar el [Mac mini M4 con el Mac mini M6](/comparador/mac-mini-m4-vs-mac-mini-m6/) o ver los datos de cada uno en sus fichas."
+   ]
+  ]
+ ],
+ "placas-ia": [
+  [
+   "Qué es una placa de IA",
+   [
+    "Las placas de IA, como la NVIDIA Jetson Orin Nano Super, son pequeños ordenadores con aceleración para inteligencia artificial pensados para proyectos de edge AI: cámaras inteligentes, robots, domótica o asistentes de voz que funcionan sin conexión. Consumen muy poco y se programan con el mismo ecosistema CUDA que las tarjetas gráficas NVIDIA.",
+    "No son la mejor opción para chatear con modelos grandes, porque tienen poca memoria, pero sí para ejecutar modelos pequeños de visión o de voz las 24 horas. Si buscas potencia para modelos de lenguaje, mira las [tarjetas gráficas para IA](/tarjetas-graficas/) o los [mini PC para IA](/mini-pc/)."
+   ]
+  ]
+ ],
+ "componentes": [
+  [
+   "Qué necesitas para montar un PC para IA",
+   [
+    "Un PC para inteligencia artificial gira en torno a la tarjeta gráfica, pero el resto de piezas también cuentan. La **fuente de alimentación** tiene que cubrir el consumo de la GPU con margen: unos 650 W para tarjetas de gama media y 1000 W o más para una RTX 5090. La **memoria RAM** conviene que sea al menos el doble que la VRAM, porque los programas cargan el modelo pasando por ella. Y un **SSD NVMe** rápido hace que los modelos, que pesan decenas de GB, carguen en segundos.",
+    "El procesador importa menos de lo que parece para la IA local, salvo que vayas a usar modelos que no caben en la VRAM. La placa base tiene que tener una ranura PCIe x16 libre y, si piensas usar dos tarjetas, espacio entre ellas. La caja debe tener sitio para tarjetas largas y buena ventilación."
+   ]
+  ],
+  [
+   "Por dónde empezar",
+   [
+    "Si ya tienes un PC y solo vas a cambiar la tarjeta gráfica, revisa primero tu fuente de alimentación: es lo que más a menudo hay que cambiar. Si vas a montarlo desde cero, elige primero la GPU en [tarjetas gráficas para IA](/tarjetas-graficas/) y después el resto de componentes de esta página. Y si tu equipo es un portátil, tienes [portátiles para IA](/portatiles-para-ia/) y [GPU externas (eGPU)](/componentes/gpu-externas-egpu/)."
+   ]
+  ]
+ ]
+}
