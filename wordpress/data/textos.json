@@ -78,6 +78,13 @@
     "Con 8 GB puedes probar la IA local con modelos de 7 a 8B. Con 12 GB ya usas modelos de 14B en Q4, algo justos, y generas imágenes con SDXL. Con 16 GB trabajas cómodo con modelos de 14B con contexto largo y también con Flux. Si tu presupuesto lo permite, **16 GB es el mejor punto de partida**. Comprueba qué modelos te caben en la [calculadora de VRAM](/calculadora-vram/).",
     "Las tarjetas baratas suelen consumir poco y funcionan con fuentes de 550 a 650 W, así que en muchos casos no tendrás que cambiar nada más del ordenador. Si dudas entre marcas, lee [NVIDIA o AMD para IA](/guias/nvidia-o-amd-para-ia-cuda-rocm/), y si quieres la recomendación final, la tienes en [mejor tarjeta gráfica calidad precio](/guias/mejor-tarjeta-grafica-calidad-precio-ia/)."
    ]
+  ],
+  [
+   "Errores al comprar una GPU barata para IA",
+   [
+    "El error más común es fijarse en el nombre y no en la memoria. Varias tarjetas se venden con el mismo nombre en versiones de 8 y 16 GB, y para IA la diferencia es enorme: la de 16 GB carga modelos que la de 8 GB no puede ni abrir. Comprueba siempre los GB en el título del producto antes de comprar.",
+    "El segundo error es descartar una tarjeta de una generación anterior solo por su edad. La RTX 3060 de 12 GB, por ejemplo, sigue siendo una entrada válida porque su memoria es suficiente para modelos de 14B en Q4, aunque vaya más despacio que las tarjetas nuevas. Y el tercero es olvidar el software: si vas a generar imágenes, una NVIDIA te ahorrará muchas horas de configuración."
+   ]
   ]
  ],
  "gpu-para-stable-diffusion": [
@@ -94,6 +101,19 @@
     "Si vas a trabajar con resoluciones altas, varios modelos LoRA o vídeo, apunta a 16 GB o más. Con 12 GB puedes empezar con SDXL sin problema. Comprueba también que tu ordenador tiene al menos 32 GB de RAM y un SSD rápido, porque los modelos de imagen pesan varios GB y se cargan a menudo. Tienes la [memoria RAM](/componentes/memoria-ram-ddr5/) y los [SSD NVMe](/componentes/ssd-nvme/) más vendidos en componentes.",
     "Si aún dudas entre NVIDIA y AMD, lee [NVIDIA o AMD para IA](/guias/nvidia-o-amd-para-ia-cuda-rocm/): para imagen, NVIDIA te ahorra muchas horas de configuración."
    ]
+  ],
+  [
+   "Cuánta VRAM pide cada modelo de imagen",
+   [
+    "Como referencia, SDXL trabaja con soltura en tarjetas de 8 GB y con holgura en las de 12 GB. Flux.1 dev, uno de los modelos de imagen más populares, pide unos 16 GB en FP8 para ir sin recortes, y algo más si añades varios LoRA o subes la resolución. Si te interesa el vídeo generado por IA, las necesidades suben todavía más y conviene ir a 24 o 32 GB.",
+    "Puedes comprobar en la [calculadora de VRAM](/calculadora-vram/) qué modelos de imagen caben en cada tarjeta, y comparar dos modelos concretos en el [comparador](/comparador/)."
+   ]
+  ],
+  [
+   "Qué programa usar para generar imágenes",
+   [
+    "ComfyUI es hoy la herramienta más flexible para trabajar con Stable Diffusion y Flux en local: funciona con nodos y permite flujos de trabajo muy completos. Forge y Automatic1111 tienen una interfaz más sencilla, pensada para empezar. Todos funcionan mejor con tarjetas NVIDIA, y conviene instalarlos en un SSD con espacio, porque los modelos y las imágenes ocupan mucho."
+   ]
   ]
  ],
  "gpu-profesionales-para-ia": [
@@ -108,6 +128,12 @@
    "Qué mirar antes de comprar una GPU profesional",
    [
     "Fíjate en la VRAM y en el formato: algunas son de tipo turbina, que expulsan el aire por detrás y permiten montar varias en el mismo equipo. Revisa la [fuente de alimentación](/componentes/fuentes-de-alimentacion/) y la ventilación de la caja. Si quieres ver cómo se compara con la gama de consumo, tienes [RTX 5090 vs RTX PRO 6000](/comparador/rtx-5090-vs-rtx-pro-6000/)."
+   ]
+  ],
+  [
+   "GPU profesional o varias tarjetas de consumo",
+   [
+    "Otra opción para conseguir mucha VRAM es montar dos tarjetas de consumo en el mismo equipo. Funciona con muchos programas de IA, que reparten el modelo entre las dos, pero exige una placa base con dos ranuras bien separadas, una fuente muy potente y una caja grande. Una sola tarjeta profesional con la misma memoria es más sencilla de montar, consume menos y ocupa menos espacio. Lo decides según tu presupuesto y el espacio que tengas."
    ]
   ]
  ],
@@ -124,6 +150,19 @@
    [
     "Si quieres velocidad con modelos de hasta 14B, una tarjeta gráfica de 16 GB en un PC de sobremesa suele ser mejor opción. Si quieres modelos grandes en un equipo pequeño, silencioso y de bajo consumo, un mini PC con mucha memoria es difícil de batir. Y si tu mini PC tiene OCuLink o Thunderbolt, puedes ampliarlo después con una [tarjeta gráfica externa](/guias/tarjeta-grafica-externa-egpu-portatil/)."
    ]
+  ],
+  [
+   "Cuánta memoria necesita un mini PC para IA",
+   [
+    "En un mini PC con memoria unificada, la memoria total hace de VRAM, aunque el sistema se reserva una parte. Con 32 GB puedes usar modelos de 14B con holgura, con 64 GB llegas a modelos de 32B y con 128 GB caben modelos de 70B. Como la memoria suele ir soldada y no se puede ampliar, elige desde el principio la capacidad que vas a necesitar.",
+    "La velocidad la marca el ancho de banda. Los mini PC con Ryzen AI Max+ 395 de nuestro catálogo tienen {bw:mini-pc-ryzen-ai-max-395} GB/s, bastante por encima de un mini PC normal pero por debajo de una tarjeta gráfica de gama media. Por eso cargan modelos enormes pero los mueven a un ritmo más pausado."
+   ]
+  ],
+  [
+   "Ventajas de un mini PC para tener IA siempre encendida",
+   [
+    "Un mini PC ocupa lo que un libro, hace poco ruido y consume mucho menos que un PC con una tarjeta gráfica potente. Eso lo convierte en un buen servidor de IA para casa: puedes dejarlo encendido con Ollama y usarlo desde el portátil o el móvil de toda la familia. Si te interesa este uso, empieza por [qué es Ollama](/guias/que-es-ollama-como-instalarlo-requisitos/)."
+   ]
   ]
  ],
  "mac": [
@@ -139,6 +178,19 @@
    [
     "El Mac mini es la opción de entrada: pequeño, barato dentro del mundo Apple y suficiente para modelos pequeños y medianos. El Mac Studio con chip Max multiplica el ancho de banda y admite mucha más memoria, así que es el que tiene sentido para modelos grandes. Puedes comparar el [Mac mini M4 con el Mac mini M6](/comparador/mac-mini-m4-vs-mac-mini-m6/) o ver los datos de cada uno en sus fichas."
    ]
+  ],
+  [
+   "Cuánta memoria elegir en un Mac para IA",
+   [
+    "La pregunta clave al comprar un Mac para IA es cuánta memoria elegir, porque no se puede ampliar nunca. Con 16 GB funcionan modelos de 8B con comodidad. Con 24 o 32 GB subes a modelos de 14B y 24B. Con 48 a 64 GB trabajas con modelos de 32B y contexto largo, y con 96 a 128 GB llegas a modelos de 70B. Recuerda que macOS se reserva una parte, así que un Mac de 16 GB no dedica los 16 GB al modelo.",
+    "Si dudas entre dos configuraciones, elige la de más memoria antes que la de más almacenamiento: el disco se puede ampliar con un SSD externo, la memoria no."
+   ]
+  ],
+  [
+   "Mac o PC con tarjeta gráfica",
+   [
+    "Un Mac gana en silencio, tamaño y consumo, y es muy cómodo para tener un modelo siempre disponible. Un PC con tarjeta gráfica NVIDIA gana en velocidad con modelos que caben en su VRAM y en generación de imágenes, donde el ecosistema CUDA es el estándar. Además, los Mac con chip Apple no admiten tarjetas gráficas externas. Si dudas, compara un Mac con una tarjeta gráfica en el [comparador](/comparador/)."
+   ]
   ]
  ],
  "placas-ia": [
@@ -147,6 +199,19 @@
    [
     "Las placas de IA, como la NVIDIA Jetson Orin Nano Super, son pequeños ordenadores con aceleración para inteligencia artificial pensados para proyectos de edge AI: cámaras inteligentes, robots, domótica o asistentes de voz que funcionan sin conexión. Consumen muy poco y se programan con el mismo ecosistema CUDA que las tarjetas gráficas NVIDIA.",
     "No son la mejor opción para chatear con modelos grandes, porque tienen poca memoria, pero sí para ejecutar modelos pequeños de visión o de voz las 24 horas. Si buscas potencia para modelos de lenguaje, mira las [tarjetas gráficas para IA](/tarjetas-graficas/) o los [mini PC para IA](/mini-pc/)."
+   ]
+  ],
+  [
+   "Para qué sirve una placa de IA en casa",
+   [
+    "Una placa como la Jetson Orin Nano Super permite montar proyectos que funcionan sin conexión a internet: una cámara que reconoce personas o matrículas, un robot que entiende órdenes de voz, un sistema de domótica que detecta movimiento o un pequeño asistente que responde preguntas sobre tus documentos. Todo ocurre en la placa, sin enviar imágenes ni audio a la nube.",
+    "Su gran ventaja es el consumo: funciona con muy pocos vatios, así que puede estar encendida todo el día. Su límite es la memoria, que la deja para modelos pequeños de visión, voz o texto."
+   ]
+  ],
+  [
+   "Qué necesitas para empezar",
+   [
+    "Además de la placa, necesitarás una tarjeta microSD o un SSD para el sistema, una fuente de alimentación adecuada y, según el proyecto, una cámara o un micrófono. NVIDIA ofrece su propio sistema y ejemplos para empezar. Si lo que buscas es chatear con modelos de lenguaje medianos o grandes, una [tarjeta gráfica para IA](/tarjetas-graficas/) o un [Mac](/mac/) te darán mucho más margen."
    ]
   ]
  ],
@@ -162,6 +227,13 @@
    "Por dónde empezar",
    [
     "Si ya tienes un PC y solo vas a cambiar la tarjeta gráfica, revisa primero tu fuente de alimentación: es lo que más a menudo hay que cambiar. Si vas a montarlo desde cero, elige primero la GPU en [tarjetas gráficas para IA](/tarjetas-graficas/) y después el resto de componentes de esta página. Y si tu equipo es un portátil, tienes [portátiles para IA](/portatiles-para-ia/) y [GPU externas (eGPU)](/componentes/gpu-externas-egpu/)."
+   ]
+  ],
+  [
+   "Cómo equilibrar un PC para IA",
+   [
+    "Un error habitual es gastar en un procesador muy potente y quedarse corto en la tarjeta gráfica. Para IA local, el reparto del presupuesto debe favorecer claramente a la GPU, que es la que decide qué modelos puedes usar y a qué velocidad. El procesador puede ser de gama media, y la memoria RAM y el SSD deben ser suficientes pero sin excesos.",
+    "Un ejemplo de equilibrio para empezar en serio sería una tarjeta de 16 GB, 32 GB de RAM DDR5, un SSD NVMe de 2 TB y una fuente de 650 a 750 W. Si apuntas a modelos de 32B con una tarjeta de 32 GB, sube a 64 GB de RAM y a una fuente de 1000 W o más."
    ]
   ]
  ],
@@ -271,6 +343,13 @@
   ]
  ],
  "grupo-portatiles-para-ia": [
+  [
+   "Portátil o sobremesa para IA",
+   [
+    "Un portátil con tarjeta gráfica te da IA local donde vayas, pero a igual nombre de GPU rinde menos que un sobremesa: la tarjeta trabaja con menos vatios para no calentarse y suele llevar menos VRAM. Si vas a usar la IA sobre todo en casa, un PC de sobremesa o un mini PC con mucha memoria te dará más por tu dinero. Si necesitas movilidad, prioriza la VRAM de la gráfica y al menos 32 GB de RAM.",
+    "Fíjate también en la refrigeración y en el ruido: generar texto o imágenes durante horas exige mucho al portátil. Las opiniones de compradores en Amazon sobre temperaturas y ventiladores son una buena pista."
+   ]
+  ],
   [
    "Qué portátil sirve para IA local",
    [

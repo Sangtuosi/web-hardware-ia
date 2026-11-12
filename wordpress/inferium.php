@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) { exit; }
 
 const INF_NOMBRE = 'Inferium';
 const INF_AUTOR = 'Ernesto Santos';
-const INF_VERSION = '1.9.0';
+const INF_VERSION = '1.9.1';
 const INF_REL = 'sponsored nofollow noopener';
 
 /* ---------- Datos ---------- */

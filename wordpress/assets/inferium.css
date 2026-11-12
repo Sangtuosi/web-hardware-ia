@@ -421,3 +421,15 @@ table.modelos tr.no td { opacity: 0.5; }
 .analisis p { color: #d6d4cf; line-height: 1.7; margin: 0; }
 .analisis a { color: var(--copper-hi); }
 .hero-inicio > .wrap { width: 100%; justify-self: stretch; }
+/* Móvil: migas que no ensanchan la página y tablas cara a cara que caben */
+.migas { min-width: 0; max-width: 100%; }
+.cabecera > *, .g-hero > * { min-width: 0; max-width: 100%; }
+.tabla-g { max-width: 100%; }
+@media (max-width: 640px) {
+  .migas ol { overflow: hidden; }
+  .p-versus .tabla { min-width: 0; border-spacing: 3px; font-size: 14px; }
+  .p-versus .tabla th, .p-versus .tabla td { padding: 10px 8px; }
+  .p-versus .tabla thead th { font-size: 14px; }
+  .p-comparador:not(.p-versus) .tabla-wrap { position: relative; }
+  .p-comparador:not(.p-versus) .tabla-wrap::after { content: 'Desliza para ver más →'; position: sticky; left: 0; display: block; padding: 8px 4px 0; font: 500 12px var(--f-mono); color: var(--copper-hi); }
+}
