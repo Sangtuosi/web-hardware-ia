@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) { exit; }
 
 const INF_NOMBRE = 'Inferium';
 const INF_AUTOR = 'Ernesto Santos';
-const INF_VERSION = '1.9.3';
+const INF_VERSION = '1.9.4';
 const INF_REL = 'sponsored nofollow noopener';
 
 /* ---------- Datos ---------- */
@@ -359,7 +359,7 @@ function inf_pag_inicio() {
         . '<li><div><b>Revisa "lo que no".</b> Cada ficha te dice qué no hace bien: fuente necesaria, tamaño, software. Léelo antes de comprar.</div></li>'
         . '</ol></div>' . inf_faq($faq) . '</div></section></main>';
     return [
-        'title' => 'Tarjetas gráficas (GPU) y ordenadores para IA local en ' . date('Y') . ' | ' . INF_NOMBRE,
+        'title' => 'Tarjetas gráficas (GPU) para IA local en ' . date('Y') . ' | ' . INF_NOMBRE,
         'description' => 'Comparativa de GPU (tarjetas gráficas), mini PCs y Mac para IA local: VRAM, ancho de banda, modelos que caben y lo que no te cuentan. Calculadora de VRAM y comparador.',
         'path' => '/', 'clase' => 'p-inicio', 'body' => $b,
         'schema' => [['@context' => 'https://schema.org', '@type' => 'WebSite', 'name' => INF_NOMBRE, 'url' => home_url('/'), 'inLanguage' => 'es-ES'], inf_schema_lista($dest), inf_schema_faq($faq)],
@@ -477,7 +477,9 @@ function inf_pag_ficha($slug) {
     $prod = ['@context' => 'https://schema.org', '@type' => 'Product', 'image' => inf_foto_url($p['asin'] ?? '') ?: null, 'name' => $p['nombre'], 'brand' => ['@type' => 'Brand', 'name' => $p['marca']], 'description' => $p['resumen'], 'url' => home_url($path),
         'review' => ['@type' => 'Review', 'author' => ['@type' => 'Person', 'name' => INF_AUTOR], 'datePublished' => $p['revisado'], 'reviewBody' => $p['paraQuien'], 'reviewRating' => ['@type' => 'Rating', 'ratingValue' => $nota, 'bestRating' => 100, 'worstRating' => 0]]];
     if (empty($prod['image'])) unset($prod['image']);
-    return ['title' => inf_corto($p) . ' para IA: análisis, ' . ($p['tipo'] === 'grafica' ? 'VRAM' : 'memoria') . ' y qué modelos mueve | ' . INF_NOMBRE,
+    $tit = inf_corto($p) . ' para IA: ' . ($p['tipo'] === 'grafica' ? 'VRAM' : 'memoria') . ' y qué modelos mueve';
+    if (mb_strlen($tit) + 11 <= 60) $tit .= ' | ' . INF_NOMBRE;
+    return ['title' => $tit,
         'description' => $p['nombre'] . ' para IA local: ' . $p['vram'] . ' GB de ' . $p['memoria'] . ', ' . $p['anchoBanda'] . ' GB/s. Qué modelos caben, tokens por segundo estimados y lo que no hace bien.',
         'path' => $path, 'clase' => 'p-ficha', 'og' => 'product', 'imagen' => inf_foto_url($p['asin'] ?? ''), 'body' => $b, 'schema' => [inf_schema_migas($migas), $prod]];
 }
@@ -799,7 +801,7 @@ function inf_pag_guias() {
         $u = esc_url(inf_url('/guias/' . $g['slug'] . '/'));
         $f = inf_foto_amb($g['slug'], 'hero');
         $min = inf_guia_minutos($g);
-        $b .= '<article class="surface item guia-card reveal">' . ($f ? '<a class="guia-mini" href="' . $u . '" tabindex="-1" aria-hidden="true"><img src="' . esc_url(content_url('/inferium/img/a/' . $f['archivo'])) . '" alt="" width="' . (int) $f['w'] . '" height="' . (int) $f['h'] . '" loading="lazy" decoding="async"></a>' : '')
+        $b .= '<article class="surface item guia-card reveal">' . ($f ? '<a class="guia-mini" href="' . $u . '" tabindex="-1"><img src="' . esc_url(content_url('/inferium/img/a/' . $f['archivo'])) . '" alt="' . esc_attr($f['alt']) . '" width="' . (int) $f['w'] . '" height="' . (int) $f['h'] . '" loading="lazy" decoding="async"></a>' : '')
             . '<div class="guia-cuerpo"><div class="guia-meta"><span class="badge badge-copper">' . ($g['tipo'] === 'comparativa' ? 'Comparativa' : 'Guía') . '</span><span class="mini muted mono">' . $min . ' min de lectura</span></div><h2><a href="' . $u . '">' . inf_e($g['titulo']) . '</a></h2><p class="muted">' . inf_md($g['descripcion']) . '</p><a class="btn btn-sm" href="' . $u . '">Leer la guía</a></div></article>';
     }
     $b .= '</div></main>';

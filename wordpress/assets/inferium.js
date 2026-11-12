@@ -220,3 +220,8 @@
   }, { threshold: 0.6 });
   cs.forEach(function (c) { io.observe(c); });
 })();
+
+(function () {
+  function mira() { document.querySelectorAll('.tabla-wrap').forEach(function (w) { w.classList.toggle('desliza', w.scrollWidth > w.clientWidth + 4); }); }
+  mira(); addEventListener('resize', mira);
+})();

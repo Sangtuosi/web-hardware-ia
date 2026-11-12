@@ -452,3 +452,8 @@ table.modelos tr.no td { opacity: 0.5; }
 .vs-fotos .foto-prod { aspect-ratio: 4 / 3; --pad: 16px; }
 .vs-x { font-size: 22px; color: var(--copper-hi); text-shadow: 0 0 18px #c8794a88; }
 @media (max-width: 600px) { .vs-fotos { gap: 8px; } .vs-fotos .foto-prod { --pad: 8px; } .vs-x { font-size: 16px; } .vs-fotos a { font-size: 14px; } }
+
+/* Pista de deslizar en tablas anchas (la pone el JS solo si la tabla no cabe) */
+.tabla-wrap.desliza { position: relative; }
+.tabla-wrap.desliza::after { content: 'Desliza para ver más →'; position: sticky; left: 0; display: block; padding: 8px 4px 0; font: 500 12px var(--f-mono); color: var(--copper-hi); }
+.p-comparador:not(.p-versus) .tabla-wrap.desliza::after { content: none; }
