@@ -263,6 +263,10 @@ function inf_nav() {
 }
 
 function inf_documento($a) {
+    // Google corta hacia los 60 caracteres: si no cabe, la marca sobra en el título.
+    $suf = ' | ' . INF_NOMBRE;
+    if (mb_strlen($a['title']) > 60 && substr($a['title'], -strlen($suf)) === $suf) $a['title'] = substr($a['title'], 0, -strlen($suf));
+    $a['title'] = str_replace(': comparativa y cuál comprar', ': cuál comprar para IA', $a['title']);
     $a += ['imagen' => '', 'title' => INF_NOMBRE, 'description' => '', 'path' => '/', 'schema' => [], 'body' => '', 'clase' => '', 'borrador' => false, 'og' => 'website', 'simple' => false];
     $solo_legal = !empty($a['noindex']);
     $noindex = $a['borrador'] || !get_option('blog_public') || $solo_legal;
