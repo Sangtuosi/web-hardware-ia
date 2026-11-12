@@ -204,3 +204,7 @@
   var t0 = Date.now();
   addEventListener('pagehide', function () { ev('tiempo_en_pagina', { segundos: Math.round((Date.now() - t0) / 1000) }); });
 })();
+(function () {
+  var d = document.querySelector('.toc details');
+  if (d && window.matchMedia && matchMedia('(min-width: 900px)').matches) d.open = true;
+})();

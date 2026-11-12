@@ -15,7 +15,7 @@ function get_post_meta() { return ''; }
 function add_action() {}
 require dirname(__DIR__) . '/inferium.php';
 
-$fallos = 0;
+$fallos = 0; $links = [];
 function ok($c, $m) { global $fallos; if (!$c) { $fallos++; echo "FALLO: $m\n"; } }
 ok(abs(inf_vram_necesaria(['params' => 8, 'tipo' => 'texto']) - 5.4) < 0.001, 'vram 8B');
 ok(inf_tokens(inf_producto('nvidia-rtx-5090'), ['params' => 8, 'tipo' => 'texto']) === 279, 'tokens 5090');
@@ -28,6 +28,8 @@ $pags = [['proximamente', '', '/'], ['inicio', '', '/inicio/'], ['catalogo', '',
 foreach (inf_categorias() as $c) $pags[] = ['categoria', $c['slug'], '/' . $c['slug'] . '/'];
 foreach (inf_productos() as $p) $pags[] = ['ficha', $p['slug'], inf_ficha_path($p)];
 $pags[] = ['componentes', '', '/componentes/'];
+$pags[] = ['guias', '', '/guias/'];
+foreach (inf_guias() as $g) $pags[] = ['guia', $g['slug'], '/guias/' . $g['slug'] . '/'];
 foreach (inf_grupos() as $g) $pags[] = ['grupo', $g['slug'], inf_grupo_path($g)];
 foreach (inf_versus() as $v) $pags[] = ['versus', $v['slug'], '/comparador/' . $v['slug'] . '/'];
 foreach ($pags as [$l, $s, $path]) {
@@ -35,11 +37,23 @@ foreach ($pags as [$l, $s, $path]) {
     ok($pag !== null, "pagina $l $s");
     $html = inf_documento($pag + ['borrador' => $l !== 'proximamente']);
     ok(!str_contains($html, '—'), "raya larga en $path");
+    if ($l === 'guia') {
+        $g = inf_guia($s);
+        $txt = preg_replace('~<nav class="toc.*?</nav>~s', '', $html);
+        $txt = strip_tags(preg_replace('~<(script|style)\b.*?</\1>~s', '', $txt));
+        $n = preg_match_all('~[\p{L}\p{N}]+~u', $txt);
+        $min = $g['tipo'] === 'comparativa' ? 2000 : 1200;
+        echo "  guia $s: $n palabras\n";
+        ok($n >= $min, "guia $s tiene $n palabras, minimo $min");
+        ok(!str_contains($html, '{nota:') && !str_contains($html, '{tps:') && !str_contains($html, '{bw:') && !str_contains($html, '{w:') && !str_contains($html, '{vram:') && !str_contains($html, '{mayor:'), "marcador sin resolver en $s");
+        preg_match_all('~href="(/[^"#?]*)"~', $html, $m);
+        foreach (array_unique($m[1]) as $h) { if (!str_starts_with($h, '/wp-content')) $links[$h] = $s; }
+    }
     @mkdir($out . $path, 0777, true);
     file_put_contents($out . $path . 'index.html', $html);
 }
 ok(inf_ficha_path(inf_producto('nvidia-rtx-5090')) === '/tarjetas-graficas/nvidia-rtx-5090/', 'ruta por tipo');
-ok(count(inf_de_categoria(inf_categoria('tarjetas-graficas'))) === 16, '16 GPU');
+ok(count(inf_de_categoria(inf_categoria('tarjetas-graficas'))) === 17, '17 GPU');
 foreach (inf_categorias() as $c) ok(count(inf_de_categoria($c)) > 0, 'categoria vacia ' . $c['slug']);
 $GLOBALS['opts'] += ['inferium_gsc' => 'abc_123-XYZ', 'inferium_ga4' => 'G-TEST12345'];
 $pub = inf_documento(inf_pagina('inicio')); $bor = inf_documento(inf_pagina('inicio') + ['borrador' => true]);
@@ -52,5 +66,7 @@ unset($GLOBALS['opts']['inferium_clarity']);
 $GLOBALS['opts']['inferium_ga4'] = '"><script>'; ok(!str_contains(inf_documento(inf_pagina('inicio')), 'googletagmanager'), 'ga4 invalido se ignora');
 $ids = []; foreach (inf_grupos() as $g) foreach ($g['items'] as $i) { ok(!in_array($i['id'], $ids, true), 'id repetido ' . $i['id']); $ids[] = $i['id']; }
 ok(str_contains(inf_cruzada(inf_producto('nvidia-rtx-5080')), 'RM850x') && str_contains(inf_cruzada(inf_producto('nvidia-rtx-5090')), '1200 W') && str_contains(inf_cruzada(inf_producto('nvidia-rtx-5060')), 'RM650e'), 'fuente segun gpu');
+$existen = array_flip(array_map(fn($p) => $p[2], $pags));
+foreach ($links as $h => $de) { if (!isset($existen[rtrim($h, '/') . '/']) && $h !== '/') ok(false, "enlace roto $h en guia $de"); }
 echo count($pags) . " paginas, $fallos fallos\n";
 exit($fallos ? 1 : 0);

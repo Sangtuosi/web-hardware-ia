@@ -92,6 +92,37 @@
     "revisado": "2026-11-11"
   },
   {
+    "slug": "amd-radeon-rx-7600-xt-16gb",
+    "nombre": "AMD Radeon RX 7600 XT 16 GB",
+    "marca": "AMD",
+    "tipo": "grafica",
+    "categorias": [
+      "gpu-baratas-para-ia"
+    ],
+    "asin": "B086ZTKLXQ",
+    "vram": 16,
+    "memoria": "GDDR6",
+    "anchoBanda": 288,
+    "consumo": 190,
+    "fuente": 600,
+    "ecosistema": "ROCm",
+    "lanzamiento": 2024,
+    "gama": "entrada",
+    "resumen": "Otra forma barata de tener 16 GB de VRAM, con varios modelos entre las gráficas más vendidas de Amazon.",
+    "pros": [
+      "16 GB de VRAM: caben modelos de 14B en Q4",
+      "Con Ollama y LM Studio los modelos de texto van bien",
+      "Es una generación anterior y se encuentra en muchas versiones"
+    ],
+    "loQueNo": [
+      "Ancho de banda de 288 GB/s: más lenta que la RX 9060 XT con la misma VRAM",
+      "Sin CUDA: la generación de imágenes pide más configuración",
+      "Es de una generación anterior: si puedes, la RX 9060 XT es mejor compra"
+    ],
+    "paraQuien": "Para quien busca 16 GB de VRAM al menor coste y va a usar sobre todo modelos de texto.",
+    "revisado": "2026-11-12"
+  },
+  {
     "slug": "nvidia-rtx-5070-ti",
     "nombre": "NVIDIA GeForce RTX 5070 Ti",
     "marca": "NVIDIA",
@@ -442,7 +473,7 @@
     "vram": 24,
     "memoria": "GDDR7",
     "anchoBanda": 672,
-    "consumo": 140,
+    "consumo": 145,
     "fuente": 550,
     "ecosistema": "CUDA",
     "lanzamiento": 2025,

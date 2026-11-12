@@ -309,3 +309,58 @@ table.modelos tr.no td { opacity: 0.5; }
 .item h2 a:hover { color: var(--copper-hi); }
 .item .btn { justify-self: start; margin-top: auto; }
 .lista.enlaces a { color: var(--copper-hi); }
+
+/* Guías */
+.g-hero { padding-bottom: 8px; }
+.g-meta { font-size: 13px; color: var(--faint); }
+.g-cuerpo { max-width: 78ch; margin-inline: auto; display: grid; gap: 22px; padding-bottom: 40px; }
+.g-cuerpo p, .g-cuerpo li { font-size: 17px; line-height: 1.75; color: #d6d4cf; }
+.g-cuerpo p strong, .g-cuerpo li strong { color: var(--ink); font-weight: 600; }
+.g-cuerpo a { color: var(--copper-hi); }
+.g-cuerpo .btn { color: var(--ink); }
+.g-cuerpo .btn-copper { color: #fff7f0; }
+.g-resumen { padding: 22px 26px; display: grid; gap: 10px; border-left: 3px solid var(--copper); }
+.g-resumen h2 { font-size: 22px; }
+.toc { padding: 4px 20px; }
+.toc summary { cursor: pointer; padding: 14px 0; font: 600 15px var(--f-display); list-style: none; }
+.toc summary::-webkit-details-marker { display: none; }
+.toc summary::after { content: '+'; float: right; color: var(--copper-hi); }
+.toc details[open] summary::after { content: '−'; }
+.toc ol { margin: 0 0 14px; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; }
+.g-sec { display: grid; gap: 18px; scroll-margin-top: 90px; padding-top: 18px; }
+.g-sec h2 { font-size: clamp(26px, 3.4vw, 34px); }
+.g-sec h3 { font-size: 20px; margin-top: 6px; color: var(--ink); }
+.lista.num { list-style: decimal; }
+.lista.num li::marker { color: var(--copper-hi); font-weight: 700; }
+.aviso-g { padding: 18px 22px; border-radius: var(--r-md); background: var(--inset); box-shadow: var(--sh-inset); border-left: 3px solid var(--warn); display: grid; gap: 6px; }
+.aviso-g b { font: 600 13px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--warn); }
+.aviso-g p { margin: 0; font-size: 16px; }
+.stats-g { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
+.stats-g .surface { padding: 18px; display: grid; gap: 4px; text-align: left; }
+.stats-g b { font: 700 34px/1 var(--f-display); }
+.stats-g span { font-size: 14px; color: var(--muted); line-height: 1.4; }
+.tabla-g { min-width: 560px; }
+.tabla-g thead th { font-size: 14px; }
+.tabla-g tbody th { width: auto; text-transform: none; letter-spacing: 0; font: 600 14px var(--f-body); color: var(--ink); }
+.tabla-g td { font-size: 14px; line-height: 1.45; }
+.barras { margin: 0; padding: 20px 22px; display: grid; gap: 14px; }
+.barras figcaption { font: 600 15px var(--f-display); }
+.barras ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.barras li { display: grid; grid-template-columns: minmax(110px, 190px) 1fr auto; gap: 14px; align-items: center; }
+.barras .b-n { font-size: 14px; color: var(--ink); }
+.barras .b-v { font-size: 13px; color: var(--copper-hi); white-space: nowrap; }
+@media (max-width: 560px) { .barras li { grid-template-columns: 1fr auto; } .barras .meter { grid-column: 1 / -1; order: 3; } }
+.pick { display: grid; grid-template-columns: minmax(150px, 220px) 1fr; gap: 22px; padding: 20px; align-items: center; }
+.pick-art .chip-art { max-width: 220px; }
+.pick-body { display: grid; gap: 10px; min-width: 0; }
+.pick-body h3 { margin: 0; font-size: 22px; }
+.pick-body h3 a { text-decoration: none; color: var(--ink); }
+.pick-body h3 a:hover { color: var(--copper-hi); }
+.pick-body p { margin: 0; font-size: 16px; }
+.pick-specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin: 0; }
+.pick-specs div { background: var(--inset); border-radius: 10px; box-shadow: var(--sh-inset); padding: 8px 12px; }
+.pick-specs dt { font: 500 11px var(--f-mono); color: var(--faint); text-transform: uppercase; letter-spacing: .08em; }
+.pick-specs dd { margin: 0; font: 600 16px var(--f-display); color: var(--ink); }
+@media (max-width: 640px) { .pick { grid-template-columns: 1fr; } .pick-art .chip-art { max-width: 260px; } }
+.cta-g { padding: 22px 26px; display: flex; gap: 18px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.cta-g p { margin: 0; max-width: 46ch; }

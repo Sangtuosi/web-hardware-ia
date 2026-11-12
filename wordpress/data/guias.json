@@ -1,0 +1,2631 @@
+[
+  {
+    "slug": "que-es-la-vram-cuanta-necesitas-ia",
+    "tipo": "informativa",
+    "titulo": "Qué es la VRAM y cuánta necesitas para IA local",
+    "seoTitulo": "Qué es la VRAM y cuánta necesitas para IA local",
+    "descripcion": "Qué es la VRAM de una tarjeta gráfica, por qué manda en inteligencia artificial y cómo calcular cuánta necesitas para cada modelo: 8, 12, 16, 24 o 32 GB.",
+    "keyword": "que es la vram",
+    "publico": "Persona que quiere comprar su primera tarjeta gráfica para IA local y no sabe cuánta memoria necesita",
+    "fecha": "2026-11-12",
+    "entradilla": "La VRAM es la memoria de la tarjeta gráfica y, para ejecutar IA en tu ordenador, es el dato que más importa. Aquí te explicamos qué es sin jerga, cómo calcular cuánta necesita cada modelo y cuánta te conviene según lo que quieras hacer.",
+    "resumen": [
+      "La VRAM es la memoria propia de la tarjeta gráfica. Si el modelo de IA no cabe en ella, todo va mucho más lento.",
+      "Regla rápida: en cuantización Q4, multiplica los miles de millones de parámetros por 0,675 y tendrás los GB necesarios.",
+      "Con 8 GB mueves modelos de 8B justos; con 16 GB, de 14B con margen; con 24 GB, de 24B a 32B; con 48 GB, de 70B.",
+      "Muchas tarjetas se venden en dos versiones con el mismo nombre y distinta VRAM. Mira siempre los gigas, no solo el modelo."
+    ],
+    "secciones": [
+      {
+        "h2": "Qué es la VRAM, explicada fácil",
+        "bloques": [
+          {
+            "p": "La VRAM (video RAM) es la memoria que lleva soldada la tarjeta gráfica. Es distinta de la memoria RAM del ordenador: la RAM la usa el procesador y la VRAM la usa solo la GPU. Aunque el nombre viene de los gráficos, hoy sirve para cualquier cosa que la GPU tenga que tener a mano mientras trabaja, y eso incluye los modelos de inteligencia artificial."
+          },
+          {
+            "p": "Una forma sencilla de imaginarlo: la GPU es un cocinero, la VRAM es su encimera y la RAM del ordenador es la despensa. El cocinero solo trabaja con lo que tiene encima de la encimera. Si la receta necesita más ingredientes de los que caben, tiene que ir a la despensa a cada paso, y eso lo frena muchísimo."
+          },
+          {
+            "p": "En una tarjeta gráfica la VRAM no se puede ampliar después. Viene en la placa y se elige al comprar: 8, 12, 16, 24, 32 GB o más. Por eso es la decisión más importante cuando compras una GPU pensando en IA. Si quieres repasar qué es cada pieza, tenemos una guía de [qué es una tarjeta gráfica o GPU](/guias/que-es-una-tarjeta-grafica-gpu-ia/)."
+          },
+          {
+            "aviso": "Los Mac y algunos mini PC no tienen VRAM separada: usan una memoria unificada que comparten el procesador y la gráfica. En ellos, lo que cuenta es la memoria total del equipo. Lo vemos más abajo.",
+            "titulo": "Ojo con esto"
+          }
+        ]
+      },
+      {
+        "h2": "Por qué la VRAM manda más que la potencia en IA",
+        "bloques": [
+          {
+            "p": "En juegos, una tarjeta más potente da más imágenes por segundo. En IA, la historia es otra. Un modelo de lenguaje es, básicamente, un archivo enorme de números (los pesos) que tiene que estar cargado en la memoria de la GPU para funcionar rápido. Si cabe, funciona. Si no cabe, no importa lo potente que sea el chip: parte del modelo se queda en la RAM del ordenador y cada palabra tarda mucho más en salir."
+          },
+          {
+            "p": "Hay un segundo motivo. Cada vez que el modelo genera una palabra (técnicamente, un token), la GPU tiene que leer todos los pesos de la memoria. Por eso la velocidad de generación depende sobre todo del **ancho de banda** de la memoria, es decir, de cuántos GB por segundo puede leer, y no tanto de los núcleos de cálculo. En nuestras fichas estimamos los tokens por segundo con una fórmula sencilla: ancho de banda × 0,7 ÷ tamaño de los pesos. Es una estimación propia, no una prueba medida, pero sirve para comparar tarjetas entre sí."
+          },
+          {
+            "barras": {
+              "titulo": "VRAM de algunas tarjetas gráficas del catálogo (GB)",
+              "datos": [
+                [
+                  "RTX 3050 6 GB",
+                  6,
+                  "6 GB"
+                ],
+                [
+                  "RTX 5060",
+                  8,
+                  "8 GB"
+                ],
+                [
+                  "RTX 3060 12 GB",
+                  12,
+                  "12 GB"
+                ],
+                [
+                  "RTX 5070",
+                  12,
+                  "12 GB"
+                ],
+                [
+                  "RTX 5060 Ti 16 GB",
+                  16,
+                  "16 GB"
+                ],
+                [
+                  "RTX 5080",
+                  16,
+                  "16 GB"
+                ],
+                [
+                  "Radeon AI PRO R9700",
+                  32,
+                  "32 GB"
+                ],
+                [
+                  "RTX 5090",
+                  32,
+                  "32 GB"
+                ],
+                [
+                  "RTX PRO 6000",
+                  96,
+                  "96 GB"
+                ]
+              ],
+              "unidad": "",
+              "nota": "Dato de las fichas de Inferium. Los Mac y mini PC con memoria unificada cuentan su memoria total."
+            }
+          },
+          {
+            "p": "Resumiendo: primero se mira que el modelo quepa (VRAM) y después cuánta velocidad da (ancho de banda). Una tarjeta modesta con mucha VRAM corre modelos que una tarjeta rápida con poca VRAM ni siquiera puede cargar."
+          }
+        ]
+      },
+      {
+        "h2": "Cómo calcular cuánta VRAM necesita un modelo",
+        "bloques": [
+          {
+            "p": "Calcularlo es más fácil de lo que parece. La memoria que ocupa un modelo depende de dos cosas: cuántos parámetros tiene (se mide en miles de millones, «8B» es 8.000 millones) y a cuántos bits se guarda cada uno. Esto último es la **cuantización**: comprimir el modelo para que ocupe menos a cambio de perder un poquito de precisión. El formato más usado es Q4, que ocupa unos 4,5 bits por parámetro."
+          },
+          {
+            "p": "Nuestra fórmula es: parámetros × bits ÷ 8, más un 20 % extra para el contexto (la memoria de la conversación). Con Q4 sale a **parámetros en miles de millones × 0,675**. Un modelo de 14B necesita unos 9,5 GB, y uno de 32B, unos 21,6 GB."
+          },
+          {
+            "tabla": {
+              "cab": [
+                "Modelo",
+                "Parámetros",
+                "Q4 (el habitual)",
+                "Q8 (más preciso)",
+                "FP16 (sin comprimir)"
+              ],
+              "filas": [
+                [
+                  "Llama 3.1 8B",
+                  "8.000 M",
+                  "5,4 GB",
+                  "10,2 GB",
+                  "19,2 GB"
+                ],
+                [
+                  "Qwen 2.5 14B",
+                  "14.000 M",
+                  "9,5 GB",
+                  "17,9 GB",
+                  "33,6 GB"
+                ],
+                [
+                  "Mistral Small 24B",
+                  "24.000 M",
+                  "16,2 GB",
+                  "30,6 GB",
+                  "57,6 GB"
+                ],
+                [
+                  "Qwen 2.5 32B",
+                  "32.000 M",
+                  "21,6 GB",
+                  "40,8 GB",
+                  "76,8 GB"
+                ],
+                [
+                  "Llama 3.3 70B",
+                  "70.000 M",
+                  "47,3 GB",
+                  "89,3 GB",
+                  "168 GB"
+                ]
+              ],
+              "nota": "Cálculo de Inferium: parámetros × bits ÷ 8 + 20 % de contexto. Q4 = 4,5 bits, Q8 = 8,5 bits, FP16 = 16 bits. Son cifras aproximadas."
+            }
+          },
+          {
+            "p": "Para los modelos que generan imágenes el cálculo es distinto y se usa su consumo típico. SDXL funciona bien con 8 GB y Flux.1 dev en FP8 pide 16 GB. Puedes probar todo esto sin hacer cuentas en nuestra [calculadora de VRAM](/calculadora-vram/): mueves la barra con la memoria de tu tarjeta y te dice qué modelos caben."
+          }
+        ]
+      },
+      {
+        "h2": "Cuánta VRAM necesitas según lo que quieras hacer",
+        "bloques": [
+          {
+            "p": "Con la fórmula en la mano, estos son los escalones habituales. Siempre contando con Q4 y con margen para el contexto:"
+          },
+          {
+            "tabla": {
+              "cab": [
+                "VRAM",
+                "Qué cabe cómodamente",
+                "Para quién"
+              ],
+              "filas": [
+                [
+                  "6 a 8 GB",
+                  "Modelos de 7 a 8B (Llama 3.1 8B) y SDXL justo.",
+                  "Probar la IA local sin gastar mucho."
+                ],
+                [
+                  "12 GB",
+                  "Modelos de hasta 14B y SDXL con holgura.",
+                  "Uso diario con modelos medianos y generar imágenes."
+                ],
+                [
+                  "16 GB",
+                  "Modelos de 14B con mucho contexto. Flux.1 dev en FP8.",
+                  "El punto dulce para empezar en serio."
+                ],
+                [
+                  "24 GB",
+                  "Mistral Small 24B y Qwen 2.5 32B en Q4.",
+                  "Programar con asistentes locales y modelos de calidad alta."
+                ],
+                [
+                  "32 GB",
+                  "Modelos de 32B con contexto largo.",
+                  "Uso intensivo de modelos medianos-grandes."
+                ],
+                [
+                  "48 GB",
+                  "Llama 3.3 70B en Q4, muy justo.",
+                  "Trabajo profesional con modelos grandes."
+                ],
+                [
+                  "96 GB o más",
+                  "70B con holgura y modelos aún mayores.",
+                  "Estaciones de trabajo y empresas."
+                ]
+              ],
+              "nota": "Con memoria unificada (Mac, mini PC Ryzen AI Max+) cuenta la memoria total del equipo, aunque el sistema se reserva una parte."
+            }
+          },
+          {
+            "p": "Si estás empezando y no sabes qué vas a usar, **16 GB** es la cifra que mejor equilibra precio y posibilidades: caben los modelos medianos con mucho contexto y también Flux. Si ya sabes que quieres trabajar con modelos de 24B a 32B, ve directo a 24 o 32 GB. Y si lo tuyo es solo curiosear, 8 o 12 GB bastan para empezar."
+          },
+          {
+            "cta": {
+              "texto": "¿Quieres ver las tarjetas de 16 GB que más se venden en Amazon?",
+              "boton": "Ver tarjetas gráficas (GPU) para IA",
+              "url": "/tarjetas-graficas/"
+            }
+          }
+        ]
+      },
+      {
+        "h2": "Qué pasa si el modelo no cabe en la VRAM",
+        "bloques": [
+          {
+            "p": "No se rompe nada: los programas como Ollama o LM Studio mandan las capas que no caben a la RAM del ordenador y las calculan con el procesador. Funciona, pero la velocidad cae en picado, porque la RAM es mucho más lenta que la VRAM y el procesador tiene menos músculo para este tipo de cálculo. Lo notarás porque el modelo escribe palabra a palabra, despacio."
+          },
+          {
+            "p": "Si te pasa, tienes tres salidas. Usar un modelo más pequeño. Usar una cuantización más agresiva (Q4 en lugar de Q8). O acortar el contexto. Para que esto funcione sin sustos conviene que el ordenador tenga bastante RAM: una buena regla es tener al menos el doble que la VRAM de la tarjeta. Si estás montando un equipo, en [componentes para un PC de IA](/componentes/) tienes la memoria RAM más vendida."
+          }
+        ]
+      },
+      {
+        "h2": "Memoria unificada: el caso de los Mac y de algunos mini PC",
+        "bloques": [
+          {
+            "p": "Los chips de Apple y los procesadores AMD Ryzen AI Max+ 395 funcionan distinto: el procesador y la gráfica comparten una misma memoria. Eso significa que toda la RAM del equipo puede hacer de VRAM. Por eso un Mac con 36 GB o un mini PC con 128 GB pueden cargar modelos que no caben en una tarjeta gráfica de 16 GB."
+          },
+          {
+            "p": "La contrapartida es la velocidad. La memoria unificada suele tener menos ancho de banda que la de una tarjeta gráfica potente, así que esos equipos cargan modelos grandes pero los mueven más despacio. Además, el sistema se reserva una parte de la memoria para él: en un Mac no puedes usar el 100 % como memoria de vídeo. Tienes más detalle en nuestras guías de [mini PC para IA](/guias/mejor-mini-pc-para-ia/) y de [Mac para IA](/guias/mejor-mac-para-ia-local/)."
+          }
+        ]
+      },
+      {
+        "h2": "Errores típicos al elegir VRAM",
+        "bloques": [
+          {
+            "ul": [
+              "**Comprar por potencia de juegos.** Una tarjeta de 8 GB muy rápida corre menos modelos de IA que una de 16 GB más modesta.",
+              "**Fijarse solo en el nombre.** La RTX 5060 Ti y la RX 9060 XT existen en versión de 8 y de 16 GB. Hay que mirar los gigas en el título del anuncio.",
+              "**Olvidar el contexto.** Una conversación larga o un documento grande necesitan memoria extra además del modelo. Por eso añadimos un 20 % en el cálculo.",
+              "**Creer que dos tarjetas suman sin más.** Hay programas que reparten el modelo entre varias GPU, pero no siempre rinde como una sola tarjeta con toda la memoria, y la placa y la fuente tienen que aguantarlo.",
+              "**Olvidar que en portátil la VRAM suele ser menor.** Una gráfica de portátil con el mismo nombre que la de sobremesa suele llevar menos memoria."
+            ]
+          }
+        ]
+      }
+    ],
+    "faq": [
+      [
+        "¿Qué es la VRAM de una tarjeta gráfica?",
+        "Es la memoria propia de la tarjeta gráfica, distinta de la RAM del ordenador. La GPU la usa para guardar lo que necesita al instante: texturas en un juego o los pesos del modelo en una IA. No se puede ampliar: se elige al comprar la tarjeta."
+      ],
+      [
+        "¿Bastan 8 GB de VRAM para IA?",
+        "Para empezar, sí: caben modelos de 8B en Q4 y generar imágenes con SDXL. Se quedan cortos con modelos de 14B o más, con Flux o con conversaciones muy largas. Si puedes, elige 12 o 16 GB."
+      ],
+      [
+        "¿Es mejor tener más VRAM o más RAM?",
+        "Para IA en la GPU manda la VRAM, porque es donde tiene que caber el modelo para ir rápido. La RAM sirve de apoyo cuando el modelo no cabe entero, pero es mucho más lenta. Lo ideal es tener bastante de las dos."
+      ],
+      [
+        "¿Cómo sé cuánta VRAM necesita un modelo?",
+        "En Q4, multiplica los miles de millones de parámetros por 0,675. Un modelo de 8B necesita unos 5,4 GB y uno de 32B unos 21,6 GB. Nuestra calculadora de VRAM lo hace por ti."
+      ],
+      [
+        "¿Se suman las VRAM de dos tarjetas gráficas?",
+        "Algunos programas pueden repartir el modelo entre dos tarjetas y así cargar uno mayor, pero depende del software y no es tan rápido como una sola tarjeta con toda la memoria. Además necesitas placa, caja y fuente preparadas."
+      ],
+      [
+        "¿Por qué las tarjetas de 16 GB se venden tanto?",
+        "Porque es el punto donde caben los modelos medianos con margen y Flux.1 dev en FP8. Por eso la RTX 5060 Ti de 16 GB, la RX 9060 XT de 16 GB y la RX 9070 XT son de las que más aparecen entre las más vendidas de Amazon.es."
+      ]
+    ],
+    "relacionadas": [
+      "que-es-una-tarjeta-grafica-gpu-ia",
+      "que-es-ollama-como-instalarlo-requisitos",
+      "mejor-tarjeta-grafica-calidad-precio-ia"
+    ]
+  },
+  {
+    "slug": "que-es-ollama-como-instalarlo-requisitos",
+    "tipo": "informativa",
+    "titulo": "Qué es Ollama, cómo instalarlo y qué ordenador necesitas",
+    "seoTitulo": "Qué es Ollama, cómo instalarlo y qué requisitos tiene",
+    "descripcion": "Qué es Ollama, cómo instalarlo paso a paso en Windows, Mac o Linux, qué modelos descargar y qué tarjeta gráfica o memoria necesitas para que vaya bien.",
+    "keyword": "que es ollama",
+    "publico": "Persona curiosa que ha oído hablar de Ollama, quiere usar IA en su ordenador y no sabe por dónde empezar",
+    "fecha": "2026-11-12",
+    "entradilla": "Ollama es el programa más popular para ejecutar modelos de inteligencia artificial en tu propio ordenador, sin pagar suscripciones ni mandar tus datos a ninguna nube. Te explicamos qué es, cómo se instala, qué comandos necesitas y qué hardware pide cada modelo.",
+    "resumen": [
+      "Ollama es un programa gratuito que descarga y ejecuta modelos de lenguaje (Llama, Qwen, Mistral y otros) en tu ordenador.",
+      "Funciona en Windows, macOS y Linux. Se instala en un par de minutos y se maneja con un comando: ollama run.",
+      "Lo que decide si va bien es la memoria: VRAM de la tarjeta gráfica, o memoria unificada en un Mac.",
+      "Con 8 GB de VRAM mueves modelos de 8B; con 16 GB, de 14B; con 24 GB o más, de 24B a 32B."
+    ],
+    "secciones": [
+      {
+        "h2": "Qué es Ollama",
+        "bloques": [
+          {
+            "p": "Ollama es una herramienta gratuita y de código abierto que sirve para descargar y ejecutar modelos de inteligencia artificial en local, es decir, en tu propio ordenador. Piensa en ella como un reproductor: tú eliges el modelo (como si fuera una película) y Ollama se encarga de cargarlo en la memoria, aprovechar la tarjeta gráfica y dejarte conversar con él."
+          },
+          {
+            "p": "Lo que la hizo popular es que quita toda la complicación técnica. Antes, ejecutar un modelo de lenguaje en casa exigía instalar librerías, convertir archivos y ajustar parámetros. Con Ollama basta un comando y, al cabo de unos minutos de descarga, ya estás chateando con el modelo. Además deja un servidor local en el puerto 11434, de modo que otros programas (editores de código, aplicaciones de notas, interfaces web) pueden usar tus modelos como si fueran un servicio en la nube, pero sin salir de tu máquina."
+          },
+          {
+            "p": "Hay tres motivos principales por los que la gente la usa. El primero es la **privacidad**: lo que escribes no sale de tu ordenador. El segundo es el **coste**: una vez tienes el equipo no hay cuotas mensuales ni límite de mensajes. El tercero es la **libertad**: puedes probar decenas de modelos distintos y elegir el que mejor te funcione."
+          },
+          {
+            "aviso": "Ollama no es un modelo de IA. Es el programa que ejecuta los modelos. Los modelos (Llama, Qwen, Mistral, Gemma y otros) los hacen otras empresas y se descargan desde Ollama.",
+            "titulo": "Ojo con esto"
+          }
+        ]
+      },
+      {
+        "h2": "Para qué sirve en la práctica",
+        "bloques": [
+          {
+            "p": "Los usos más habituales de Ollama son estos, de lo más sencillo a lo más avanzado:"
+          },
+          {
+            "ul": [
+              "**Chatear con un asistente** como lo harías con un servicio en línea, pero en privado: resumir textos, redactar correos, traducir, corregir.",
+              "**Programar con ayuda.** Muchos editores de código se conectan a Ollama para autocompletar y explicar código sin enviarlo fuera.",
+              "**Trabajar con tus documentos.** Con una interfaz adicional puedes preguntar cosas a tus propios archivos sin subirlos a ningún sitio.",
+              "**Automatizar tareas.** Como Ollama ofrece una API local, se puede integrar en scripts, hojas de cálculo o flujos de trabajo."
+            ]
+          },
+          {
+            "p": "Para saber qué ordenador necesita cada uso y cuánto aguanta tu equipo, lo importante es entender la [VRAM y cuánta necesitas para IA](/guias/que-es-la-vram-cuanta-necesitas-ia/). Es la clave de todo."
+          }
+        ]
+      },
+      {
+        "h2": "Requisitos: qué ordenador necesitas",
+        "bloques": [
+          {
+            "p": "Ollama funciona en prácticamente cualquier ordenador moderno, pero **la experiencia depende del hardware**. Hay tres escenarios:"
+          },
+          {
+            "h3": "Con tarjeta gráfica (lo más rápido)"
+          },
+          {
+            "p": "Si tu ordenador tiene una tarjeta gráfica NVIDIA o AMD compatible, Ollama carga el modelo en su VRAM y genera texto a buena velocidad. Es la opción recomendada. Con NVIDIA todo es más directo gracias a CUDA; con AMD funciona en muchos modelos, pero hay que comprobar que tu tarjeta aparece como compatible en la documentación oficial de Ollama. Tienes más detalle en nuestra guía de [NVIDIA o AMD para IA](/guias/nvidia-o-amd-para-ia-cuda-rocm/)."
+          },
+          {
+            "h3": "Con un Mac con chip Apple"
+          },
+          {
+            "p": "Los Mac con chip M usan memoria unificada: el procesador y la gráfica comparten la misma memoria. Ollama la aprovecha bien y, cuanta más memoria tenga el Mac, más grandes serán los modelos que puedas cargar. Es una opción silenciosa y de poco consumo."
+          },
+          {
+            "h3": "Sin tarjeta gráfica (solo procesador)"
+          },
+          {
+            "p": "También funciona, pero a la velocidad que da el procesador y la memoria RAM. Sirve para modelos pequeños (de 1B a 4B parámetros) y para probar. Para uso diario con modelos medianos se queda corto."
+          },
+          {
+            "tabla": {
+              "cab": [
+                "Memoria disponible",
+                "Modelos que caben bien (Q4)",
+                "Ejemplo de comando"
+              ],
+              "filas": [
+                [
+                  "6 a 8 GB de VRAM",
+                  "Hasta 8B parámetros",
+                  "ollama run llama3.1:8b"
+                ],
+                [
+                  "12 a 16 GB de VRAM",
+                  "Hasta 14B parámetros",
+                  "ollama run qwen2.5:14b"
+                ],
+                [
+                  "24 GB de VRAM",
+                  "24B y 32B parámetros",
+                  "ollama run mistral-small:24b"
+                ],
+                [
+                  "32 GB de VRAM o memoria unificada",
+                  "32B con contexto largo",
+                  "ollama run qwen2.5:32b"
+                ],
+                [
+                  "48 GB o más",
+                  "70B parámetros",
+                  "ollama run llama3.3:70b"
+                ]
+              ],
+              "nota": "Cifras aproximadas calculadas con cuantización Q4 y un margen del 20 % para el contexto. La memoria RAM del ordenador conviene que sea al menos el doble que la VRAM."
+            }
+          },
+          {
+            "p": "Aparte de la memoria de vídeo necesitarás espacio en disco: un modelo de 8B en Q4 ocupa unos 5 GB y uno de 70B, unos 40 GB o más. Un disco SSD hace que el modelo cargue en segundos en vez de minutos."
+          }
+        ]
+      },
+      {
+        "h2": "Cómo instalar Ollama paso a paso",
+        "bloques": [
+          {
+            "p": "La instalación es la misma idea en los tres sistemas. Usa siempre la web oficial de Ollama para descargar el instalador."
+          },
+          {
+            "ol": [
+              "**Descarga el instalador** desde la web oficial de Ollama, eligiendo tu sistema: Windows, macOS o Linux.",
+              "**Instálalo.** En Windows y macOS es un instalador normal: siguiente, siguiente, terminar. En Linux se instala con el comando que indica la propia web.",
+              "**Abre una terminal.** En Windows, busca «PowerShell» o «Símbolo del sistema». En macOS, abre «Terminal».",
+              "**Descarga y ejecuta un modelo.** Escribe `ollama run llama3.1` y pulsa Intro. La primera vez descargará el modelo, que tarda unos minutos según tu conexión.",
+              "**Conversa.** Cuando aparezca el cursor, escribe tu pregunta. Para salir, escribe `/bye`."
+            ]
+          },
+          {
+            "p": "Ya está. Desde ese momento puedes volver a abrir la terminal y repetir el mismo comando: el modelo ya estará descargado y arrancará en segundos."
+          }
+        ]
+      },
+      {
+        "h2": "Los comandos básicos que vas a usar",
+        "bloques": [
+          {
+            "p": "No necesitas aprender mucho. Con estos comandos tienes de sobra para empezar:"
+          },
+          {
+            "ul": [
+              "`ollama run nombre` descarga (si hace falta) y abre un chat con ese modelo.",
+              "`ollama list` muestra los modelos que tienes instalados y lo que ocupan.",
+              "`ollama ps` enseña qué modelos están cargados ahora mismo y si están en la tarjeta gráfica o en el procesador. Es la forma más fácil de comprobar si tu VRAM es suficiente.",
+              "`ollama pull nombre` descarga un modelo sin abrir el chat.",
+              "`ollama rm nombre` borra un modelo para liberar espacio."
+            ]
+          },
+          {
+            "aviso": "Si `ollama ps` indica que el modelo va en «CPU» o en un porcentaje repartido entre CPU y GPU, es que no cabe entero en la VRAM. Funciona, pero más despacio. Prueba un modelo más pequeño o una cuantización más ligera.",
+            "titulo": "Cómo saber si te cabe"
+          }
+        ]
+      },
+      {
+        "h2": "Qué modelo descargar primero",
+        "bloques": [
+          {
+            "p": "Los nombres de modelos pueden abrumar, así que esta es una forma sencilla de elegir. Primero decide cuánta memoria tienes y luego busca la etiqueta con el tamaño en la propia lista de Ollama (la parte tras los dos puntos, como 8b o 14b):"
+          },
+          {
+            "ul": [
+              "**Llama 3.1 8B** (`llama3.1:8b`): un buen punto de partida, generalista y rápido, cabe en 8 GB.",
+              "**Qwen 2.5 14B** (`qwen2.5:14b`): muy buen equilibrio con 16 GB, bueno también con código.",
+              "**Mistral Small 24B** (`mistral-small:24b`): calidad alta si tienes 24 GB.",
+              "**Qwen 2.5 32B** (`qwen2.5:32b`): para tarjetas de 24 a 32 GB con ganas de más calidad.",
+              "**Llama 3.3 70B** (`llama3.3:70b`): el escalón profesional, pide unos 48 GB."
+            ]
+          },
+          {
+            "p": "Un consejo: empieza por uno pequeño, comprueba que funciona y sube de tamaño poco a poco. La calidad de un modelo grande es mejor, pero si no te cabe y va a trompicones, uno mediano bien cargado te dará mejor experiencia. Puedes comprobar cuál te cabe con nuestra [calculadora de VRAM](/calculadora-vram/)."
+          }
+        ]
+      },
+      {
+        "h2": "Qué tarjeta gráfica elegir para usar Ollama",
+        "bloques": [
+          {
+            "p": "Si vas a comprar una tarjeta pensando en Ollama, el orden de prioridades es siempre el mismo: **primero la VRAM, después el ancho de banda y por último la potencia bruta**. Estas son tres opciones representativas del catálogo para distintos presupuestos:"
+          },
+          {
+            "pick": "nvidia-rtx-5060-ti-16gb",
+            "rol": "Para empezar con 16 GB",
+            "texto": "Caben los modelos de 14B con margen y la compatibilidad con CUDA evita sorpresas."
+          },
+          {
+            "pick": "amd-radeon-rx-9060-xt-16gb",
+            "rol": "La alternativa con 16 GB",
+            "texto": "Permite lo mismo de memoria, con más trabajo de configuración en algunas aplicaciones."
+          },
+          {
+            "pick": "nvidia-rtx-5090",
+            "rol": "Para modelos grandes",
+            "texto": "Sus 32 GB permiten modelos de 32B con mucho contexto."
+          },
+          {
+            "p": "En la sección de [tarjetas gráficas para IA](/tarjetas-graficas/) tienes todas, con su VRAM, su consumo y una estimación de los tokens por segundo. Y si prefieres un equipo cerrado y silencioso, mira la guía de [Mac para IA local](/guias/mejor-mac-para-ia-local/)."
+          }
+        ]
+      },
+      {
+        "h2": "Ollama o LM Studio: ¿cuál elijo?",
+        "bloques": [
+          {
+            "p": "Es la duda más común entre quienes empiezan. Ollama se maneja con comandos y es perfecta para integrarla con otros programas. LM Studio ofrece una aplicación con ventanas para buscar, descargar y probar modelos con ratón. Ambas ejecutan los mismos tipos de modelos y las dos necesitan la misma memoria. Lo explicamos con más calma en [LM Studio o Ollama](/guias/lm-studio-o-ollama/)."
+          }
+        ]
+      },
+      {
+        "h2": "Problemas habituales y cómo resolverlos",
+        "bloques": [
+          {
+            "ul": [
+              "**Va muy lento.** Comprueba con `ollama ps` si el modelo está en la GPU. Si no cabe, usa uno más pequeño.",
+              "**No usa mi tarjeta gráfica.** Actualiza los controladores de la tarjeta y comprueba que está en la lista de compatibles de Ollama. En AMD conviene revisar esa lista antes de comprar.",
+              "**Se queda sin espacio en disco.** Cada modelo ocupa varios GB. Con `ollama list` ves qué tienes y con `ollama rm` borras lo que no uses.",
+              "**Las respuestas son flojas.** Los modelos pequeños son menos precisos. Prueba un tamaño mayor si tu memoria lo permite."
+            ]
+          }
+        ]
+      }
+    ],
+    "faq": [
+      [
+        "¿Ollama es gratis?",
+        "Sí. Ollama es gratuita y de código abierto. Solo pagas, si quieres, el hardware donde la ejecutas."
+      ],
+      [
+        "¿Necesito tarjeta gráfica para usar Ollama?",
+        "No es obligatoria, pero la recomendamos. Sin tarjeta gráfica solo irán con fluidez los modelos pequeños."
+      ],
+      [
+        "¿Qué ordenador necesito para Ollama?",
+        "Para empezar vale cualquier equipo moderno con 16 GB de RAM. Para modelos medianos conviene una tarjeta gráfica con 12 a 16 GB de VRAM o un Mac con memoria suficiente."
+      ],
+      [
+        "¿Ollama funciona sin internet?",
+        "Sí, una vez descargado el modelo. Solo necesitas conexión para bajarlo."
+      ],
+      [
+        "¿Ollama funciona en Mac?",
+        "Sí, funciona en Mac con chip Apple, que aprovecha su memoria unificada para cargar modelos."
+      ],
+      [
+        "¿Qué modelo descargo primero?",
+        "Llama 3.1 de 8B es una buena primera prueba. Si tienes más memoria, sube a Qwen 2.5 de 14B."
+      ]
+    ],
+    "relacionadas": [
+      "que-es-la-vram-cuanta-necesitas-ia",
+      "lm-studio-o-ollama",
+      "mejor-tarjeta-grafica-calidad-precio-ia"
+    ]
+  },
+  {
+    "slug": "lm-studio-o-ollama",
+    "tipo": "informativa",
+    "titulo": "LM Studio o Ollama: cuál elegir para IA en tu ordenador",
+    "seoTitulo": "LM Studio vs Ollama: diferencias y cuál elegir",
+    "descripcion": "Comparamos LM Studio y Ollama: facilidad de uso, interfaz, integraciones y requisitos de hardware. Descubre cuál te conviene para ejecutar IA en local.",
+    "keyword": "lm studio vs ollama",
+    "publico": "Persona que quiere ejecutar IA en local y duda entre los dos programas más populares",
+    "fecha": "2026-11-12",
+    "entradilla": "LM Studio y Ollama sirven para lo mismo: ejecutar modelos de inteligencia artificial en tu ordenador. Cambia la forma de usarlos. Te explicamos en qué se diferencian, qué hardware piden en ambos casos y cuál encaja mejor contigo.",
+    "resumen": [
+      "Los dos ejecutan los mismos tipos de modelos y necesitan la misma memoria. La diferencia está en cómo los manejas.",
+      "LM Studio es una aplicación con ventanas, ideal para empezar con el ratón y explorar modelos.",
+      "Ollama funciona por comandos y deja un servidor local, ideal para integrarla con otras herramientas.",
+      "Puedes instalar los dos sin problema. Lo que de verdad decide el rendimiento es tu tarjeta gráfica y su VRAM."
+    ],
+    "secciones": [
+      {
+        "h2": "La respuesta corta",
+        "bloques": [
+          {
+            "p": "Si quieres una aplicación visual, con buscador de modelos, botones y un chat integrado, empieza por **LM Studio**. Si te sientes cómodo con una terminal o quieres conectar tus modelos a un editor de código, a una interfaz web o a tus propios scripts, elige **Ollama**. Ninguna es «mejor» en general: son dos formas de llegar al mismo sitio."
+          },
+          {
+            "p": "Lo que sí es igual en las dos es el hardware. Un modelo de 14B ocupa en torno a 9,5 GB en Q4 se ejecute en un programa o en otro, así que la tarjeta gráfica que necesitas no cambia. Si todavía no tienes clara esa parte, empieza por la guía de [qué es la VRAM y cuánta necesitas](/guias/que-es-la-vram-cuanta-necesitas-ia/)."
+          },
+          {
+            "aviso": "Esta comparativa se basa en cómo funcionan los dos programas a la fecha de publicación. Son proyectos que se actualizan con frecuencia, así que conviene revisar sus webs oficiales para ver las funciones y condiciones de uso al día.",
+            "titulo": "Ojo con esto"
+          }
+        ]
+      },
+      {
+        "h2": "Qué es cada uno",
+        "bloques": [
+          {
+            "h3": "LM Studio"
+          },
+          {
+            "p": "Es una aplicación de escritorio para Windows, macOS y Linux. Lo abres como cualquier programa, buscas un modelo en su catálogo, lo descargas con un botón y chateas con él en una ventana. Te muestra cuánta memoria va a ocupar y te deja ajustar parámetros con controles gráficos. También puede ofrecer un servidor local para que otras aplicaciones se conecten."
+          },
+          {
+            "h3": "Ollama"
+          },
+          {
+            "p": "Es un programa ligero que se maneja desde la terminal. Un comando como `ollama run llama3.1` descarga el modelo y abre el chat. Funciona como servicio en segundo plano y deja una API local en el puerto 11434 que muchos programas saben usar. Hay interfaces gráficas de terceros si quieres ventanas. Tienes la explicación completa en [qué es Ollama y cómo instalarlo](/guias/que-es-ollama-como-instalarlo-requisitos/)."
+          }
+        ]
+      },
+      {
+        "h2": "Diferencias que se notan al usarlos",
+        "bloques": [
+          {
+            "tabla": {
+              "cab": [
+                "Aspecto",
+                "LM Studio",
+                "Ollama"
+              ],
+              "filas": [
+                [
+                  "Forma de usarlo",
+                  "Aplicación con ventanas y ratón",
+                  "Comandos en terminal y API local"
+                ],
+                [
+                  "Descubrir modelos",
+                  "Buscador integrado con información de tamaño y memoria",
+                  "Lista de modelos en su web y comando para descargar"
+                ],
+                [
+                  "Curva de aprendizaje",
+                  "Muy suave, pensado para empezar",
+                  "Suave si no te asusta la terminal"
+                ],
+                [
+                  "Integrar con otros programas",
+                  "Posible mediante su servidor local",
+                  "Es su punto fuerte, muchas herramientas lo soportan"
+                ],
+                [
+                  "Ajustes del modelo",
+                  "Controles gráficos a la vista",
+                  "Por comandos y archivos de configuración"
+                ],
+                [
+                  "Uso de la tarjeta gráfica",
+                  "Elige cuántas capas llevar a la GPU con un control",
+                  "Lo decide solo, y `ollama ps` te dice dónde está cargado"
+                ],
+                [
+                  "Automatización",
+                  "Posible, más pensado para uso manual",
+                  "Muy cómodo para scripts y flujos de trabajo"
+                ]
+              ],
+              "nota": "Comparativa orientativa de Inferium. Ambos programas evolucionan y pueden cambiar sus funciones."
+            }
+          }
+        ]
+      },
+      {
+        "h2": "Rendimiento: ¿uno va más rápido que el otro?",
+        "bloques": [
+          {
+            "p": "Con el mismo modelo y la misma cuantización, la velocidad depende sobre todo de tu hardware, no del programa. Lo que manda es si el modelo cabe entero en la VRAM y cuánto ancho de banda tiene tu tarjeta. Pueden aparecer pequeñas diferencias entre programas según la versión del motor que usen por debajo, pero no son lo que va a cambiar tu experiencia."
+          },
+          {
+            "p": "Donde sí notarás diferencia es en el reparto entre tarjeta gráfica y procesador. Si el modelo no cabe en la VRAM, ambos mandan parte del trabajo al procesador y la velocidad cae. Es entonces cuando conviene un modelo más pequeño o una tarjeta con más memoria."
+          },
+          {
+            "barras": {
+              "titulo": "Memoria que ocupan modelos habituales en Q4 (GB)",
+              "datos": [
+                [
+                  "Llama 3.1 8B",
+                  5.4,
+                  "5,4 GB"
+                ],
+                [
+                  "Qwen 2.5 14B",
+                  9.5,
+                  "9,5 GB"
+                ],
+                [
+                  "Mistral Small 24B",
+                  16.2,
+                  "16,2 GB"
+                ],
+                [
+                  "Qwen 2.5 32B",
+                  21.6,
+                  "21,6 GB"
+                ],
+                [
+                  "Llama 3.3 70B",
+                  47.3,
+                  "47,3 GB"
+                ]
+              ],
+              "unidad": "",
+              "nota": "Cálculo de Inferium: parámetros × 4,5 bits ÷ 8 + 20 % de contexto. Es igual en cualquier programa."
+            }
+          }
+        ]
+      },
+      {
+        "h2": "Qué elegir según tu caso",
+        "bloques": [
+          {
+            "h3": "Elige LM Studio si..."
+          },
+          {
+            "ul": [
+              "Es la primera vez que ejecutas IA en tu ordenador y prefieres ventanas a comandos.",
+              "Quieres explorar muchos modelos y ver de un vistazo cuánto pesan y si te caben.",
+              "Te gusta tener un chat cómodo y ajustes visibles sin tocar archivos."
+            ]
+          },
+          {
+            "h3": "Elige Ollama si..."
+          },
+          {
+            "ul": [
+              "Quieres conectar los modelos a tu editor de código u otras aplicaciones.",
+              "Vas a automatizar tareas o usarlos desde tus propios scripts.",
+              "Prefieres un programa ligero que funcione en segundo plano."
+            ]
+          },
+          {
+            "h3": "Y si dudas"
+          },
+          {
+            "p": "Instala los dos. Pueden convivir en el mismo ordenador, aunque cada uno guarda sus propios modelos y ocuparás el doble de disco si descargas el mismo modelo en ambos. Prueba con un modelo pequeño en cada uno durante una tarde y quédate con el que te resulte más cómodo."
+          }
+        ]
+      },
+      {
+        "h2": "El hardware que necesitas en cualquiera de los dos",
+        "bloques": [
+          {
+            "p": "Como el rendimiento depende del equipo, esta es la tabla que sirve para ambos programas:"
+          },
+          {
+            "tabla": {
+              "cab": [
+                "Quieres usar",
+                "Memoria recomendada",
+                "Tarjetas del catálogo que lo permiten"
+              ],
+              "filas": [
+                [
+                  "Modelos de 8B",
+                  "8 GB de VRAM",
+                  "RTX 5060, RTX 3060 de 12 GB"
+                ],
+                [
+                  "Modelos de 14B",
+                  "12 a 16 GB de VRAM",
+                  "RTX 5060 Ti 16 GB, RX 9060 XT 16 GB, RX 9070 XT"
+                ],
+                [
+                  "Modelos de 24B a 32B",
+                  "24 a 32 GB de VRAM",
+                  "RTX 5090, Radeon AI PRO R9700"
+                ],
+                [
+                  "Modelos de 70B",
+                  "48 GB o más",
+                  "RTX PRO 5000 o RTX PRO 6000, Mac Studio con memoria alta"
+                ]
+              ],
+              "nota": "Con Q4 y margen de contexto. Comprueba en cada ficha la VRAM exacta de la versión que compras."
+            }
+          },
+          {
+            "p": "Un buen punto de partida es la RTX 5060 Ti de 16 GB, porque junta VRAM suficiente para modelos de 14B con la compatibilidad de CUDA:"
+          },
+          {
+            "pick": "nvidia-rtx-5060-ti-16gb",
+            "rol": "Para estrenarte con cualquiera de los dos"
+          },
+          {
+            "p": "Si prefieres no montar un PC, un Mac con memoria unificada funciona muy bien con los dos programas. Lo detallamos en [mejor Mac para IA local](/guias/mejor-mac-para-ia-local/). Y para comparar todas las tarjetas, entra en [tarjetas gráficas para IA](/tarjetas-graficas/)."
+          },
+          {
+            "cta": {
+              "texto": "¿Cuánta memoria te hace falta para tus modelos?",
+              "boton": "Abrir la calculadora de VRAM",
+              "url": "/calculadora-vram/"
+            }
+          }
+        ]
+      },
+      {
+        "h2": "Errores comunes al empezar",
+        "bloques": [
+          {
+            "ul": [
+              "**Descargar un modelo que no cabe.** Es lo que más frustra. Calcula antes el tamaño o usa la calculadora.",
+              "**Pensar que un programa es más potente que el otro.** La potencia la pone tu tarjeta gráfica.",
+              "**Olvidar el disco.** Los modelos pesan decenas de GB. Un SSD ayuda a cargarlos rápido.",
+              "**Comprar por la potencia de juegos.** Para IA importa más la VRAM que los fotogramas por segundo."
+            ]
+          }
+        ]
+      }
+    ],
+    "faq": [
+      [
+        "¿Es mejor LM Studio o Ollama?",
+        "Ninguno es mejor en todo. LM Studio es más cómodo para empezar con ventanas. Ollama es más flexible para integrarlo con otros programas."
+      ],
+      [
+        "¿Puedo usar los dos a la vez?",
+        "Sí, se pueden instalar en el mismo ordenador. Cada uno guarda sus modelos por separado."
+      ],
+      [
+        "¿Necesitan los dos la misma tarjeta gráfica?",
+        "Sí. El hardware que necesitas depende del tamaño del modelo, no del programa."
+      ],
+      [
+        "¿Cuál es más fácil para un principiante?",
+        "LM Studio suele ser el más cómodo para el primer contacto por su interfaz visual."
+      ],
+      [
+        "¿Cuál se integra mejor con editores de código?",
+        "Ollama es la opción más extendida para conectar los modelos locales con editores y otras herramientas."
+      ]
+    ],
+    "relacionadas": [
+      "que-es-ollama-como-instalarlo-requisitos",
+      "que-es-la-vram-cuanta-necesitas-ia",
+      "mejor-tarjeta-grafica-calidad-precio-ia"
+    ]
+  },
+  {
+    "slug": "que-es-una-tarjeta-grafica-gpu-ia",
+    "tipo": "informativa",
+    "titulo": "Qué es una tarjeta gráfica (GPU) y por qué sirve para IA",
+    "seoTitulo": "Qué es una tarjeta gráfica (GPU) y para qué sirve en IA",
+    "descripcion": "Qué es una tarjeta gráfica o GPU, cómo se diferencia del procesador, qué partes tiene y qué debes mirar si la quieres para inteligencia artificial.",
+    "keyword": "que es tarjeta grafica",
+    "publico": "Persona que quiere entender qué es una tarjeta gráfica antes de comprar una para usar IA",
+    "fecha": "2026-11-12",
+    "entradilla": "Una tarjeta gráfica, también llamada GPU, es la pieza del ordenador que hace miles de cálculos a la vez. Nació para los videojuegos y hoy es la base de la inteligencia artificial. Te explicamos qué es, cómo funciona y qué datos mirar al comprarla.",
+    "resumen": [
+      "La tarjeta gráfica (GPU) es un procesador especializado en hacer muchos cálculos sencillos a la vez, y por eso sirve para juegos, vídeo e IA.",
+      "No es lo mismo que el procesador (CPU): la CPU hace pocas tareas variadas y la GPU hace muchísimas tareas iguales en paralelo.",
+      "Para IA, lo primero que hay que mirar es la VRAM, después el ancho de banda y por último la marca (NVIDIA o AMD).",
+      "Una tarjeta gráfica exige una fuente de alimentación adecuada, espacio en la caja y una placa con ranura PCIe."
+    ],
+    "secciones": [
+      {
+        "h2": "Qué es una tarjeta gráfica",
+        "bloques": [
+          {
+            "p": "Una tarjeta gráfica (también llamada GPU, por las siglas en inglés de unidad de procesamiento gráfico, o tarjeta de vídeo) es un componente del ordenador que se encarga de generar las imágenes que ves en pantalla. Es una placa con su propio chip, su propia memoria y su propio sistema de refrigeración, que se conecta a la placa base del ordenador."
+          },
+          {
+            "p": "Tradicionalmente se compraba para jugar. Pintar un videojuego exige calcular millones de puntos de color muchas veces por segundo, y esa tarea es muy repetitiva. La GPU está construida precisamente para eso: tiene miles de núcleos pequeños que trabajan a la vez."
+          },
+          {
+            "p": "Resulta que hacer funcionar un modelo de inteligencia artificial es, matemáticamente, un trabajo parecido: multiplicar enormes tablas de números una y otra vez. Por eso la tarjeta gráfica se ha convertido en la pieza más importante para usar IA en casa."
+          },
+          {
+            "aviso": "«GPU» es el chip y «tarjeta gráfica» es la placa completa que lo lleva con su memoria y su ventilación. En el día a día se usan como sinónimos, y así los usamos aquí.",
+            "titulo": "Ojo con esto"
+          }
+        ]
+      },
+      {
+        "h2": "Diferencia entre GPU y CPU",
+        "bloques": [
+          {
+            "p": "El procesador (CPU) es el cerebro general del ordenador. Tiene pocos núcleos, pero muy listos, y sabe hacer de todo: abrir programas, gestionar el sistema, hacer cuentas variadas. La GPU tiene miles de núcleos más sencillos que hacen todos lo mismo al mismo tiempo."
+          },
+          {
+            "p": "Una imagen útil: la CPU es un grupo pequeño de ingenieros que resuelven problemas complejos uno por uno. La GPU es un estadio lleno de personas que hacen una suma sencilla cada una, pero todas a la vez. Para una tarea que es sumar millones de números, gana el estadio."
+          },
+          {
+            "tabla": {
+              "cab": [
+                "",
+                "CPU (procesador)",
+                "GPU (tarjeta gráfica)"
+              ],
+              "filas": [
+                [
+                  "Núcleos",
+                  "Pocos y muy versátiles",
+                  "Miles y especializados"
+                ],
+                [
+                  "Mejor para",
+                  "Tareas variadas y secuenciales",
+                  "Muchos cálculos iguales a la vez"
+                ],
+                [
+                  "Memoria",
+                  "Usa la RAM del ordenador",
+                  "Tiene su propia memoria (VRAM)"
+                ],
+                [
+                  "En IA",
+                  "Funciona, pero lento con modelos medianos",
+                  "La opción habitual para ejecutar modelos"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "h2": "Las partes de una tarjeta gráfica",
+        "bloques": [
+          {
+            "ul": [
+              "**El chip (GPU).** Es el cerebro de la tarjeta. NVIDIA, AMD e Intel fabrican los chips; luego marcas como ASUS, MSI, Gigabyte, Sapphire, XFX o Palit montan las tarjetas completas.",
+              "**La memoria de vídeo (VRAM).** Almacena lo que la GPU necesita tener a mano. Para IA es el dato clave. Tienes la explicación detallada en [qué es la VRAM y cuánta necesitas](/guias/que-es-la-vram-cuanta-necesitas-ia/).",
+              "**El sistema de refrigeración.** Disipador y ventiladores que evitan que el chip se caliente. Más ventiladores no siempre significa más rendimiento, pero sí menos ruido y temperatura.",
+              "**La alimentación.** Conectores que traen la corriente desde la fuente del ordenador. Las tarjetas potentes necesitan conectores específicos.",
+              "**Las salidas de vídeo.** HDMI y DisplayPort para conectar monitores. Para IA casi no importan."
+            ]
+          }
+        ]
+      },
+      {
+        "h2": "Por qué la GPU es clave para la inteligencia artificial",
+        "bloques": [
+          {
+            "p": "Un modelo de lenguaje es un archivo enorme de números, y generar cada palabra implica leer todo ese archivo y hacer una multiplicación gigante. Hacerlo con un procesador normal funciona, pero lento. Una GPU lo hace muchas veces más rápido porque reparte el cálculo entre sus miles de núcleos."
+          },
+          {
+            "p": "Pero en IA no manda solo la potencia. Mandan tres cosas, en este orden:"
+          },
+          {
+            "ol": [
+              "**La VRAM.** Si el modelo no cabe en la memoria de la tarjeta, se ralentiza mucho.",
+              "**El ancho de banda de la memoria.** Cuántos GB por segundo puede leer la tarjeta. Determina cuántas palabras por segundo genera.",
+              "**El ecosistema de software.** NVIDIA tiene CUDA, que es lo más compatible. AMD usa ROCm, que mejora cada año pero requiere algo más de atención."
+            ]
+          },
+          {
+            "barras": {
+              "titulo": "Ancho de banda de memoria de algunas tarjetas del catálogo (GB/s)",
+              "datos": [
+                [
+                  "RTX 3060 12 GB",
+                  360,
+                  "360 GB/s"
+                ],
+                [
+                  "RTX 5060 Ti 16 GB",
+                  448,
+                  "448 GB/s"
+                ],
+                [
+                  "RX 9070 XT",
+                  640,
+                  "640 GB/s"
+                ],
+                [
+                  "RTX 5080",
+                  960,
+                  "960 GB/s"
+                ],
+                [
+                  "RTX 5090",
+                  1792,
+                  "1.792 GB/s"
+                ]
+              ],
+              "unidad": "",
+              "nota": "Datos de las fichas de Inferium. Un mayor ancho de banda se traduce en más palabras por segundo con el mismo modelo."
+            }
+          },
+          {
+            "p": "Si quieres profundizar en esa elección, tenemos una guía sobre [NVIDIA o AMD para IA](/guias/nvidia-o-amd-para-ia-cuda-rocm/)."
+          }
+        ]
+      },
+      {
+        "h2": "Tipos de tarjeta gráfica",
+        "bloques": [
+          {
+            "h3": "Integrada y dedicada"
+          },
+          {
+            "p": "Una **gráfica integrada** va dentro del procesador, comparte la memoria RAM y sirve para tareas básicas. Una **gráfica dedicada** es una tarjeta independiente con su propia VRAM. Para IA en serio se necesita una dedicada, salvo que uses un equipo con memoria unificada como un Mac o un mini PC con procesador de gama alta."
+          },
+          {
+            "h3": "De sobremesa y portátil"
+          },
+          {
+            "p": "La tarjeta de sobremesa se instala en la ranura PCIe de la placa base. En un portátil la GPU va soldada y no se cambia. Si tu portátil se queda corto, existe la opción de conectar una [tarjeta gráfica externa](/guias/tarjeta-grafica-externa-egpu-portatil/)."
+          },
+          {
+            "h3": "De consumo y profesional"
+          },
+          {
+            "p": "Las tarjetas de consumo (la serie GeForce o Radeon) están pensadas para jugar y son lo más habitual para IA doméstica. Las profesionales (por ejemplo las RTX PRO) llevan mucha más VRAM y están pensadas para estaciones de trabajo. Las tienes en [GPU profesionales para IA](/gpu-profesionales-para-ia/)."
+          }
+        ]
+      },
+      {
+        "h2": "Qué mirar al comprar una tarjeta gráfica para IA",
+        "bloques": [
+          {
+            "ol": [
+              "**La VRAM exacta.** Muchas tarjetas se venden en dos versiones con el mismo nombre y distinta memoria. Comprueba los gigas en la ficha.",
+              "**El ancho de banda.** A igual VRAM, más ancho de banda significa más velocidad al generar texto.",
+              "**El consumo y la fuente.** Mira los vatios de la tarjeta y la fuente de alimentación recomendada. Si no te llega, tendrás que cambiarla.",
+              "**El tamaño.** Algunas tarjetas ocupan tres ranuras y miden más de 30 cm. Revisa que cabe en tu caja.",
+              "**La compatibilidad con el software.** Si vas a generar imágenes con Stable Diffusion o Flux, NVIDIA ahorra problemas."
+            ]
+          },
+          {
+            "p": "Si ya tienes claro el presupuesto, mira la comparativa de [mejor tarjeta gráfica calidad precio para IA](/guias/mejor-tarjeta-grafica-calidad-precio-ia/). Y si ya sabes qué modelo quieres usar, la [calculadora de VRAM](/calculadora-vram/) te dice qué tarjeta necesitas."
+          }
+        ]
+      },
+      {
+        "h2": "Una tarjeta para empezar",
+        "bloques": [
+          {
+            "p": "Si buscas el escalón de entrada razonable para IA, estas dos tarjetas de 16 GB son de las que más se venden en Amazon.es y permiten modelos de 14B:"
+          },
+          {
+            "pick": "nvidia-rtx-5060-ti-16gb",
+            "rol": "Con CUDA, la opción más compatible"
+          },
+          {
+            "pick": "amd-radeon-rx-9060-xt-16gb",
+            "rol": "La alternativa de AMD con 16 GB"
+          },
+          {
+            "cta": {
+              "texto": "¿Quieres comparar todas?",
+              "boton": "Ver todas las tarjetas gráficas (GPU)",
+              "url": "/tarjetas-graficas/"
+            }
+          }
+        ]
+      },
+      {
+        "h2": "Lo que necesita tu ordenador para llevar una tarjeta gráfica",
+        "bloques": [
+          {
+            "ul": [
+              "**Una ranura PCIe en la placa base.** Todas las placas de sobremesa modernas la tienen.",
+              "**Una fuente de alimentación suficiente.** La potencia depende de la tarjeta. Mira los vatios recomendados en cada ficha. Tienes las [fuentes de alimentación más vendidas](/componentes/fuentes-de-alimentacion/) en la sección de componentes.",
+              "**Espacio y ventilación en la caja.** Una tarjeta grande en una caja pequeña se calienta y hace ruido.",
+              "**Memoria RAM.** Para IA conviene tener al menos el doble de RAM que VRAM."
+            ]
+          }
+        ]
+      }
+    ],
+    "faq": [
+      [
+        "¿Qué es una tarjeta gráfica?",
+        "Es un componente del ordenador con su propio chip (GPU) y su propia memoria que se encarga de los cálculos gráficos y, hoy, también de los de inteligencia artificial."
+      ],
+      [
+        "¿Qué es la GPU?",
+        "Es el chip de la tarjeta gráfica. Tiene miles de núcleos que hacen cálculos en paralelo."
+      ],
+      [
+        "¿Es lo mismo GPU que tarjeta gráfica?",
+        "En el uso diario sí. Técnicamente la GPU es el chip y la tarjeta gráfica es la placa completa."
+      ],
+      [
+        "¿Para qué sirve una tarjeta gráfica en IA?",
+        "Para ejecutar los modelos mucho más rápido que con el procesador, siempre que quepan en su memoria."
+      ],
+      [
+        "¿Qué tarjeta gráfica necesito para IA?",
+        "Depende del modelo. Con 8 GB de VRAM empiezas, con 16 GB trabajas cómodo con modelos de 14B y con 24 GB o más llegas a modelos de 24B a 32B."
+      ],
+      [
+        "¿Sirve una tarjeta gráfica de juegos para IA?",
+        "Sí, de hecho es lo habitual. Lo importante es que tenga suficiente VRAM."
+      ]
+    ],
+    "relacionadas": [
+      "que-es-la-vram-cuanta-necesitas-ia",
+      "nvidia-o-amd-para-ia-cuda-rocm",
+      "mejor-tarjeta-grafica-calidad-precio-ia"
+    ]
+  },
+  {
+    "slug": "tarjeta-grafica-externa-egpu-portatil",
+    "tipo": "informativa",
+    "titulo": "Tarjeta gráfica externa (eGPU) para portátil: qué es y si compensa",
+    "seoTitulo": "Tarjeta gráfica externa para portátil (eGPU): guía completa",
+    "descripcion": "Qué es una tarjeta gráfica externa (eGPU), cómo se conecta a un portátil con OCuLink o Thunderbolt, qué necesitas comprar y si compensa para usar IA.",
+    "keyword": "tarjeta grafica externa para portatil",
+    "publico": "Persona con un portátil o mini PC que quiere usar IA y se pregunta si puede conectarle una tarjeta gráfica de sobremesa",
+    "fecha": "2026-11-12",
+    "entradilla": "Una tarjeta gráfica externa permite darle a un portátil o a un mini PC la potencia de una gráfica de sobremesa. Te contamos cómo funciona, qué conexión elegir, qué accesorios hacen falta y en qué casos tiene sentido para IA.",
+    "resumen": [
+      "Una eGPU es una tarjeta gráfica de sobremesa instalada en una caja o dock externo que se conecta al portátil por cable.",
+      "La conexión importa: OCuLink ofrece un ancho de banda mayor que Thunderbolt 4, aunque exige que el equipo tenga ese puerto.",
+      "Para IA, la conexión influye menos que en juegos: una vez el modelo está cargado en la VRAM, casi no se mueven datos por el cable.",
+      "Los Mac con chip Apple no admiten tarjetas gráficas externas. Para ellos la solución es elegir un modelo con más memoria."
+    ],
+    "secciones": [
+      {
+        "h2": "Qué es una tarjeta gráfica externa",
+        "bloques": [
+          {
+            "p": "Una tarjeta gráfica externa (eGPU, de «external GPU») es una tarjeta gráfica de sobremesa que, en lugar de ir dentro de un PC, se monta en una caja o dock fuera del ordenador. Esa caja se conecta al portátil o al mini PC con un cable y le presta su potencia. El portátil sigue siendo el que lleva la pantalla, el teclado y el sistema, pero los cálculos pesados los hace la tarjeta externa."
+          },
+          {
+            "p": "La idea tiene mucho sentido: los portátiles y los mini PC son cómodos y compactos, pero su gráfica integrada o su GPU móvil se queda corta para modelos de IA medianos. Con una eGPU puedes ampliar ese equipo sin cambiarlo entero. Si todavía no tienes claro qué hace una GPU, empieza por nuestra guía de [qué es una tarjeta gráfica](/guias/que-es-una-tarjeta-grafica-gpu-ia/)."
+          }
+        ]
+      },
+      {
+        "h2": "Cómo se conecta: OCuLink, Thunderbolt y USB4",
+        "bloques": [
+          {
+            "p": "Aquí está la parte técnica que más condiciona la compra. La tarjeta se comunica con el equipo por un puerto, y no todos los puertos son iguales:"
+          },
+          {
+            "tabla": {
+              "cab": [
+                "Conexión",
+                "Ancho de banda aproximado",
+                "Cosas a tener en cuenta"
+              ],
+              "filas": [
+                [
+                  "OCuLink (PCIe 4.0 x4)",
+                  "Unos 64 Gbps",
+                  "Es el más rápido de los habituales. Solo lo traen algunos mini PC y portátiles, y a veces hay que adaptarlo con un módulo en la ranura M.2."
+                ],
+                [
+                  "Thunderbolt 4 / USB4",
+                  "40 Gbps",
+                  "Es el más extendido y se enchufa sin abrir nada. Pierde algo de rendimiento frente a OCuLink."
+                ],
+                [
+                  "Thunderbolt 5",
+                  "80 Gbps (hasta 120 en algunos casos)",
+                  "Es el más reciente. Solo lo llevan los equipos más nuevos."
+                ]
+              ],
+              "nota": "Cifras teóricas de cada estándar. El rendimiento real depende del equipo y del dock. Comprueba qué puerto tiene el tuyo antes de comprar."
+            }
+          },
+          {
+            "aviso": "Si el portátil solo tiene USB-C normal, sin Thunderbolt ni USB4, no podrás usar una eGPU. Mira en las especificaciones del fabricante que el puerto sea Thunderbolt o USB4, o que lleve OCuLink.",
+            "titulo": "Ojo con esto"
+          }
+        ]
+      },
+      {
+        "h2": "Qué necesitas comprar",
+        "bloques": [
+          {
+            "p": "Una eGPU no es un solo producto, sino un conjunto. Necesitas cuatro cosas:"
+          },
+          {
+            "ol": [
+              "**La tarjeta gráfica.** Elígela por su VRAM, como harías para un PC. En [tarjetas gráficas para IA](/tarjetas-graficas/) tienes todas las opciones.",
+              "**El dock o caja externa.** Es la estructura donde se monta la tarjeta y que la conecta al portátil. Los más vendidos de Amazon.es los tienes en [GPU externas (eGPU)](/componentes/gpu-externas-egpu/).",
+              "**Una fuente de alimentación.** Algunas cajas la traen incluida y otras no. Debe tener potencia suficiente para la tarjeta que elijas. Mira los vatios recomendados en la ficha de cada una.",
+              "**El cable o adaptador.** Con OCuLink necesitas un cable específico y, si tu equipo no tiene el puerto, un adaptador en la ranura M.2."
+            ]
+          },
+          {
+            "p": "Si compras la fuente por separado, en [fuentes de alimentación](/componentes/fuentes-de-alimentacion/) están las más vendidas, ordenadas por potencia."
+          }
+        ]
+      },
+      {
+        "h2": "¿Compensa para usar IA?",
+        "bloques": [
+          {
+            "p": "Aquí hay una buena noticia respecto a los juegos. En juegos, el cable limita el rendimiento porque pasan imágenes y datos constantemente. En IA, el modelo se carga una vez en la VRAM de la tarjeta externa y, a partir de ahí, casi todo ocurre dentro de la tarjeta. El cable solo importa en la carga inicial y para enviar el texto de entrada y recibir el de salida, que son cantidades diminutas."
+          },
+          {
+            "p": "Eso significa que para ejecutar modelos de lenguaje en local una eGPU **pierde mucho menos rendimiento** de lo que ocurre jugando. La velocidad de generación depende de la tarjeta, de su VRAM y de su ancho de banda interno, no del cable. Por eso es una opción interesante para IA."
+          },
+          {
+            "h3": "Cuándo sí compensa"
+          },
+          {
+            "ul": [
+              "Tienes un portátil o mini PC con OCuLink o Thunderbolt que ya funciona bien y solo te falta potencia gráfica.",
+              "Quieres aprovechar el mismo equipo para trabajar fuera de casa y tener potencia cuando estás en el escritorio.",
+              "Prefieres ampliar tu equipo actual en vez de comprar uno nuevo."
+            ]
+          },
+          {
+            "h3": "Cuándo es mejor otra cosa"
+          },
+          {
+            "ul": [
+              "Si ya vas a comprar equipo nuevo y no necesitas movilidad, un PC de sobremesa con la misma tarjeta suele salir más sencillo y más barato.",
+              "Si el portátil no tiene un puerto compatible, no hay solución cómoda.",
+              "Si lo que quieres es memoria para modelos grandes sin montar nada, un [mini PC para IA](/guias/mejor-mini-pc-para-ia/) con memoria unificada puede encajar mejor."
+            ]
+          }
+        ]
+      },
+      {
+        "h2": "Qué tarjeta gráfica poner en una eGPU",
+        "bloques": [
+          {
+            "p": "Se aplica la regla de siempre: primero la VRAM. Con una eGPU, además, conviene cuidar el consumo, porque la fuente y la caja tienen un límite. Estas dos opciones suelen ser un buen equilibrio:"
+          },
+          {
+            "pick": "nvidia-rtx-5060-ti-16gb",
+            "rol": "Pocos vatios y 16 GB de VRAM",
+            "texto": "Con un consumo de {w:nvidia-rtx-5060-ti-16gb} W, es fácil de alimentar en una caja externa y permite modelos de 14B."
+          },
+          {
+            "pick": "amd-radeon-rx-9060-xt-16gb",
+            "rol": "Otra opción de 16 GB con poco consumo",
+            "texto": "Consume {w:amd-radeon-rx-9060-xt-16gb} W. Si usas Windows, con Ollama y LM Studio va bien."
+          },
+          {
+            "p": "Si quieres más potencia y tu caja y tu fuente lo permiten, hay modelos de más memoria. Fíjate bien en el consumo de cada ficha: una tarjeta que gaste más de lo que la fuente aguanta no es una opción."
+          }
+        ]
+      },
+      {
+        "h2": "Los Mac no admiten eGPU",
+        "bloques": [
+          {
+            "p": "Es importante saberlo antes de gastar dinero: los Mac con chip Apple Silicon (M1 en adelante) **no admiten tarjetas gráficas externas**. Su gráfica forma parte del propio chip y comparte la memoria con el procesador. Si usas un Mac y necesitas más potencia para IA, la solución es un modelo con más memoria unificada. Lo explicamos en [mejor Mac para IA local](/guias/mejor-mac-para-ia-local/)."
+          }
+        ]
+      },
+      {
+        "h2": "Portátiles para IA: la alternativa sin dock",
+        "bloques": [
+          {
+            "p": "Si estás pensando en comprar un portátil nuevo y quieres usar IA, a veces es más práctico elegir uno que ya traiga una tarjeta gráfica dedicada. Ten en cuenta que la VRAM de las GPU de portátil es menor que la de sus equivalentes de sobremesa. En [portátiles para IA](/portatiles-para-ia/) tienes los más vendidos con tarjeta gráfica NVIDIA."
+          }
+        ]
+      },
+      {
+        "h2": "Errores frecuentes con las eGPU",
+        "bloques": [
+          {
+            "ul": [
+              "**Comprar la tarjeta antes de comprobar el puerto.** Verifica primero que tu equipo tiene Thunderbolt, USB4 u OCuLink.",
+              "**Subestimar la fuente.** Si la fuente es justa, el equipo se apaga al cargar la tarjeta.",
+              "**Esperar rendimiento de sobremesa en juegos.** Para IA la pérdida es menor, pero en juegos la conexión sí limita.",
+              "**Olvidar los controladores.** Instala los de la tarjeta antes de conectar la caja por primera vez."
+            ]
+          }
+        ]
+      }
+    ],
+    "faq": [
+      [
+        "¿Qué es una tarjeta gráfica externa?",
+        "Es una tarjeta gráfica de sobremesa que se monta en una caja o dock fuera del ordenador y se conecta con un cable a un portátil o mini PC."
+      ],
+      [
+        "¿Se puede conectar una tarjeta gráfica externa a cualquier portátil?",
+        "No. El portátil necesita un puerto Thunderbolt, USB4 u OCuLink. Un USB-C básico no sirve."
+      ],
+      [
+        "¿Qué es mejor, OCuLink o Thunderbolt?",
+        "OCuLink ofrece más ancho de banda, pero solo lo traen algunos equipos. Thunderbolt es más común y se conecta sin abrir el ordenador."
+      ],
+      [
+        "¿Sirve una eGPU para IA?",
+        "Sí, y pierde menos rendimiento que en juegos, porque el modelo se carga una vez en la VRAM de la tarjeta externa."
+      ],
+      [
+        "¿Funciona una eGPU en un Mac?",
+        "No, los Mac con chip Apple no admiten tarjetas gráficas externas."
+      ],
+      [
+        "¿Necesito una fuente de alimentación aparte?",
+        "Depende del dock. Algunos la incluyen y otros no. Debe cubrir el consumo de la tarjeta."
+      ]
+    ],
+    "relacionadas": [
+      "que-es-una-tarjeta-grafica-gpu-ia",
+      "mejor-mini-pc-para-ia",
+      "mejor-tarjeta-grafica-calidad-precio-ia"
+    ]
+  },
+  {
+    "slug": "nvidia-o-amd-para-ia-cuda-rocm",
+    "tipo": "informativa",
+    "titulo": "NVIDIA o AMD para IA: CUDA, ROCm y cuál te conviene",
+    "seoTitulo": "NVIDIA o AMD para IA: diferencias entre CUDA y ROCm",
+    "descripcion": "NVIDIA o AMD para inteligencia artificial: qué son CUDA y ROCm, qué funciona mejor en Ollama, LM Studio y Stable Diffusion y qué tarjeta elegir según tu caso.",
+    "keyword": "tarjeta grafica nvidia o amd para ia",
+    "publico": "Persona que va a comprar una tarjeta gráfica para IA y duda entre NVIDIA y AMD",
+    "fecha": "2026-11-12",
+    "entradilla": "Elegir entre NVIDIA y AMD para inteligencia artificial no va de marcas, va de software. Te explicamos qué son CUDA y ROCm, qué cambia según uses modelos de texto o generes imágenes, y en qué casos te sale mejor cada una.",
+    "resumen": [
+      "NVIDIA ofrece CUDA, el ecosistema más compatible: casi todo el software de IA funciona sin configurar nada.",
+      "AMD ofrece ROCm y suele dar más VRAM por el mismo dinero, pero algunas herramientas piden más configuración.",
+      "Para modelos de texto con Ollama o LM Studio, las dos marcas funcionan bien en las tarjetas compatibles.",
+      "Para generar imágenes con Stable Diffusion o Flux, NVIDIA ahorra bastantes dolores de cabeza."
+    ],
+    "secciones": [
+      {
+        "h2": "La respuesta corta",
+        "bloques": [
+          {
+            "p": "Si quieres que todo funcione a la primera, sobre todo si vas a generar imágenes, elige **NVIDIA**. Si tu prioridad es conseguir la máxima VRAM posible para modelos de texto y estás dispuesto a comprobar la compatibilidad antes de comprar, **AMD** es una opción muy competitiva. En ambos casos, lo más importante sigue siendo la VRAM: lo explicamos en [qué es la VRAM y cuánta necesitas](/guias/que-es-la-vram-cuanta-necesitas-ia/)."
+          }
+        ]
+      },
+      {
+        "h2": "Qué son CUDA y ROCm",
+        "bloques": [
+          {
+            "p": "Una tarjeta gráfica necesita software que le diga cómo hacer los cálculos de IA. Cada fabricante tiene su propio sistema para ello."
+          },
+          {
+            "p": "**CUDA** es la plataforma de NVIDIA. Lleva muchos años en el mercado y es la base sobre la que se han escrito la mayoría de herramientas de IA. Eso significa que cuando sale un programa nuevo, casi siempre funciona primero (y mejor) con CUDA."
+          },
+          {
+            "p": "**ROCm** es la plataforma de AMD. Es más reciente y ha mejorado mucho, pero no todas las tarjetas ni todas las herramientas la soportan igual. Para algunos programas hay alternativas que no dependen de ROCm, pero conviene mirar la lista de tarjetas compatibles en cada programa."
+          },
+          {
+            "aviso": "El soporte de AMD cambia con las versiones del software. Antes de comprar una tarjeta AMD pensando en IA, revisa la lista de GPU compatibles en la web oficial del programa que vas a usar, por ejemplo Ollama o LM Studio.",
+            "titulo": "Ojo con esto"
+          }
+        ]
+      },
+      {
+        "h2": "Según lo que quieras hacer",
+        "bloques": [
+          {
+            "h3": "Modelos de texto: Ollama y LM Studio"
+          },
+          {
+            "p": "Para chatear con modelos de lenguaje, las dos marcas funcionan bien en las tarjetas que los programas soportan. La clave, otra vez, es la VRAM. Con una tarjeta AMD de 16 GB y una NVIDIA de 16 GB puedes cargar los mismos modelos. Si quieres saber cómo se instalan, mira [qué es Ollama](/guias/que-es-ollama-como-instalarlo-requisitos/) y la comparativa [LM Studio o Ollama](/guias/lm-studio-o-ollama/)."
+          },
+          {
+            "h3": "Generar imágenes: Stable Diffusion y Flux"
+          },
+          {
+            "p": "Aquí es donde más se nota la diferencia. Casi todos los tutoriales, extensiones y flujos de trabajo se han creado pensando en CUDA. Con una tarjeta AMD es posible, pero tendrás que investigar más y puede que algunas extensiones no funcionen. Si la generación de imágenes es lo tuyo, NVIDIA es la opción tranquila."
+          },
+          {
+            "h3": "Programar con asistentes locales"
+          },
+          {
+            "p": "Los editores de código se conectan a los modelos locales a través de servidores como el de Ollama, así que la marca de la tarjeta es indiferente: lo que cuenta es que el modelo quepa y vaya rápido."
+          },
+          {
+            "h3": "Entrenar o ajustar modelos"
+          },
+          {
+            "p": "Si quieres entrenar o ajustar modelos tú mismo, el ecosistema de NVIDIA es el más cómodo y el más documentado. Es un uso más avanzado, y si es tu caso te interesará mirar también las [GPU profesionales para IA](/gpu-profesionales-para-ia/)."
+          }
+        ]
+      },
+      {
+        "h2": "Comparativa de las dos marcas",
+        "bloques": [
+          {
+            "tabla": {
+              "cab": [
+                "",
+                "NVIDIA",
+                "AMD"
+              ],
+              "filas": [
+                [
+                  "Plataforma de software",
+                  "CUDA",
+                  "ROCm"
+                ],
+                [
+                  "Compatibilidad con programas de IA",
+                  "La más amplia",
+                  "Buena en texto, desigual en imagen"
+                ],
+                [
+                  "Modelos de texto (Ollama, LM Studio)",
+                  "Funciona sin complicaciones",
+                  "Funciona en las tarjetas compatibles"
+                ],
+                [
+                  "Generar imágenes",
+                  "La opción más sencilla",
+                  "Posible, con más configuración"
+                ],
+                [
+                  "VRAM por el mismo presupuesto",
+                  "Suele ser menor",
+                  "Suele ser mayor"
+                ],
+                [
+                  "Quién lo recomienda",
+                  "Quien quiere que funcione a la primera",
+                  "Quien busca más VRAM y revisa compatibilidad"
+                ]
+              ],
+              "nota": "Valoración orientativa de Inferium basada en el estado del software a la fecha de publicación."
+            }
+          }
+        ]
+      },
+      {
+        "h2": "Dos tarjetas de 16 GB frente a frente",
+        "bloques": [
+          {
+            "p": "Para ver la diferencia con datos de nuestro catálogo, comparamos dos tarjetas con la misma VRAM:"
+          },
+          {
+            "tabla": {
+              "cab": [
+                "Dato",
+                "RTX 5070 Ti",
+                "RX 9070 XT"
+              ],
+              "filas": [
+                [
+                  "VRAM",
+                  "{vram:nvidia-rtx-5070-ti} GB",
+                  "{vram:amd-radeon-rx-9070-xt} GB"
+                ],
+                [
+                  "Ancho de banda",
+                  "{bw:nvidia-rtx-5070-ti} GB/s",
+                  "{bw:amd-radeon-rx-9070-xt} GB/s"
+                ],
+                [
+                  "Consumo",
+                  "{w:nvidia-rtx-5070-ti} W",
+                  "{w:amd-radeon-rx-9070-xt} W"
+                ],
+                [
+                  "Tokens por segundo (Llama 8B, estimación)",
+                  "{tps:nvidia-rtx-5070-ti}",
+                  "{tps:amd-radeon-rx-9070-xt}"
+                ],
+                [
+                  "Nota IA de Inferium",
+                  "{nota:nvidia-rtx-5070-ti}",
+                  "{nota:amd-radeon-rx-9070-xt}"
+                ]
+              ],
+              "nota": "Datos de las fichas de Inferium. Los tokens por segundo son una estimación propia (ancho de banda × 0,7 ÷ tamaño del modelo), no una prueba medida."
+            }
+          },
+          {
+            "p": "Puedes ver más combinaciones en nuestro [comparador de tarjetas](/comparador/)."
+          },
+          {
+            "pick": "nvidia-rtx-5070-ti",
+            "rol": "Opción NVIDIA de 16 GB"
+          },
+          {
+            "pick": "amd-radeon-rx-9070-xt",
+            "rol": "Opción AMD de 16 GB"
+          }
+        ]
+      },
+      {
+        "h2": "Qué elegir según tu caso",
+        "bloques": [
+          {
+            "ul": [
+              "**Primera vez con IA y quieres tranquilidad:** NVIDIA, por la compatibilidad.",
+              "**Solo modelos de texto y buscas la VRAM más barata:** AMD, tras comprobar que tu tarjeta está en la lista del programa.",
+              "**Generas imágenes con Stable Diffusion o Flux:** NVIDIA.",
+              "**Usas Linux y te gusta trastear:** AMD puede ser una buena opción.",
+              "**Trabajo profesional o entrenamiento:** NVIDIA."
+            ]
+          },
+          {
+            "p": "Y si aún no tienes claro el presupuesto, en [mejor tarjeta gráfica calidad precio para IA](/guias/mejor-tarjeta-grafica-calidad-precio-ia/) ordenamos las opciones por lo que ofrecen."
+          },
+          {
+            "cta": {
+              "texto": "¿Quieres ver todas las tarjetas de cada marca?",
+              "boton": "Ver tarjetas gráficas (GPU) para IA",
+              "url": "/tarjetas-graficas/"
+            }
+          }
+        ]
+      },
+      {
+        "h2": "Y Intel o Apple, ¿qué pasa?",
+        "bloques": [
+          {
+            "p": "Intel también fabrica tarjetas gráficas con muchas opciones de VRAM, pero el soporte para IA es todavía más limitado que el de las otras dos. Apple tiene su propio camino: sus chips usan memoria unificada y un software distinto. Si vas por ahí, la guía de [mejor Mac para IA local](/guias/mejor-mac-para-ia-local/) te explica qué modelo encaja con cada uso."
+          }
+        ]
+      },
+      {
+        "h2": "Consejos antes de comprar",
+        "bloques": [
+          {
+            "ol": [
+              "Decide primero qué vas a hacer: texto, imágenes o ambas.",
+              "Calcula la VRAM que necesitas con la [calculadora](/calculadora-vram/).",
+              "Revisa que el programa que quieres usar soporta tu tarjeta.",
+              "Comprueba la fuente de alimentación y el espacio en la caja.",
+              "Compara la versión exacta de VRAM: algunas tarjetas existen en dos capacidades."
+            ]
+          }
+        ]
+      }
+    ],
+    "faq": [
+      [
+        "¿Es mejor NVIDIA o AMD para IA?",
+        "NVIDIA es más compatible con casi todo el software de IA. AMD suele ofrecer más VRAM por el mismo presupuesto, pero pide comprobar la compatibilidad."
+      ],
+      [
+        "¿Qué es CUDA?",
+        "Es la plataforma de software de NVIDIA para hacer cálculos en la tarjeta gráfica. La mayoría de herramientas de IA están hechas pensando en ella."
+      ],
+      [
+        "¿Qué es ROCm?",
+        "Es la plataforma equivalente de AMD. Funciona en las tarjetas compatibles y mejora con cada versión."
+      ],
+      [
+        "¿Funciona Ollama con una tarjeta AMD?",
+        "Sí, con las tarjetas AMD que aparecen como compatibles en la documentación de Ollama. Conviene comprobarlo antes de comprar."
+      ],
+      [
+        "¿Qué es mejor para Stable Diffusion?",
+        "NVIDIA, porque la mayoría de las herramientas están optimizadas para CUDA."
+      ],
+      [
+        "¿Me conviene una AMD si solo quiero chatear con modelos?",
+        "Puede convenirte, sobre todo si buscas VRAM al menor coste, siempre que tu modelo de tarjeta esté soportado."
+      ]
+    ],
+    "relacionadas": [
+      "que-es-la-vram-cuanta-necesitas-ia",
+      "mejor-tarjeta-grafica-calidad-precio-ia",
+      "que-es-una-tarjeta-grafica-gpu-ia"
+    ]
+  },
+  {
+    "slug": "mejor-tarjeta-grafica-calidad-precio-ia",
+    "tipo": "comparativa",
+    "titulo": "Mejor tarjeta gráfica calidad precio para IA en 2026",
+    "seoTitulo": "Mejor tarjeta gráfica calidad precio para IA en 2026",
+    "descripcion": "Las mejores tarjetas gráficas (GPU) calidad precio para IA local en 2026, ordenadas por VRAM, velocidad y consumo, con las que más se venden en Amazon.es.",
+    "keyword": "mejor tarjeta grafica calidad precio",
+    "publico": "Persona que quiere comprar una tarjeta gráfica para IA local y busca la mejor relación entre lo que ofrece y lo que cuesta",
+    "fecha": "2026-11-12",
+    "entradilla": "Buscas la mejor tarjeta gráfica calidad precio para IA y no quieres perderte entre cientos de modelos. Aquí te decimos cuáles merecen la pena según cuánta VRAM necesites, cuáles son las que más se venden en Amazon.es y a quién le conviene cada una.",
+    "resumen": [
+      "Para IA, la mejor relación calidad precio la da la VRAM: 16 GB es el escalón con mejor equilibrio para empezar en serio.",
+      "Las tarjetas de 16 GB más vendidas en Amazon.es son la RTX 5060 Ti, la RX 9060 XT y las RTX 5070 Ti y RX 9070 XT para quien quiere más velocidad.",
+      "Si el presupuesto es muy ajustado, la RTX 3060 de 12 GB sigue siendo una puerta de entrada válida con modelos de hasta 14B en Q4.",
+      "Si necesitas modelos de 32B, la RTX 5090 con 32 GB es la opción de consumo con más memoria."
+    ],
+    "secciones": [
+      {
+        "h2": "Cómo hemos elegido las tarjetas",
+        "bloques": [
+          {
+            "p": "Una tarjeta gráfica para IA no se elige como una para jugar. Un videojuego se disfruta con más o menos fotogramas, pero un modelo de IA o cabe en la memoria o no cabe. Por eso hemos seguido un criterio propio, con datos de las fichas de Inferium, y sin mirar el precio del día, que cambia a diario en Amazon y se queda obsoleto en horas."
+          },
+          {
+            "p": "Para decidir cuáles incluir y en qué orden, hemos aplicado cuatro reglas:"
+          },
+          {
+            "ol": [
+              "**La VRAM manda.** Un modelo que no cabe en la memoria de la tarjeta se ralentiza muchísimo. Lo explicamos en [qué es la VRAM y cuánta necesitas](/guias/que-es-la-vram-cuanta-necesitas-ia/).",
+              "**El ancho de banda decide la velocidad.** A igual VRAM, la tarjeta con más ancho de banda genera más palabras por segundo.",
+              "**Lo que se vende, importa.** Hemos priorizado modelos que aparecen entre los más vendidos de Amazon.es, porque es la señal de lo que de verdad compra la gente. Revisamos el ranking el 11 de noviembre de 2026.",
+              "**Consumo y compatibilidad.** Una tarjeta que pide una fuente enorme o que no funciona con tus programas deja de ser buena compra."
+            ]
+          },
+          {
+            "p": "Calculamos además una **nota IA** para cada tarjeta, que combina VRAM, ancho de banda y ecosistema de software. No es una prueba medida en laboratorio, sino una forma de comparar tarjetas con la misma vara. Los tokens por segundo que ves en las fichas son una estimación propia: ancho de banda × 0,7 ÷ tamaño del modelo."
+          },
+          {
+            "aviso": "No ponemos precios porque cambian cada día y varían entre versiones y vendedores. Al pulsar el botón verás el precio actual en Amazon.es. Si compras a través de nuestros enlaces, Inferium puede recibir una pequeña comisión sin que a ti te cueste más.",
+            "titulo": "Sobre los precios"
+          }
+        ]
+      },
+      {
+        "h2": "Resumen: la mejor tarjeta según lo que necesites",
+        "bloques": [
+          {
+            "tabla": {
+              "cab": [
+                "Tu caso",
+                "Tarjeta recomendada",
+                "Por qué"
+              ],
+              "filas": [
+                [
+                  "Empezar con presupuesto ajustado",
+                  "RTX 3060 de 12 GB",
+                  "12 GB de VRAM, la entrada más sencilla a modelos medianos."
+                ],
+                [
+                  "Mejor equilibrio para empezar en serio",
+                  "RTX 5060 Ti de 16 GB",
+                  "16 GB y CUDA con un consumo de {w:nvidia-rtx-5060-ti-16gb} W."
+                ],
+                [
+                  "16 GB al menor coste con AMD",
+                  "RX 9060 XT de 16 GB",
+                  "Misma VRAM con otra marca y consumo de {w:amd-radeon-rx-9060-xt-16gb} W."
+                ],
+                [
+                  "Más velocidad con 16 GB",
+                  "RTX 5070 Ti",
+                  "Ancho de banda de {bw:nvidia-rtx-5070-ti} GB/s frente a 448 GB/s de la 5060 Ti."
+                ],
+                [
+                  "Modelos de 24B a 32B",
+                  "RTX 5090",
+                  "32 GB de VRAM, la que más memoria da entre las de consumo."
+                ],
+                [
+                  "Modelos de 70B",
+                  "RTX PRO 5000 o RTX PRO 6000",
+                  "48 y 96 GB de VRAM, ya en el terreno profesional."
+                ]
+              ],
+              "nota": "Recomendación de Inferium basada en datos de las fichas. Revisa siempre la versión exacta de VRAM al comprar."
+            }
+          }
+        ]
+      },
+      {
+        "h2": "1. RTX 5060 Ti de 16 GB: la mejor compra para empezar",
+        "bloques": [
+          {
+            "p": "Es la tarjeta que mejor encaja con la idea de «calidad precio» para IA. Con 16 GB de VRAM caben modelos de 14B en cuantización Q4 con margen para contexto largo, y también se puede generar imágenes con Flux. Su consumo es contenido y la compatibilidad con CUDA hace que casi cualquier programa funcione sin ajustes."
+          },
+          {
+            "p": "Además está entre las gráficas más vendidas de Amazon.es, en distintas versiones de varias marcas. Un detalle importante: existe también una versión de 8 GB con el mismo nombre que se vende bastante. Para IA no la queremos. Comprueba que en el título ponga 16 GB."
+          },
+          {
+            "pick": "nvidia-rtx-5060-ti-16gb",
+            "rol": "La mejor compra calidad precio para IA"
+          },
+          {
+            "h3": "Lo que debes saber"
+          },
+          {
+            "ul": [
+              "Su ancho de banda es moderado, así que no es la más rápida generando texto.",
+              "Con modelos de 24B o 32B no hay sitio: se quedan fuera de los 16 GB.",
+              "Es una tarjeta que cabe en casi cualquier caja y funciona con fuentes de potencia normal."
+            ]
+          }
+        ]
+      },
+      {
+        "h2": "2. RX 9060 XT de 16 GB: 16 GB con AMD",
+        "bloques": [
+          {
+            "p": "Es la alternativa de AMD al escalón anterior. Ofrece los mismos 16 GB de VRAM y, en nuestro catálogo, un ancho de banda de {bw:amd-radeon-rx-9060-xt-16gb} GB/s. Entre las tarjetas de 16 GB es de las más asequibles y también de las más vendidas en Amazon.es, con varias versiones de XFX, Gigabyte y otras marcas que aparecen en el ranking."
+          },
+          {
+            "p": "Para chatear con modelos de lenguaje en Ollama o LM Studio funciona bien. Donde puede darte más trabajo es en generación de imágenes, porque ese mundo está más pensado para NVIDIA. Lo explicamos en [NVIDIA o AMD para IA](/guias/nvidia-o-amd-para-ia-cuda-rocm/)."
+          },
+          {
+            "pick": "amd-radeon-rx-9060-xt-16gb",
+            "rol": "16 GB al menor coste"
+          },
+          {
+            "aviso": "Antes de comprar, comprueba que tu modelo exacto de tarjeta aparece como compatible en la documentación del programa que vas a usar.",
+            "titulo": "Compatibilidad"
+          }
+        ]
+      },
+      {
+        "h2": "3. RTX 5070 Ti: velocidad con 16 GB",
+        "bloques": [
+          {
+            "p": "Si con 16 GB ya tienes suficiente para los modelos que usas, pero quieres que las respuestas lleguen más deprisa, la RTX 5070 Ti es el siguiente paso. Mantiene los 16 GB, pero con un ancho de banda de {bw:nvidia-rtx-5070-ti} GB/s, el doble que el de la 5060 Ti. En nuestra estimación sale en torno a {tps:nvidia-rtx-5070-ti} tokens por segundo con un modelo de 8B, frente a {tps:nvidia-rtx-5060-ti-16gb} de la 5060 Ti."
+          },
+          {
+            "p": "Es una compra menos barata, pero muy equilibrada para quien ya usa la IA todos los días, programa con asistentes locales o genera imágenes con frecuencia. Aparece en el ranking de más vendidas y también en el de mejor valoradas de Amazon.es."
+          },
+          {
+            "pick": "nvidia-rtx-5070-ti",
+            "rol": "Más velocidad sin pasar de 16 GB"
+          }
+        ]
+      },
+      {
+        "h2": "4. RX 9070 XT: la alternativa de AMD con más potencia",
+        "bloques": [
+          {
+            "p": "La RX 9070 XT es una de las tarjetas con más presencia en las listas de más vendidas de Amazon.es: aparecen varias versiones de Sapphire, ASUS, Gigabyte y XFX entre las primeras posiciones. Ofrece 16 GB y un ancho de banda de {bw:amd-radeon-rx-9070-xt} GB/s, bastante por encima de las tarjetas de gama media de AMD."
+          },
+          {
+            "p": "Es una buena opción si vienes de AMD, usas Linux o Windows con modelos de texto y buscas rendimiento. Con generación de imágenes, como siempre, NVIDIA es más cómoda. Su consumo es mayor ({w:amd-radeon-rx-9070-xt} W), así que revisa tu fuente de alimentación."
+          },
+          {
+            "pick": "amd-radeon-rx-9070-xt",
+            "rol": "La opción de AMD con más músculo"
+          }
+        ]
+      },
+      {
+        "h2": "5. RTX 3060 de 12 GB: la entrada más asequible",
+        "bloques": [
+          {
+            "p": "Es una tarjeta de una generación anterior, pero sigue vendiéndose mucho en Amazon.es, con varias versiones entre las más vendidas. Sus 12 GB de VRAM permiten ejecutar modelos de hasta 14B en Q4 con poco margen y generar imágenes con SDXL sin problema. Su ancho de banda es de {bw:nvidia-rtx-3060-12gb} GB/s, así que no es rápida, pero cumple."
+          },
+          {
+            "p": "Es la opción para quien quiere probar IA local gastando poco y todavía no sabe si va a usarla a diario. Si ves que te gusta, siempre puedes dar el salto a 16 GB más adelante."
+          },
+          {
+            "pick": "nvidia-rtx-3060-12gb",
+            "rol": "Para estrenarse con poco presupuesto"
+          }
+        ]
+      },
+      {
+        "h2": "6. RTX 5090: la que más memoria da entre las de consumo",
+        "bloques": [
+          {
+            "p": "Con 32 GB de VRAM y {bw:nvidia-rtx-5090} GB/s de ancho de banda, la RTX 5090 es la reina de las tarjetas de consumo para IA. Carga modelos de 32B con mucho contexto y los mueve a gran velocidad: en nuestra estimación, en torno a {tps:nvidia-rtx-5090} tokens por segundo con un modelo de 8B. También permite modelos de imagen grandes sin recortes."
+          },
+          {
+            "p": "No es para todo el mundo: su consumo ronda los {w:nvidia-rtx-5090} W, necesita una fuente muy potente y mucho espacio en la caja. Pero si quieres lo máximo sin saltar a las tarjetas profesionales, es la opción. Hay mucha demanda en España: «rtx 5090» es una de las búsquedas más frecuentes sobre tarjetas gráficas."
+          },
+          {
+            "pick": "nvidia-rtx-5090",
+            "rol": "Máxima VRAM de consumo"
+          }
+        ]
+      },
+      {
+        "h2": "Otras tarjetas que merece la pena conocer",
+        "bloques": [
+          {
+            "ul": [
+              "**RTX 5080 (16 GB).** Muy rápida y muy vendida, pero con la misma VRAM que opciones más baratas. Es una tarjeta potente pensada más para jugar que para IA; solo compensa si necesitas velocidad pura con modelos que ya caben en 16 GB.",
+              "**RTX 5070 (12 GB).** Rápida, pero 12 GB se quedan justos para modelos de 14B con contexto largo.",
+              "**RX 7600 XT (16 GB).** Una forma muy económica de tener 16 GB con AMD. Va más lenta que la RX 9060 XT.",
+              "**RTX 5060 (8 GB) y RTX 3050 (6 GB).** Aparecen mucho en las más vendidas por su precio, pero 8 y 6 GB limitan a modelos de 8B o menos. Solo para probar.",
+              "**Tarjetas profesionales (RTX PRO, Radeon AI PRO).** Mucha más VRAM, de 24 a 96 GB, para modelos de 32B a 70B. Están en [GPU profesionales para IA](/gpu-profesionales-para-ia/)."
+            ]
+          }
+        ]
+      },
+      {
+        "h2": "Comparativa de todas las tarjetas",
+        "bloques": [
+          {
+            "tabla": {
+              "cab": [
+                "Tarjeta",
+                "VRAM",
+                "Ancho de banda",
+                "Consumo",
+                "Nota IA"
+              ],
+              "filas": [
+                [
+                  "RTX 3060 12 GB",
+                  "{vram:nvidia-rtx-3060-12gb} GB",
+                  "{bw:nvidia-rtx-3060-12gb} GB/s",
+                  "{w:nvidia-rtx-3060-12gb} W",
+                  "{nota:nvidia-rtx-3060-12gb}"
+                ],
+                [
+                  "RX 9060 XT 16 GB",
+                  "{vram:amd-radeon-rx-9060-xt-16gb} GB",
+                  "{bw:amd-radeon-rx-9060-xt-16gb} GB/s",
+                  "{w:amd-radeon-rx-9060-xt-16gb} W",
+                  "{nota:amd-radeon-rx-9060-xt-16gb}"
+                ],
+                [
+                  "RTX 5060 Ti 16 GB",
+                  "{vram:nvidia-rtx-5060-ti-16gb} GB",
+                  "{bw:nvidia-rtx-5060-ti-16gb} GB/s",
+                  "{w:nvidia-rtx-5060-ti-16gb} W",
+                  "{nota:nvidia-rtx-5060-ti-16gb}"
+                ],
+                [
+                  "RX 9070 XT",
+                  "{vram:amd-radeon-rx-9070-xt} GB",
+                  "{bw:amd-radeon-rx-9070-xt} GB/s",
+                  "{w:amd-radeon-rx-9070-xt} W",
+                  "{nota:amd-radeon-rx-9070-xt}"
+                ],
+                [
+                  "RTX 5070 Ti",
+                  "{vram:nvidia-rtx-5070-ti} GB",
+                  "{bw:nvidia-rtx-5070-ti} GB/s",
+                  "{w:nvidia-rtx-5070-ti} W",
+                  "{nota:nvidia-rtx-5070-ti}"
+                ],
+                [
+                  "RTX 5080",
+                  "{vram:nvidia-rtx-5080} GB",
+                  "{bw:nvidia-rtx-5080} GB/s",
+                  "{w:nvidia-rtx-5080} W",
+                  "{nota:nvidia-rtx-5080}"
+                ],
+                [
+                  "RTX 5090",
+                  "{vram:nvidia-rtx-5090} GB",
+                  "{bw:nvidia-rtx-5090} GB/s",
+                  "{w:nvidia-rtx-5090} W",
+                  "{nota:nvidia-rtx-5090}"
+                ]
+              ],
+              "nota": "Datos de las fichas de Inferium. La nota IA combina VRAM, ancho de banda y ecosistema, sobre 100. Puedes enfrentarlas en el [comparador](/comparador/)."
+            }
+          },
+          {
+            "barras": {
+              "titulo": "Nota IA de Inferium",
+              "datos": [
+                [
+                  "RTX 3060 12 GB",
+                  "{nota:nvidia-rtx-3060-12gb}",
+                  "{nota:nvidia-rtx-3060-12gb}"
+                ],
+                [
+                  "RX 9060 XT 16 GB",
+                  "{nota:amd-radeon-rx-9060-xt-16gb}",
+                  "{nota:amd-radeon-rx-9060-xt-16gb}"
+                ],
+                [
+                  "RTX 5060 Ti 16 GB",
+                  "{nota:nvidia-rtx-5060-ti-16gb}",
+                  "{nota:nvidia-rtx-5060-ti-16gb}"
+                ],
+                [
+                  "RX 9070 XT",
+                  "{nota:amd-radeon-rx-9070-xt}",
+                  "{nota:amd-radeon-rx-9070-xt}"
+                ],
+                [
+                  "RTX 5070 Ti",
+                  "{nota:nvidia-rtx-5070-ti}",
+                  "{nota:nvidia-rtx-5070-ti}"
+                ],
+                [
+                  "RTX 5080",
+                  "{nota:nvidia-rtx-5080}",
+                  "{nota:nvidia-rtx-5080}"
+                ],
+                [
+                  "RTX 5090",
+                  "{nota:nvidia-rtx-5090}",
+                  "{nota:nvidia-rtx-5090}"
+                ]
+              ],
+              "unidad": "/100",
+              "nota": "Cuanto más alta, mejor encaja la tarjeta con el uso de IA local."
+            }
+          }
+        ]
+      },
+      {
+        "h2": "Cómo elegir entre ellas en cinco minutos",
+        "bloques": [
+          {
+            "ol": [
+              "**Decide el modelo más grande que quieres usar.** Si es de 8B, te sirve casi cualquiera. Si es de 14B, necesitas 12 o 16 GB. Si es de 32B, 24 o 32 GB.",
+              "**Usa la calculadora.** Con la [calculadora de VRAM](/calculadora-vram/) comprobarás si te cabe.",
+              "**Elige marca según tu uso.** Para imágenes, NVIDIA. Para texto, cualquiera de las dos.",
+              "**Revisa tu fuente de alimentación.** Si no llega, tendrás que cambiarla: tienes las [más vendidas aquí](/componentes/fuentes-de-alimentacion/).",
+              "**Comprueba la versión.** Fíjate en los gigas de VRAM del título antes de pulsar comprar."
+            ]
+          },
+          {
+            "p": "Si no tienes caja de PC o prefieres no montar nada, mira también el [mejor mini PC para IA](/guias/mejor-mini-pc-para-ia/) o el [mejor Mac para IA](/guias/mejor-mac-para-ia-local/). Y si tu equipo es un portátil, la [tarjeta gráfica externa](/guias/tarjeta-grafica-externa-egpu-portatil/) puede ser una solución."
+          },
+          {
+            "cta": {
+              "texto": "¿Quieres ver todas las tarjetas con sus datos?",
+              "boton": "Ver tarjetas gráficas (GPU) para IA",
+              "url": "/tarjetas-graficas/"
+            }
+          }
+        ]
+      },
+      {
+        "h2": "Errores que cuestan caro",
+        "bloques": [
+          {
+            "ul": [
+              "**Comprar por los fotogramas de juegos.** Una tarjeta rápida con poca VRAM corre menos modelos que una modesta con mucha.",
+              "**Confundir versiones.** Algunas tarjetas existen en 8 y 16 GB con casi el mismo nombre. Comprueba siempre los gigas.",
+              "**Olvidar el consumo.** Una tarjeta de 300 W o más puede exigir cambiar la fuente.",
+              "**Pagar de más por potencia que no vas a usar.** Si tus modelos caben en 16 GB, una tarjeta con 32 GB no te hace más rápido.",
+              "**No mirar el espacio en la caja.** Algunas tarjetas ocupan tres ranuras y son muy largas."
+            ]
+          }
+        ]
+      }
+    ],
+    "faq": [
+      [
+        "¿Cuál es la mejor tarjeta gráfica calidad precio para IA?",
+        "Para empezar en serio, la RTX 5060 Ti de 16 GB es la que mejor equilibrio ofrece: 16 GB de VRAM, CUDA y un consumo contenido."
+      ],
+      [
+        "¿Cuánta VRAM necesito para IA?",
+        "Con 8 GB empiezas con modelos de 8B. Con 16 GB, de 14B. Con 24 a 32 GB, modelos de 24B a 32B."
+      ],
+      [
+        "¿NVIDIA o AMD para IA?",
+        "NVIDIA es más compatible, sobre todo con imágenes. AMD suele dar más VRAM por el mismo dinero para modelos de texto."
+      ],
+      [
+        "¿Sirve la RTX 3060 de 12 GB en 2026?",
+        "Sí, sigue siendo una entrada válida con modelos de hasta 14B en Q4, aunque justa de memoria y lenta."
+      ],
+      [
+        "¿Por qué no ponéis precios?",
+        "Porque cambian cada día en Amazon. Al pulsar el botón verás el precio actual."
+      ],
+      [
+        "¿Qué tarjeta necesito para modelos de 32B?",
+        "Una de 24 a 32 GB de VRAM. En consumo, la RTX 5090 con 32 GB es la opción."
+      ],
+      [
+        "¿Vale la pena una tarjeta profesional?",
+        "Solo si necesitas modelos de 70B o más. Para uso doméstico, las de consumo son más prácticas."
+      ]
+    ],
+    "relacionadas": [
+      "que-es-la-vram-cuanta-necesitas-ia",
+      "nvidia-o-amd-para-ia-cuda-rocm",
+      "mejor-mini-pc-para-ia"
+    ]
+  },
+  {
+    "slug": "mejor-mini-pc-para-ia",
+    "tipo": "comparativa",
+    "titulo": "Mejor mini PC para IA en 2026: qué memoria y qué chip elegir",
+    "seoTitulo": "Mejor mini PC para IA en 2026: guía y comparativa",
+    "descripcion": "Los mejores mini PC para ejecutar IA en local en 2026: Ryzen AI Max+ 395, DGX Spark y otros. Qué memoria necesitas y por qué un mini PC barato de oficina no sirve.",
+    "keyword": "mejor mini pc",
+    "publico": "Persona que busca un ordenador pequeño y silencioso para ejecutar modelos de IA en casa y no sabe qué mini PC elegir",
+    "fecha": "2026-11-12",
+    "entradilla": "Un mini PC puede ser una forma compacta y silenciosa de ejecutar IA en casa, pero no todos valen. Te explicamos en qué fijarte, por qué la mayoría de los más vendidos no sirven para modelos de lenguaje y cuáles son las opciones que sí tienen sentido.",
+    "resumen": [
+      "Para IA, un mini PC solo vale si tiene mucha memoria y un procesador con gráfica potente. Los de oficina más vendidos no sirven para modelos medianos.",
+      "Los que sí cuentan son los mini PC con Ryzen AI Max+ 395 y memoria unificada de 64 a 128 GB, y equipos como el NVIDIA DGX Spark.",
+      "La ventaja es poder cargar modelos enormes en un equipo pequeño. La contrapartida es que se mueven más despacio que en una tarjeta gráfica potente.",
+      "Si lo que buscas es velocidad con modelos de hasta 14B, una tarjeta gráfica de 16 GB suele ser mejor compra que un mini PC."
+    ],
+    "secciones": [
+      {
+        "h2": "Primero, una advertencia: no todos los mini PC valen",
+        "bloques": [
+          {
+            "p": "Cuando miras los mini PC más vendidos de Amazon.es, la mayoría son equipos de oficina con procesadores sencillos de la gama Intel N100 o similares. Son baratos, silenciosos y perfectos para navegar, ver vídeo o trabajar con documentos. Pero **no sirven para ejecutar modelos de IA medianos**: tienen poca memoria, una gráfica integrada básica y un ancho de banda muy bajo."
+          },
+          {
+            "p": "Para IA necesitas un mini PC de otra categoría: los que llevan un procesador con gráfica integrada potente y, sobre todo, mucha memoria que puede compartirse con esa gráfica. Esa es la clave de todo lo que sigue. Si quieres entender por qué, lee primero [qué es la VRAM y cuánta necesitas](/guias/que-es-la-vram-cuanta-necesitas-ia/)."
+          },
+          {
+            "aviso": "En Amazon hay mini PC con la etiqueta «para IA» o «con NPU» que en realidad son de oficina. Antes de comprar, mira la memoria máxima, el tipo de memoria y el procesador. Si no pone al menos 32 GB, no es una opción real para modelos de lenguaje medianos.",
+            "titulo": "Cuidado con la etiqueta"
+          }
+        ]
+      },
+      {
+        "h2": "Para quién tiene sentido un mini PC de IA",
+        "bloques": [
+          {
+            "p": "Un mini PC con mucha memoria encaja si quieres un equipo discreto y silencioso en una estantería, si te interesa cargar modelos grandes aunque no vayan a la máxima velocidad, o si ya tienes monitor, teclado y ratón y solo necesitas el «cerebro». No encaja si tu prioridad es la velocidad pura con modelos medianos ni si quieres generar muchas imágenes, porque para eso una tarjeta gráfica NVIDIA es mejor."
+          }
+        ]
+      },
+      {
+        "h2": "Cómo funciona un mini PC con IA",
+        "bloques": [
+          {
+            "p": "Los mini PC capaces de ejecutar IA usan **memoria unificada**: el procesador y la gráfica comparten la misma memoria, como en un Mac. Eso significa que si el equipo tiene 128 GB, una parte importante puede usarse como si fuera VRAM, y por eso caben modelos que no entran en una tarjeta gráfica de 16 GB."
+          },
+          {
+            "p": "Esto es una ventaja enorme para modelos grandes, pero tiene un coste: la memoria unificada de un mini PC suele tener menos ancho de banda que la de una tarjeta gráfica potente. El resultado es que cargas modelos grandes, pero los mueves más despacio. Por ejemplo, en nuestro catálogo un mini PC con Ryzen AI Max+ 395 llega a {bw:mini-pc-ryzen-ai-max-395} GB/s, mientras que una RTX 5090 llega a {bw:nvidia-rtx-5090} GB/s."
+          },
+          {
+            "barras": {
+              "titulo": "Ancho de banda de memoria (GB/s)",
+              "datos": [
+                [
+                  "MINISFORUM AI X1 Pro",
+                  "{bw:minisforum-ai-x1-pro-470}",
+                  "{bw:minisforum-ai-x1-pro-470} GB/s"
+                ],
+                [
+                  "GMKtec EVO-X2",
+                  "{bw:gmktec-evo-x2-64gb}",
+                  "{bw:gmktec-evo-x2-64gb} GB/s"
+                ],
+                [
+                  "Mini PC Ryzen AI Max+ 395",
+                  "{bw:mini-pc-ryzen-ai-max-395}",
+                  "{bw:mini-pc-ryzen-ai-max-395} GB/s"
+                ],
+                [
+                  "NVIDIA DGX Spark",
+                  "{bw:nvidia-dgx-spark}",
+                  "{bw:nvidia-dgx-spark} GB/s"
+                ],
+                [
+                  "RTX 5060 Ti 16 GB",
+                  "{bw:nvidia-rtx-5060-ti-16gb}",
+                  "{bw:nvidia-rtx-5060-ti-16gb} GB/s"
+                ],
+                [
+                  "RTX 5090",
+                  "{bw:nvidia-rtx-5090}",
+                  "{bw:nvidia-rtx-5090} GB/s"
+                ]
+              ],
+              "unidad": "",
+              "nota": "Datos de las fichas de Inferium. Más ancho de banda significa más palabras por segundo con el mismo modelo."
+            }
+          }
+        ]
+      },
+      {
+        "h2": "Qué mirar al elegir un mini PC para IA",
+        "bloques": [
+          {
+            "ol": [
+              "**La memoria total.** Es lo primero. Para modelos de 14B te bastan 16 a 32 GB, para 32B conviene 64 GB y para 70B hacen falta 96 a 128 GB. Recuerda que el sistema reserva una parte.",
+              "**Que la memoria sea unificada y rápida.** No vale cualquier memoria: tiene que ser la que comparten procesador y gráfica en chips como el Ryzen AI Max+.",
+              "**El ancho de banda.** Dato clave para la velocidad. Búscalo en la ficha técnica del procesador.",
+              "**La refrigeración y el ruido.** Los mini PC potentes calientan. Mira opiniones sobre el ruido bajo carga.",
+              "**La compatibilidad con el software.** En Windows y Linux, Ollama y LM Studio funcionan en la mayoría; revisa la lista de compatibles.",
+              "**La conexión de ampliación.** Un puerto OCuLink o Thunderbolt te permite conectar más adelante una [tarjeta gráfica externa](/guias/tarjeta-grafica-externa-egpu-portatil/)."
+            ]
+          }
+        ]
+      },
+      {
+        "h2": "Las opciones que sí tienen sentido",
+        "bloques": [
+          {
+            "h3": "Mini PC con Ryzen AI Max+ 395 y 64 a 128 GB"
+          },
+          {
+            "p": "Es el tipo de equipo que ha cambiado el mercado. Un procesador AMD con una gráfica integrada potente y hasta 128 GB de memoria unificada, en una caja del tamaño de un libro. Permite cargar modelos de 70B que ni siquiera caben en una tarjeta de 32 GB. Es la mejor opción si buscas un equipo pequeño para modelos grandes."
+          },
+          {
+            "pick": "mini-pc-ryzen-ai-max-395",
+            "rol": "Para modelos grandes en poco espacio",
+            "texto": "Con {vram:mini-pc-ryzen-ai-max-395} GB de memoria unificada caben modelos de 70B en Q4, aunque se mueven más despacio que en una tarjeta gráfica."
+          },
+          {
+            "pick": "gmktec-evo-x2-64gb",
+            "rol": "La opción de 64 GB",
+            "texto": "Con {vram:gmktec-evo-x2-64gb} GB de memoria alcanza para modelos de 32B con comodidad."
+          },
+          {
+            "h3": "NVIDIA DGX Spark"
+          },
+          {
+            "p": "Es el pequeño superordenador de NVIDIA para IA. Lleva 128 GB de memoria unificada y todo el ecosistema CUDA, por lo que es muy cómodo para desarrollo. Es una opción más profesional que doméstica."
+          },
+          {
+            "pick": "nvidia-dgx-spark",
+            "rol": "Para desarrollo con CUDA y 128 GB"
+          },
+          {
+            "h3": "MINISFORUM AI X1 Pro"
+          },
+          {
+            "p": "Un mini PC de gama media con procesador AMD de la serie Ryzen AI. Su ancho de banda es más limitado, pero ofrece mucha más memoria que un mini PC de oficina."
+          },
+          {
+            "pick": "minisforum-ai-x1-pro-470",
+            "rol": "Una opción intermedia",
+            "texto": "Su ancho de banda de {bw:minisforum-ai-x1-pro-470} GB/s es bajo, así que se queda en modelos pequeños y medianos."
+          }
+        ]
+      },
+      {
+        "h2": "Comparativa de los mini PC del catálogo",
+        "bloques": [
+          {
+            "tabla": {
+              "cab": [
+                "Equipo",
+                "Memoria",
+                "Ancho de banda",
+                "Consumo",
+                "Nota IA",
+                "Para quién"
+              ],
+              "filas": [
+                [
+                  "MINISFORUM AI X1 Pro",
+                  "{vram:minisforum-ai-x1-pro-470} GB",
+                  "{bw:minisforum-ai-x1-pro-470} GB/s",
+                  "{w:minisforum-ai-x1-pro-470} W",
+                  "{nota:minisforum-ai-x1-pro-470}",
+                  "Modelos pequeños y medianos"
+                ],
+                [
+                  "GMKtec EVO-X2 64 GB",
+                  "{vram:gmktec-evo-x2-64gb} GB",
+                  "{bw:gmktec-evo-x2-64gb} GB/s",
+                  "{w:gmktec-evo-x2-64gb} W",
+                  "{nota:gmktec-evo-x2-64gb}",
+                  "Modelos de hasta 32B"
+                ],
+                [
+                  "Mini PC Ryzen AI Max+ 395",
+                  "{vram:mini-pc-ryzen-ai-max-395} GB",
+                  "{bw:mini-pc-ryzen-ai-max-395} GB/s",
+                  "{w:mini-pc-ryzen-ai-max-395} W",
+                  "{nota:mini-pc-ryzen-ai-max-395}",
+                  "Modelos de 70B"
+                ],
+                [
+                  "NVIDIA DGX Spark",
+                  "{vram:nvidia-dgx-spark} GB",
+                  "{bw:nvidia-dgx-spark} GB/s",
+                  "{w:nvidia-dgx-spark} W",
+                  "{nota:nvidia-dgx-spark}",
+                  "Desarrollo con CUDA"
+                ]
+              ],
+              "nota": "Datos de las fichas de Inferium. La memoria es la total del equipo, de la que el sistema reserva una parte."
+            }
+          },
+          {
+            "p": "Puedes ver todas las fichas y compararlas entre sí en la sección de [mini PC para IA](/mini-pc/) y en nuestro [comparador](/comparador/)."
+          }
+        ]
+      },
+      {
+        "h2": "¿Mini PC o tarjeta gráfica?",
+        "bloques": [
+          {
+            "p": "Es la pregunta de fondo. La respuesta depende de qué modelos quieras usar:"
+          },
+          {
+            "tabla": {
+              "cab": [
+                "Si quieres...",
+                "Te conviene..."
+              ],
+              "filas": [
+                [
+                  "Modelos de hasta 14B y la máxima velocidad",
+                  "Una tarjeta gráfica de 16 GB en un PC de sobremesa"
+                ],
+                [
+                  "Modelos de 32B",
+                  "Una tarjeta de 24 a 32 GB o un mini PC con 64 GB"
+                ],
+                [
+                  "Modelos de 70B",
+                  "Un mini PC con 128 GB o una GPU profesional"
+                ],
+                [
+                  "Un equipo pequeño y silencioso",
+                  "Un mini PC o un Mac"
+                ],
+                [
+                  "Generar imágenes con Stable Diffusion",
+                  "Una tarjeta gráfica NVIDIA"
+                ]
+              ]
+            }
+          },
+          {
+            "p": "En [mejor tarjeta gráfica calidad precio para IA](/guias/mejor-tarjeta-grafica-calidad-precio-ia/) tienes las opciones de sobremesa. Y si prefieres el ecosistema de Apple, mira [mejor Mac para IA local](/guias/mejor-mac-para-ia-local/)."
+          },
+          {
+            "cta": {
+              "texto": "¿Quieres ver todos los mini PC con sus datos?",
+              "boton": "Ver mini PC para IA",
+              "url": "/mini-pc/"
+            }
+          }
+        ]
+      },
+      {
+        "h2": "Qué puedes ejecutar con cada nivel de memoria",
+        "bloques": [
+          {
+            "tabla": {
+              "cab": [
+                "Memoria del mini PC",
+                "Modelos que caben (Q4)",
+                "Ejemplo"
+              ],
+              "filas": [
+                [
+                  "16 GB",
+                  "Hasta 8B",
+                  "Llama 3.1 8B"
+                ],
+                [
+                  "32 GB",
+                  "Hasta 14B con holgura",
+                  "Qwen 2.5 14B"
+                ],
+                [
+                  "64 GB",
+                  "Hasta 32B",
+                  "Qwen 2.5 32B"
+                ],
+                [
+                  "128 GB",
+                  "70B con holgura",
+                  "Llama 3.3 70B"
+                ]
+              ],
+              "nota": "Cálculo de Inferium: parámetros × 4,5 bits ÷ 8 + 20 % de contexto. El sistema se reserva parte de la memoria."
+            }
+          },
+          {
+            "p": "Para hacer tus propias cuentas usa la [calculadora de VRAM](/calculadora-vram/). Si ejecutas los modelos con Ollama, tienes la guía [qué es Ollama y cómo instalarlo](/guias/que-es-ollama-como-instalarlo-requisitos/)."
+          }
+        ]
+      },
+      {
+        "h2": "Consumo, ruido y espacio: lo que no sale en la ficha",
+        "bloques": [
+          {
+            "p": "Una de las razones por las que un mini PC resulta atractivo es lo poco que ocupa y lo poco que gasta frente a un PC con tarjeta gráfica potente. Mientras una RTX 5090 puede rondar los {w:nvidia-rtx-5090} W ella sola, los mini PC del catálogo se mueven entre {w:minisforum-ai-x1-pro-470} y {w:nvidia-dgx-spark} W en total. Para un equipo que se deja encendido muchas horas sirviendo modelos, esa diferencia se nota en la factura de la luz."
+          },
+          {
+            "p": "A cambio, hay que mirar el ruido. Un chip potente en una caja pequeña necesita ventiladores que trabajan fuerte cuando el modelo está generando texto. Conviene leer opiniones de compradores en Amazon.es sobre el ruido bajo carga y colocar el equipo con espacio alrededor para que respire. También hay que pensar en los puertos: si vas a conectar varios discos o una tarjeta externa, comprueba que tiene los puertos necesarios, y si quieres conectar más adelante una gráfica, que trae OCuLink o Thunderbolt."
+          },
+          {
+            "p": "Por último, el almacenamiento. Los modelos pesan entre 5 y 50 GB cada uno, y si pruebas muchos se llena rápido. Si el equipo admite un segundo disco, tienes los [SSD NVMe más vendidos](/componentes/ssd-nvme/) para ampliarlo."
+          }
+        ]
+      },
+      {
+        "h2": "Errores típicos al comprar un mini PC para IA",
+        "bloques": [
+          {
+            "ul": [
+              "**Comprar un mini PC de oficina esperando que sirva para IA.** Es el error más común, sobre todo porque son los más vendidos.",
+              "**Fijarse solo en la memoria RAM sin mirar si es unificada.** La memoria de un mini PC normal no la puede usar la gráfica del mismo modo.",
+              "**Ignorar el ancho de banda.** Mucha memoria con poco ancho de banda da modelos que caben, pero van lentos.",
+              "**Olvidar la refrigeración.** Un equipo potente en una caja pequeña puede hacer ruido bajo carga.",
+              "**No comprobar la compatibilidad del software.** Revisa que Ollama o LM Studio soportan la gráfica del equipo."
+            ]
+          }
+        ]
+      }
+    ],
+    "faq": [
+      [
+        "¿Qué mini PC es mejor para IA?",
+        "Los de Ryzen AI Max+ 395 con 64 a 128 GB de memoria unificada son los que más sentido tienen. Los mini PC de oficina no sirven para modelos medianos."
+      ],
+      [
+        "¿Puedo usar un mini PC barato para IA?",
+        "Solo con modelos muy pequeños. Para modelos medianos necesitas mucha memoria y una gráfica potente."
+      ],
+      [
+        "¿Cuánta memoria necesita un mini PC para IA?",
+        "32 GB para modelos de 14B, 64 GB para 32B y 96 a 128 GB para 70B."
+      ],
+      [
+        "¿Es mejor un mini PC o una tarjeta gráfica?",
+        "Una tarjeta gráfica es más rápida con modelos que caben en su VRAM. Un mini PC permite cargar modelos mucho más grandes."
+      ],
+      [
+        "¿Qué es un mini PC con NPU?",
+        "Es el que lleva una unidad especializada en IA. Para modelos de lenguaje grandes sigue importando más la memoria que la NPU."
+      ],
+      [
+        "¿Funciona Ollama en un mini PC?",
+        "Sí, en los que tienen gráfica compatible. Revisa la lista oficial antes de comprar."
+      ]
+    ],
+    "relacionadas": [
+      "mejor-mac-para-ia-local",
+      "mejor-tarjeta-grafica-calidad-precio-ia",
+      "tarjeta-grafica-externa-egpu-portatil"
+    ]
+  },
+  {
+    "slug": "mejor-mac-para-ia-local",
+    "tipo": "comparativa",
+    "titulo": "Mejor Mac para IA local: mini, Studio y cuánta memoria elegir",
+    "seoTitulo": "Mejor Mac para IA local en 2026: Mac mini o Mac Studio",
+    "descripcion": "Qué Mac elegir para ejecutar IA en local: Mac mini M4, Mac mini M6 o Mac Studio M5 Max. Cuánta memoria necesitas, qué modelos caben y cuándo no compensa.",
+    "keyword": "mac mini ia",
+    "publico": "Persona que usa o quiere comprar un Mac y se pregunta cuál le conviene para ejecutar modelos de IA en local",
+    "fecha": "2026-11-12",
+    "entradilla": "Los Mac con chip Apple son una de las formas más cómodas de ejecutar IA en casa: silenciosos, compactos y con memoria unificada. Te explicamos qué modelo elegir, cuánta memoria necesitas de verdad y en qué casos una tarjeta gráfica te sale mejor.",
+    "resumen": [
+      "En un Mac, la memoria unificada hace de VRAM: lo que importa es la memoria total del equipo, que no se puede ampliar después.",
+      "El Mac mini sirve para empezar con modelos de 8B a 14B; para modelos de 32B o más conviene un Mac Studio o configuraciones de mucha memoria.",
+      "Un Mac es silencioso y gasta poco, pero a igual presupuesto una tarjeta gráfica NVIDIA suele ser más rápida con modelos que le caben.",
+      "La memoria hay que elegirla al comprar. Es la decisión más importante y la que más se lamenta quedarse corto."
+    ],
+    "secciones": [
+      {
+        "h2": "Por qué un Mac sirve para IA",
+        "bloques": [
+          {
+            "p": "Los Mac con chip Apple (la serie M) usan una **memoria unificada**: el procesador y la gráfica comparten la misma memoria, sin copias entre una y otra. En un PC, un modelo tiene que caber en la VRAM de la tarjeta gráfica. En un Mac, puede ocupar buena parte de toda la memoria del equipo. Por eso un Mac con 36 GB puede cargar un modelo que no entra en una tarjeta gráfica de 16 GB."
+          },
+          {
+            "p": "A eso se suman otras ventajas prácticas: son silenciosos incluso trabajando, ocupan poquísimo, gastan mucha menos electricidad que un PC con una tarjeta potente y funcionan con Ollama y LM Studio. Para quien quiere un equipo discreto que esté siempre encendido sirviendo modelos, es una opción muy cómoda."
+          },
+          {
+            "p": "La contrapartida es la velocidad: la memoria unificada de los chips base tiene menos ancho de banda que la de una tarjeta gráfica potente, y eso se traduce en menos palabras por segundo. Lo explicamos en [qué es la VRAM y cuánta necesitas](/guias/que-es-la-vram-cuanta-necesitas-ia/)."
+          },
+          {
+            "aviso": "En un Mac no puedes usar el 100 % de la memoria como memoria de vídeo: el sistema se reserva una parte. Cuenta con que un Mac de 16 GB aprovecha bastante menos de 16 GB para el modelo.",
+            "titulo": "Ojo con esto"
+          }
+        ]
+      },
+      {
+        "h2": "Lo más importante: la memoria se elige al comprar",
+        "bloques": [
+          {
+            "p": "En un Mac la memoria va soldada al chip y **no se puede ampliar nunca**. Si compras con poca memoria y luego quieres modelos más grandes, la única solución es cambiar de Mac. Por eso conviene pensar antes cuánto necesitas."
+          },
+          {
+            "tabla": {
+              "cab": [
+                "Memoria del Mac",
+                "Modelos que caben (Q4)",
+                "Para qué sirve"
+              ],
+              "filas": [
+                [
+                  "16 GB",
+                  "Hasta 8B con holgura, 14B muy justo",
+                  "Probar la IA local y tareas sencillas."
+                ],
+                [
+                  "24 GB",
+                  "Hasta 14B con holgura",
+                  "Uso diario con modelos medianos."
+                ],
+                [
+                  "32 a 36 GB",
+                  "Hasta 24B, 32B muy justo",
+                  "Un uso serio con modelos de calidad alta."
+                ],
+                [
+                  "48 a 64 GB",
+                  "32B con holgura",
+                  "Programar con modelos grandes y contexto largo."
+                ],
+                [
+                  "96 a 128 GB",
+                  "70B",
+                  "Trabajo profesional con modelos grandes."
+                ]
+              ],
+              "nota": "Cálculo de Inferium: parámetros × 4,5 bits ÷ 8 + 20 % de contexto, descontando lo que el sistema se reserva. Son cifras aproximadas."
+            }
+          },
+          {
+            "p": "Si vas a comprar un Mac para IA, nuestra recomendación es no quedarte en la memoria mínima. Es el dato que más determina qué podrás hacer dentro de dos años."
+          }
+        ]
+      },
+      {
+        "h2": "Mac mini: el escalón de entrada",
+        "bloques": [
+          {
+            "p": "El Mac mini es el Mac más barato y el más popular para IA: ocupa lo que un libro, no hace ruido y gasta poco. Según los datos oficiales de Apple, el Mac mini con chip M6 se ofrece con 16, 24 o 32 GB de memoria y un ancho de banda de 153 GB/s (con 16 GB) o 170 GB/s (con 24 y 32 GB). La versión anterior, con chip M4, tiene 120 GB/s. «Mac mini» es una de las búsquedas más frecuentes de nuestro sector, con unas 22.000 al mes en España."
+          },
+          {
+            "p": "Es una opción estupenda para empezar: con 16 GB funcionan modelos de 8B con comodidad, y con 24 o 32 GB subes a modelos de 14B y 24B. No es el más rápido, pero sí el más cómodo de usar."
+          },
+          {
+            "pick": "apple-mac-mini-m6",
+            "rol": "El Mac mini más reciente",
+            "texto": "Con {bw:apple-mac-mini-m6} GB/s en su versión base, genera en torno a {tps:apple-mac-mini-m6} tokens por segundo con un modelo de 8B. Si te lo planteas para IA, elige una configuración de más memoria."
+          },
+          {
+            "pick": "apple-mac-mini-m4",
+            "rol": "La opción anterior",
+            "texto": "Con {bw:apple-mac-mini-m4} GB/s y 16 GB es suficiente para empezar con modelos de 8B."
+          },
+          {
+            "h3": "¿Y el Mac mini con M5 Pro?"
+          },
+          {
+            "p": "Apple ofrece también el Mac mini con chip M5 Pro, con 24, 48 o 64 GB de memoria y 307 GB/s de ancho de banda según sus especificaciones oficiales. Es un salto importante en velocidad y en memoria, y es la opción lógica si quieres modelos de 32B en un equipo compacto."
+          }
+        ]
+      },
+      {
+        "h2": "Mac Studio: para modelos grandes",
+        "bloques": [
+          {
+            "p": "Si el Mac mini se te queda corto, el Mac Studio es el siguiente paso. El Mac Studio con chip M5 Max parte de 36 GB de memoria, se puede configurar con 48, 64 o 128 GB y ofrece 460 GB/s de ancho de banda (hasta 614 GB/s con la variante de 40 núcleos de GPU), según las especificaciones oficiales de Apple. Eso es unas tres veces el ancho de banda de un Mac mini básico, y se nota en la velocidad."
+          },
+          {
+            "p": "Es el Mac que tiene sentido si quieres trabajar con modelos de 32B o de 70B de forma cómoda en un equipo pequeño y casi silencioso. Con 128 GB caben modelos de 70B con holgura. La gama más alta de Apple (el chip Ultra) llega a memorias aún mayores, aunque ya es una compra mucho más especializada."
+          },
+          {
+            "pick": "apple-mac-studio-m5-max",
+            "rol": "Para modelos de 32B a 70B",
+            "texto": "Con {bw:apple-mac-studio-m5-max} GB/s, en nuestra estimación sale en torno a {tps:apple-mac-studio-m5-max} tokens por segundo con un modelo de 8B, tres veces más que un Mac mini base."
+          }
+        ]
+      },
+      {
+        "h2": "Comparativa de los Mac del catálogo",
+        "bloques": [
+          {
+            "tabla": {
+              "cab": [
+                "Mac",
+                "Memoria base",
+                "Ancho de banda",
+                "Consumo máx.",
+                "Nota IA",
+                "Para quién"
+              ],
+              "filas": [
+                [
+                  "Mac mini M4",
+                  "{vram:apple-mac-mini-m4} GB",
+                  "{bw:apple-mac-mini-m4} GB/s",
+                  "{w:apple-mac-mini-m4} W",
+                  "{nota:apple-mac-mini-m4}",
+                  "Empezar con modelos de 8B"
+                ],
+                [
+                  "Mac mini M6",
+                  "{vram:apple-mac-mini-m6} GB",
+                  "{bw:apple-mac-mini-m6} GB/s",
+                  "{w:apple-mac-mini-m6} W",
+                  "{nota:apple-mac-mini-m6}",
+                  "Uso diario con modelos de hasta 14B"
+                ],
+                [
+                  "Mac Studio M5 Max",
+                  "{vram:apple-mac-studio-m5-max} GB",
+                  "{bw:apple-mac-studio-m5-max} GB/s",
+                  "{w:apple-mac-studio-m5-max} W",
+                  "{nota:apple-mac-studio-m5-max}",
+                  "Modelos de 32B a 70B"
+                ]
+              ],
+              "nota": "Datos de las fichas de Inferium, con la memoria de la configuración base. El consumo es el máximo continuo que indica el fabricante para la línea."
+            }
+          },
+          {
+            "barras": {
+              "titulo": "Tokens por segundo estimados con un modelo de 8B",
+              "datos": [
+                [
+                  "Mac mini M4",
+                  "{tps:apple-mac-mini-m4}",
+                  "{tps:apple-mac-mini-m4}"
+                ],
+                [
+                  "Mac mini M6",
+                  "{tps:apple-mac-mini-m6}",
+                  "{tps:apple-mac-mini-m6}"
+                ],
+                [
+                  "Mac Studio M5 Max",
+                  "{tps:apple-mac-studio-m5-max}",
+                  "{tps:apple-mac-studio-m5-max}"
+                ],
+                [
+                  "RTX 5060 Ti 16 GB",
+                  "{tps:nvidia-rtx-5060-ti-16gb}",
+                  "{tps:nvidia-rtx-5060-ti-16gb}"
+                ]
+              ],
+              "unidad": "",
+              "nota": "Estimación propia de Inferium (ancho de banda × 0,7 ÷ tamaño del modelo), no una prueba medida. Sirve para comparar entre equipos."
+            }
+          },
+          {
+            "p": "Para enfrentarlos con otros equipos, usa nuestro [comparador](/comparador/) o entra en la sección de [Mac para IA](/mac/)."
+          }
+        ]
+      },
+      {
+        "h2": "Mac o tarjeta gráfica: cuándo elegir cada uno",
+        "bloques": [
+          {
+            "p": "Es la duda que más nos llega. La respuesta corta es que depende de qué priorices:"
+          },
+          {
+            "tabla": {
+              "cab": [
+                "Prioridad",
+                "Mejor opción"
+              ],
+              "filas": [
+                [
+                  "Silencio, tamaño y poco consumo",
+                  "Un Mac"
+                ],
+                [
+                  "Máxima velocidad con modelos de hasta 14B",
+                  "Una tarjeta gráfica NVIDIA de 16 GB"
+                ],
+                [
+                  "Cargar modelos grandes sin comprar una GPU profesional",
+                  "Un Mac con mucha memoria"
+                ],
+                [
+                  "Generar imágenes con Stable Diffusion o Flux",
+                  "Una tarjeta gráfica NVIDIA"
+                ],
+                [
+                  "Ampliar el equipo más adelante",
+                  "Un PC con tarjeta gráfica"
+                ],
+                [
+                  "Un equipo que está siempre encendido",
+                  "Un Mac"
+                ]
+              ]
+            }
+          },
+          {
+            "p": "Un detalle importante: **los Mac con chip Apple no admiten tarjetas gráficas externas**, así que no hay forma de ampliarlos después. Lo explicamos en [tarjeta gráfica externa para portátil](/guias/tarjeta-grafica-externa-egpu-portatil/). Para ver las tarjetas de sobremesa, consulta [mejor tarjeta gráfica calidad precio para IA](/guias/mejor-tarjeta-grafica-calidad-precio-ia/). Y si lo que te atrae es un equipo pequeño pero con Windows o Linux, tienes el [mejor mini PC para IA](/guias/mejor-mini-pc-para-ia/)."
+          },
+          {
+            "cta": {
+              "texto": "¿Quieres ver todos los Mac con sus datos?",
+              "boton": "Ver Mac para IA",
+              "url": "/mac/"
+            }
+          }
+        ]
+      },
+      {
+        "h2": "Cómo empezar con IA en un Mac",
+        "bloques": [
+          {
+            "ol": [
+              "**Elige la memoria.** Con 16 GB empiezas, con 24 a 32 GB trabajas cómodo, con 48 GB o más vas en serio.",
+              "**Instala Ollama o LM Studio.** Ambos funcionan en macOS. Mira [qué es Ollama](/guias/que-es-ollama-como-instalarlo-requisitos/) o la comparativa [LM Studio o Ollama](/guias/lm-studio-o-ollama/).",
+              "**Empieza con un modelo pequeño.** Llama 3.1 de 8B es una buena primera prueba.",
+              "**Sube de tamaño poco a poco.** Si te cabe y va bien, prueba uno de 14B.",
+              "**Vigila la memoria.** Si el Mac empieza a ir lento, es que el modelo no cabe y está usando el disco."
+            ]
+          },
+          {
+            "p": "Para saber qué modelo cabe en tu configuración, usa la [calculadora de VRAM](/calculadora-vram/) con la memoria de tu Mac."
+          }
+        ]
+      },
+      {
+        "h2": "Qué modelos de IA corren bien en un Mac",
+        "bloques": [
+          {
+            "p": "En un Mac, la pregunta práctica es qué modelos van cómodos con la memoria que tienes. Con Ollama o LM Studio, los modelos aprovechan la gráfica del chip y la memoria unificada, así que la regla es la misma que para una tarjeta gráfica: el modelo tiene que caber, con margen para el contexto."
+          },
+          {
+            "ul": [
+              "**Modelos de 8B** (como Llama 3.1 8B, unos 5,4 GB en Q4): van bien en cualquier Mac de 16 GB. Son rápidos y sirven para resumir, traducir y redactar.",
+              "**Modelos de 14B** (como Qwen 2.5 14B, unos 9,5 GB): conviene tener al menos 24 GB para que quede margen para el sistema y el contexto.",
+              "**Modelos de 24B y 32B** (unos 16 y 22 GB): piden 36 GB o más para trabajar con holgura.",
+              "**Modelos de 70B** (unos 47 GB): solo tienen sentido con 96 o 128 GB de memoria."
+            ]
+          },
+          {
+            "p": "Un consejo útil: si el Mac empieza a ir lento o el modelo escribe palabra a palabra, es probable que la memoria esté al límite. Cierra otros programas pesados o prueba una cuantización más ligera. En nuestra guía de [qué es Ollama](/guias/que-es-ollama-como-instalarlo-requisitos/) tienes el comando `ollama ps` para comprobarlo."
+          }
+        ]
+      },
+      {
+        "h2": "Errores típicos al comprar un Mac para IA",
+        "bloques": [
+          {
+            "ul": [
+              "**Comprar la memoria mínima.** Es el error que más se lamenta, porque no se puede ampliar.",
+              "**Esperar la velocidad de una tarjeta gráfica potente.** Un Mac base mueve los modelos más despacio.",
+              "**Pensar que se puede añadir una GPU externa.** Con chip Apple no es posible.",
+              "**Ignorar el almacenamiento.** Los modelos pesan decenas de GB y el disco interno tampoco se amplía fácilmente.",
+              "**No contar la memoria que reserva el sistema.** Un Mac de 16 GB no aprovecha los 16 GB para el modelo."
+            ]
+          }
+        ]
+      }
+    ],
+    "faq": [
+      [
+        "¿Qué Mac es mejor para IA local?",
+        "Para empezar, un Mac mini con 24 o 32 GB. Para modelos de 32B o 70B, un Mac Studio con 64 a 128 GB."
+      ],
+      [
+        "¿Cuánta memoria necesita un Mac para IA?",
+        "16 GB para modelos de 8B, 24 a 32 GB para 14B y 24B, 48 a 64 GB para 32B y 96 a 128 GB para 70B."
+      ],
+      [
+        "¿Sirve un Mac mini para IA?",
+        "Sí, para modelos pequeños y medianos. Es silencioso, pequeño y consume poco, aunque es más lento que una tarjeta gráfica potente."
+      ],
+      [
+        "¿Es mejor un Mac o un PC con tarjeta gráfica?",
+        "Un Mac gana en silencio, tamaño y consumo. Un PC con tarjeta NVIDIA gana en velocidad y en generación de imágenes."
+      ],
+      [
+        "¿Se puede ampliar la memoria de un Mac?",
+        "No, la memoria va soldada y hay que elegirla al comprar."
+      ],
+      [
+        "¿Funciona Ollama en un Mac?",
+        "Sí, funciona en Mac con chip Apple y aprovecha su memoria unificada."
+      ]
+    ],
+    "relacionadas": [
+      "que-es-la-vram-cuanta-necesitas-ia",
+      "mejor-mini-pc-para-ia",
+      "mejor-tarjeta-grafica-calidad-precio-ia"
+    ]
+  }
+]
