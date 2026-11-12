@@ -138,8 +138,33 @@ function inf_btn_amazon($p, $texto = 'Ver precio en Amazon', $small = false) {
         . ' <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></svg></a>';
 }
 
+/** Foto de producto alojada en wp-content/inferium/img/p/<ASIN>.webp (imagen principal de Amazon, con permiso de Ernesto). */
+function inf_foto_url($asin) {
+    if (!$asin || !preg_match('/^[A-Z0-9]{10}$/', $asin)) return '';
+    $f = '/inferium/img/p/' . $asin . '.webp';
+    return is_file(WP_CONTENT_DIR . $f) ? content_url($f) . '?v=' . filemtime(WP_CONTENT_DIR . $f) : '';
+}
+function inf_foto_prod($x, $grande = false, $lazy = true) {
+    $u = inf_foto_url($x['asin'] ?? '');
+    if (!$u) return '';
+    return '<div class="foto-prod' . ($grande ? ' grande' : '') . '"><img src="' . esc_url($u) . '" alt="' . esc_attr($x['nombre']) . '" width="600" height="600"' . ($lazy ? ' loading="lazy" decoding="async"' : ' fetchpriority="high"') . '></div>';
+}
+/** Foto de ambiente (Unsplash o Pexels) alojada en wp-content/inferium/img/a/, con su crédito. Datos en data/fotos.json. */
+function inf_fotos() { return inf_datos('fotos'); }
+function inf_foto_amb($clave, $uso) {
+    foreach (inf_fotos() as $f) { if ($f['clave'] === $clave && $f['uso'] === $uso && is_file(WP_CONTENT_DIR . '/inferium/img/a/' . $f['archivo'])) return $f; }
+    return null;
+}
+function inf_foto_amb_html($f, $clase = '', $lazy = true) {
+    if (!$f) return '';
+    return '<figure class="foto-amb ' . $clase . ' reveal"><img src="' . esc_url(content_url('/inferium/img/a/' . $f['archivo'])) . '" alt="' . esc_attr($f['alt']) . '" width="' . (int) $f['w'] . '" height="' . (int) $f['h'] . '"' . ($lazy ? ' loading="lazy" decoding="async"' : ' fetchpriority="high"') . '>'
+        . '<figcaption class="mini muted">Foto: <a href="' . esc_url($f['pagina']) . '" rel="noopener" target="_blank">' . inf_e($f['autor']) . ' / ' . inf_e($f['sitio']) . '</a></figcaption></figure>';
+}
+
 /** Ilustración propia mientras no haya fotos: placa con el chip y la memoria grabada. */
 function inf_chip_art($p, $grande = false) {
+    $foto = inf_foto_prod($p, $grande, !$grande);
+    if ($foto) return $foto;
     static $n = 0; $n++;
     $mods = $p['tipo'] === 'grafica' ? min(12, max(4, (int) round($p['vram'] / 2.7))) : 8;
     $etq = ['grafica' => 'GPU', 'mini-pc' => 'SOC', 'mac' => 'APPLE', 'edge' => 'EDGE'][$p['tipo']] ?? 'GPU';
@@ -225,7 +250,7 @@ function inf_nav() {
 }
 
 function inf_documento($a) {
-    $a += ['title' => INF_NOMBRE, 'description' => '', 'path' => '/', 'schema' => [], 'body' => '', 'clase' => '', 'borrador' => false, 'og' => 'website', 'simple' => false];
+    $a += ['imagen' => '', 'title' => INF_NOMBRE, 'description' => '', 'path' => '/', 'schema' => [], 'body' => '', 'clase' => '', 'borrador' => false, 'og' => 'website', 'simple' => false];
     $solo_legal = !empty($a['noindex']);
     $noindex = $a['borrador'] || !get_option('blog_public') || $solo_legal;
     $canon = home_url($a['path']);
@@ -235,7 +260,7 @@ function inf_documento($a) {
         . '<title>' . inf_e($a['title']) . '</title><meta name="description" content="' . esc_attr($a['description']) . '">'
         . '<link rel="canonical" href="' . esc_url($canon) . '">'
         . '<meta name="robots" content="' . ($noindex ? ($solo_legal && !$a['borrador'] && get_option('blog_public') ? 'noindex, follow' : 'noindex, nofollow') : 'index, follow, max-image-preview:large') . '">'
-        . '<meta property="og:type" content="' . esc_attr($a['og']) . '"><meta property="og:title" content="' . esc_attr($a['title']) . '"><meta property="og:description" content="' . esc_attr($a['description']) . '"><meta property="og:url" content="' . esc_url($canon) . '"><meta property="og:locale" content="es_ES"><meta property="og:site_name" content="' . INF_NOMBRE . '">'
+        . '<meta property="og:type" content="' . esc_attr($a['og']) . '"><meta property="og:title" content="' . esc_attr($a['title']) . '"><meta property="og:description" content="' . esc_attr($a['description']) . '"><meta property="og:url" content="' . esc_url($canon) . '"><meta property="og:locale" content="es_ES">' . (!empty($a['imagen']) ? '<meta property="og:image" content="' . esc_url($a['imagen']) . '">' : '') . '<meta property="og:site_name" content="' . INF_NOMBRE . '">'
         . '<meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#141414">'
         . '<link rel="icon" href="' . esc_url(inf_asset('favicon.svg')) . '" type="image/svg+xml">'
         . '<link rel="preload" href="' . esc_url(content_url('inferium/assets/fonts/space-grotesk.woff2')) . '" as="font" type="font/woff2" crossorigin>'
@@ -381,11 +406,12 @@ function inf_pag_ficha($slug) {
     $rel = array_slice(array_values(array_filter(inf_productos(), fn($x) => $x['slug'] !== $slug && $x['tipo'] === $p['tipo'])), 0, 3);
     if ($rel) { $b .= '<section class="block"><div class="sec-head"><h2>Si no te encaja, mira estos</h2></div><div class="grid-cards">'; foreach ($rel as $r) $b .= inf_card($r); $b .= '</div></section>'; }
     $b .= '<p class="mini muted">Enlace de afiliado de Amazon: si compras desde él recibimos una comisión sin coste para ti. Datos revisados el ' . inf_fecha($p['revisado']) . '.</p></main>';
-    $prod = ['@context' => 'https://schema.org', '@type' => 'Product', 'name' => $p['nombre'], 'brand' => ['@type' => 'Brand', 'name' => $p['marca']], 'description' => $p['resumen'], 'url' => home_url($path),
+    $prod = ['@context' => 'https://schema.org', '@type' => 'Product', 'image' => inf_foto_url($p['asin'] ?? '') ?: null, 'name' => $p['nombre'], 'brand' => ['@type' => 'Brand', 'name' => $p['marca']], 'description' => $p['resumen'], 'url' => home_url($path),
         'review' => ['@type' => 'Review', 'author' => ['@type' => 'Person', 'name' => INF_AUTOR], 'datePublished' => $p['revisado'], 'reviewBody' => $p['paraQuien'], 'reviewRating' => ['@type' => 'Rating', 'ratingValue' => $nota, 'bestRating' => 100, 'worstRating' => 0]]];
+    if (empty($prod['image'])) unset($prod['image']);
     return ['title' => inf_corto($p) . ': precio, opiniones y qué IA mueve' . ($p['tipo'] === 'grafica' ? ' esta GPU | ' : ' | ') . INF_NOMBRE,
         'description' => $p['nombre'] . ' para IA local: ' . $p['vram'] . ' GB de ' . $p['memoria'] . ', ' . $p['anchoBanda'] . ' GB/s. Qué modelos caben, tokens por segundo estimados y lo que no hace bien.',
-        'path' => $path, 'clase' => 'p-ficha', 'og' => 'product', 'body' => $b, 'schema' => [inf_schema_migas($migas), $prod]];
+        'path' => $path, 'clase' => 'p-ficha', 'og' => 'product', 'imagen' => inf_foto_url($p['asin'] ?? ''), 'body' => $b, 'schema' => [inf_schema_migas($migas), $prod]];
 }
 
 function inf_pag_comparador() {
@@ -496,7 +522,7 @@ function inf_pag_versus($slug) {
 
 /** Tarjeta sencilla de un accesorio o componente (sin puntuación de IA). */
 function inf_item_card($i) {
-    return '<article class="surface pad item reveal"><h3>' . inf_e($i['nombre']) . '</h3><p class="muted">' . inf_e($i['nota']) . '</p>' . inf_btn_amazon($i, 'Ver precio en Amazon', true) . '</article>';
+    return '<article class="surface pad item reveal">' . inf_foto_prod($i) . '<h3>' . inf_e($i['nombre']) . '</h3><p class="muted">' . inf_e($i['nota']) . '</p>' . inf_btn_amazon($i, 'Ver precio en Amazon', true) . '</article>';
 }
 
 /** Venta cruzada en la ficha: lo que hace falta alrededor del equipo. */
@@ -640,17 +666,24 @@ function inf_pag_guia($slug) {
     $palabras = count(preg_split('/\s+/u', trim(inf_guia_texto($g))));
     $min = max(1, (int) ceil($palabras / 200));
     $toc = ''; $secs = '';
-    foreach ($g['secciones'] as $s) {
+    // Fotos de texto: una cada pocas secciones (f1, f2, f3...), repartidas por la guía.
+    $ns = count($g['secciones']); $fotos = [];
+    for ($k = 1; $k <= 6; $k++) { $f = inf_foto_amb($g['slug'], 'f' . $k); if ($f) $fotos[] = $f; }
+    $cada = $fotos ? max(1, (int) floor($ns / (count($fotos) + 1))) : 0;
+    foreach ($g['secciones'] as $i => $s) {
         $id = inf_slug_h($s['h2']);
         $toc .= '<li><a href="#' . $id . '">' . inf_md($s['h2']) . '</a></li>';
         $secs .= '<section class="g-sec" id="' . $id . '"><h2>' . inf_md($s['h2']) . '</h2>';
         foreach ($s['bloques'] as $b) $secs .= inf_guia_bloque($b);
         $secs .= '</section>';
+        if ($cada && ($i + 1) % $cada === 0 && $fotos && $i < $ns - 1) $secs .= inf_foto_amb_html(array_shift($fotos), 'g-foto');
     }
+    $hero = inf_foto_amb($g['slug'], 'hero');
     $comp = $g['tipo'] === 'comparativa';
     $b = '<main class="wrap guia"><header class="cabecera g-hero">' . inf_migas($migas)
         . '<span class="badge badge-copper">' . ($comp ? 'Comparativa' : 'Guía') . '</span><h1>' . inf_e($g['titulo']) . '</h1><p class="muted intro">' . inf_md($g['entradilla']) . '</p>'
         . '<p class="g-meta mono">Por ' . INF_AUTOR . ' · ' . inf_fecha($g['fecha']) . ' · ' . $min . ' min de lectura</p></header>'
+        . inf_foto_amb_html($hero, 'g-portada', false)
         . '<div class="g-cuerpo"><aside class="surface g-resumen"><h2>En resumen</h2><ul class="lista">';
     foreach ($g['resumen'] as $x) $b .= '<li>' . inf_md($x) . '</li>';
     $b .= '</ul></aside><nav class="toc surface" aria-label="Índice" data-nocount><details><summary>Índice de la guía</summary><ol>' . $toc . '</ol></details></nav>'
@@ -665,7 +698,8 @@ function inf_pag_guia($slug) {
     $b .= '<p class="mini muted">Enlaces de afiliado de Amazon: si compras desde ellos recibimos una comisión sin coste para ti. No mostramos precios porque cambian a diario. Las cifras de tokens por segundo son estimaciones propias a partir del ancho de banda, no pruebas medidas.</p></div></main>';
     $art = ['@context' => 'https://schema.org', '@type' => 'Article', 'headline' => $g['titulo'], 'description' => $g['descripcion'], 'author' => ['@type' => 'Person', 'name' => INF_AUTOR],
         'publisher' => ['@type' => 'Organization', 'name' => INF_NOMBRE, 'url' => home_url('/')], 'datePublished' => $g['fecha'], 'dateModified' => $g['actualizado'] ?? $g['fecha'], 'mainEntityOfPage' => home_url($path), 'inLanguage' => 'es'];
-    return ['title' => $g['seoTitulo'] . ' | ' . INF_NOMBRE, 'description' => $g['descripcion'], 'path' => $path, 'clase' => 'p-guia', 'og' => 'article', 'body' => $b, 'schema' => [inf_schema_migas($migas), $art, inf_schema_faq($g['faq'])]];
+    if ($hero) $art['image'] = content_url('/inferium/img/a/' . $hero['archivo']);
+    return ['title' => $g['seoTitulo'] . ' | ' . INF_NOMBRE, 'description' => $g['descripcion'], 'path' => $path, 'clase' => 'p-guia', 'og' => 'article', 'imagen' => $art['image'] ?? '', 'body' => $b, 'schema' => [inf_schema_migas($migas), $art, inf_schema_faq($g['faq'])]];
 }
 
 function inf_pag_guias() {

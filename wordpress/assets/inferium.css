@@ -364,3 +364,19 @@ table.modelos tr.no td { opacity: 0.5; }
 @media (max-width: 640px) { .pick { grid-template-columns: 1fr; } .pick-art .chip-art { max-width: 260px; } }
 .cta-g { padding: 22px 26px; display: flex; gap: 18px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
 .cta-g p { margin: 0; max-width: 46ch; }
+
+/* Fotos de producto (imagen principal de Amazon sobre fondo claro) y fotos de ambiente con crédito */
+.foto-prod { border-radius: var(--r-md); background: radial-gradient(circle at 50% 35%, #ffffff, #e9e4dc 75%); box-shadow: var(--sh-inset), 0 0 0 1px #00000040; padding: 14px; aspect-ratio: 4 / 3; display: grid; place-items: center; overflow: hidden; }
+.foto-prod img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; mix-blend-mode: multiply; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+.card:hover .foto-prod img, .pick:hover .foto-prod img { transform: scale(1.05) translateY(-2px); }
+.foto-prod.grande { aspect-ratio: 1 / 1; padding: 28px; }
+.item .foto-prod { aspect-ratio: 16 / 10; margin-bottom: 12px; padding: 10px; }
+.pick-art .foto-prod { max-width: 220px; }
+.foto-amb { margin: 28px 0; }
+.foto-amb img { display: block; width: 100%; height: auto; border-radius: var(--r-md); box-shadow: 0 18px 40px #000a, 0 0 0 1px #ffffff10; aspect-ratio: 16 / 9; object-fit: cover; filter: saturate(.92) contrast(1.03); }
+.foto-amb figcaption { margin-top: 8px; }
+.foto-amb figcaption a { color: inherit; }
+.g-portada img { aspect-ratio: 21 / 9; }
+.sec-portada { position: relative; margin: 0 0 24px; }
+.sec-portada img { aspect-ratio: 24 / 7; }
+@media (max-width: 640px) { .g-portada img, .sec-portada img { aspect-ratio: 16 / 9; } }
