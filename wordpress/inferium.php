@@ -619,7 +619,7 @@ function inf_pag_grupo($slug) {
         . '<section class="surface pad"><h2>Cómo elegir</h2><p>' . inf_e($g['consejo']) . '</p></section>'
         . '<section class="block"><div class="sec-head"><h2>Los más vendidos en Amazon</h2><p>Elegidos entre los más vendidos de Amazon.es. Revisado el ' . inf_fecha('2026-11-11') . '.</p></div><div class="grid-cards">';
     foreach ($g['items'] as $i) $b .= inf_item_card($i);
-    $b .= '</div></section><section class="block"><div class="sec-head"><h2>Sigue montando tu equipo de IA</h2></div><ul class="lista enlaces">'
+    $b .= '</div></section>' . inf_texto_seo('grupo-' . $slug) . '<section class="block"><div class="sec-head"><h2>Sigue montando tu equipo de IA</h2></div><ul class="lista enlaces">'
         . '<li><a href="' . esc_url(inf_url('/tarjetas-graficas/')) . '">Tarjetas gráficas (GPU) para IA</a></li>';
     foreach (inf_grupos() as $x) { if ($x['slug'] !== $slug) $b .= '<li><a href="' . esc_url(inf_url(inf_grupo_path($x))) . '">' . inf_e($x['nombre']) . '</a></li>'; }
     $b .= '<li><a href="' . esc_url(inf_url('/calculadora-vram/')) . '">Calculadora de VRAM</a></li></ul></section>'
