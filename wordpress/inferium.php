@@ -321,6 +321,10 @@ function inf_pag_inicio() {
         $b .= '<a class="cat surface reveal' . ($i === 0 ? ' cat-principal' : '') . '" href="' . esc_url(inf_url('/' . $c['slug'] . '/')) . '"><h3>' . inf_e($c['nombre']) . '</h3><p class="muted">' . inf_e(explode('. ', $c['intro'])[0]) . '.</p><span class="cuenta mono">' . $n . ' equipos</span></a>';
     }
     $b .= '</div></div></section>';
+    $gs = array_slice(inf_guias(), 0, 4);
+    $b .= '<section class="block sin-top"><div class="wrap split-foto">' . inf_foto_amb_html(inf_foto_amb('portada', 'hero'), '') . '<div><h2>Tu propia IA, en tu escritorio</h2><p class="muted">Sin cuotas, sin límites de mensajes y sin mandar tus datos a ninguna nube. Con la tarjeta gráfica o el ordenador adecuado, modelos como Llama, Qwen o Mistral funcionan en casa. Empieza por estas guías:</p><ul class="lista enlaces">';
+    foreach ($gs as $g) $b .= '<li><a href="' . esc_url(inf_url('/guias/' . $g['slug'] . '/')) . '">' . inf_e($g['titulo']) . '</a></li>';
+    $b .= '</ul><a class="btn btn-sm" href="' . esc_url(inf_url('/guias/')) . '">Ver todas las guías</a></div></div></section>';
     $b .= '<section class="block sin-top" id="calc"><div class="wrap"><div class="sec-head"><h2>Calculadora de VRAM</h2><p>Mueve la memoria y mira qué modelos te caben. Te decimos el equipo más ajustado que lo cumple.</p></div>' . inf_calc() . '</div></section>';
     $b .= '<section class="block sin-top"><div class="wrap"><div class="sec-head"><h2>Los más completos para IA</h2><p>Ordenados por lo que más pesa en IA: VRAM, ancho de banda y ecosistema de software. <a href="' . esc_url(inf_url('/como-elegimos/')) . '">Así puntuamos</a>.</p></div><div class="grid-cards">';
     foreach ($dest as $i => $p) $b .= inf_card($p, $i + 1);
@@ -348,7 +352,7 @@ function inf_pag_categoria($slug) {
     $migas = [['/', 'Inicio'], ["/$slug/", $cat['nombre']]];
     $rev = max(array_column($lista, 'revisado'));
     $b = '<main class="wrap"><section class="cabecera">' . inf_migas($migas) . '<h1>' . inf_e($cat['titulo']) . '</h1><p class="intro">' . inf_e($cat['intro']) . '</p>'
-        . '<div class="meta"><span class="badge">' . count($lista) . ' equipos</span><span class="badge">Datos revisados el ' . inf_fecha($rev) . '</span><a class="badge badge-copper" href="' . esc_url(inf_url('/comparador/')) . '">Comparar</a></div></section><div class="grid-cards">';
+        . '<div class="meta"><span class="badge">' . count($lista) . ' equipos</span><span class="badge">Datos revisados el ' . inf_fecha($rev) . '</span><a class="badge badge-copper" href="' . esc_url(inf_url('/comparador/')) . '">Comparar</a></div></section>' . inf_foto_amb_html(inf_foto_amb($slug, 'hero'), 'sec-portada', false) . '<div class="grid-cards">';
     foreach ($lista as $i => $p) $b .= inf_card($p, $i + 1);
     $b .= '</div><section class="block">' . inf_faq($cat['faq']) . '</section><section class="otras"><h2>Otras categorías</h2><div class="chips">';
     foreach (inf_categorias() as $c) { if ($c['slug'] !== $slug) $b .= '<a class="chip" href="' . esc_url(inf_url('/' . $c['slug'] . '/')) . '">' . inf_e($c['nombre']) . '</a>'; }
@@ -566,7 +570,7 @@ function inf_pag_grupo($slug) {
 
 function inf_pag_componentes() {
     $migas = [['/', 'Inicio'], ['/componentes/', 'Componentes']];
-    $b = '<main class="wrap"><section class="cabecera">' . inf_migas($migas) . '<h1>Componentes para montar un PC de IA</h1><p class="muted intro">La tarjeta gráfica es la pieza clave, pero no trabaja sola. Aquí tienes lo que la acompaña: fuente de alimentación, memoria RAM, disco SSD, procesador, placa base, caja y refrigeración, además de las GPU externas para portátil y mini PC. Todo elegido entre los más vendidos de Amazon.</p></section><div class="grid-cards">';
+    $b = '<main class="wrap"><section class="cabecera">' . inf_migas($migas) . '<h1>Componentes para montar un PC de IA</h1><p class="muted intro">La tarjeta gráfica es la pieza clave, pero no trabaja sola. Aquí tienes lo que la acompaña: fuente de alimentación, memoria RAM, disco SSD, procesador, placa base, caja y refrigeración, además de las GPU externas para portátil y mini PC. Todo elegido entre los más vendidos de Amazon.</p></section>' . inf_foto_amb_html(inf_foto_amb('componentes', 'hero'), 'sec-portada', false) . '<div class="grid-cards">';
     foreach (inf_grupos() as $g) {
         $b .= '<article class="surface pad item reveal"><h2><a href="' . esc_url(inf_url(inf_grupo_path($g))) . '">' . inf_e($g['nombre']) . '</a></h2><p class="muted">' . inf_e($g['descripcion']) . '</p><a class="btn btn-sm" href="' . esc_url(inf_url(inf_grupo_path($g))) . '">Ver ' . count($g['items']) . ' opciones</a></article>';
     }
