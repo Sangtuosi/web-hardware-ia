@@ -350,5 +350,38 @@
   "archivo": "mejor-mac-para-ia-local-f2.webp",
   "w": 1200,
   "h": 800
+ },
+ {
+  "clave": "mejores-modelos-ollama-segun-tu-tarjeta-grafica",
+  "uso": "hero",
+  "autor": "Czapp Árpád",
+  "alt": "Persona trabajando de noche con un portátil junto a una lámpara de luz cálida",
+  "sitio": "Pexels",
+  "pagina": "https://www.pexels.com/es-es/foto/11208031/",
+  "archivo": "lm-studio-o-ollama-f2.webp",
+  "w": 1200,
+  "h": 800
+ },
+ {
+  "clave": "mac-mini-m6-para-ia",
+  "uso": "hero",
+  "autor": "Tranmautritam",
+  "alt": "Puesto de trabajo luminoso con monitor, teclado y un ordenador compacto plateado",
+  "sitio": "Pexels",
+  "pagina": "https://www.pexels.com/es-es/foto/18024478/",
+  "archivo": "mejor-mac-para-ia-local-f1.webp",
+  "w": 1200,
+  "h": 800
+ },
+ {
+  "clave": "rtx-5090-para-ia",
+  "uso": "hero",
+  "autor": "Matheus Bertelli",
+  "alt": "Ventiladores de una tarjeta gráfica iluminados con luz anaranjada dentro de un PC",
+  "sitio": "Pexels",
+  "pagina": "https://www.pexels.com/es-es/foto/34552790/",
+  "archivo": "que-es-una-tarjeta-grafica-gpu-ia-f2.webp",
+  "w": 1200,
+  "h": 800
  }
 ]

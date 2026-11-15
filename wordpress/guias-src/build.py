@@ -7,7 +7,7 @@ import importlib, json, os, sys
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 
-MODULOS = ['g01_vram', 'g02_ollama', 'g03_lmstudio', 'g04_gpu', 'g05_egpu', 'g06_nvidia_amd', 'g07_calidad_precio', 'g08_minipc', 'g09_mac']
+MODULOS = ['g01_vram', 'g02_ollama', 'g03_lmstudio', 'g04_gpu', 'g05_egpu', 'g06_nvidia_amd', 'g07_calidad_precio', 'g08_minipc', 'g09_mac', 'g10_modelos_ollama', 'g11_mac_mini_m6', 'g12_rtx_5090']
 
 
 def p(t): return {"p": t}

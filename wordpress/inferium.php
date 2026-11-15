@@ -776,7 +776,7 @@ function inf_guia_bloque($b) {
     if (isset($b['aviso'])) return '<aside class="aviso-g reveal"><b>' . inf_e($b['titulo'] ?? 'Ojo con esto') . '</b><p>' . inf_md($b['aviso']) . '</p></aside>';
     if (isset($b['stats'])) {
         $h = '<div class="stats-g reveal">';
-        foreach ($b['stats'] as $x) $h .= '<div class="surface"><b class="copper-text">' . inf_e($x[0]) . '</b><span>' . inf_md($x[1]) . '</span></div>';
+        foreach ($b['stats'] as $x) $h .= '<div class="surface"><b class="copper-text">' . inf_md($x[0]) . '</b><span>' . inf_md($x[1]) . '</span></div>';
         return $h . '</div>';
     }
     if (isset($b['tabla'])) {

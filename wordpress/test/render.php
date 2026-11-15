@@ -29,7 +29,7 @@ foreach (inf_categorias() as $c) $pags[] = ['categoria', $c['slug'], '/' . $c['s
 foreach (inf_productos() as $p) $pags[] = ['ficha', $p['slug'], inf_ficha_path($p)];
 $pags[] = ['componentes', '', '/componentes/'];
 $pags[] = ['guias', '', '/guias/'];
-foreach (inf_guias() as $g) $pags[] = ['guia', $g['slug'], '/guias/' . $g['slug'] . '/'];
+foreach (inf_datos('guias') as $g) $pags[] = ['guia', $g['slug'], '/guias/' . $g['slug'] . '/'];
 foreach (inf_grupos() as $g) $pags[] = ['grupo', $g['slug'], inf_grupo_path($g)];
 foreach (inf_versus() as $v) $pags[] = ['versus', $v['slug'], '/comparador/' . $v['slug'] . '/'];
 foreach ($pags as [$l, $s, $path]) {

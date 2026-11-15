@@ -2626,5 +2626,827 @@
       "mejor-mini-pc-para-ia",
       "mejor-tarjeta-grafica-calidad-precio-ia"
     ]
+  },
+  {
+    "slug": "mejores-modelos-ollama-segun-tu-tarjeta-grafica",
+    "tipo": "informativa",
+    "titulo": "Mejores modelos de Ollama según tu tarjeta gráfica (de 8 a 32 GB)",
+    "seoTitulo": "Mejores modelos de Ollama según la VRAM de tu GPU",
+    "descripcion": "Qué modelos de Ollama puedes usar con tu tarjeta gráfica: los mejores para 8, 12, 16, 24 y 32 GB de VRAM, cuánto ocupan, a qué velocidad van y cuál elegir para chatear o programar.",
+    "keyword": "modelos ollama",
+    "publico": "Persona que ya tiene Ollama instalado, o va a instalarlo, y no sabe qué modelo descargar para su tarjeta gráfica",
+    "fecha": "2026-11-16",
+    "publicar": "2026-11-16 09:00",
+    "entradilla": "La biblioteca de modelos de Ollama tiene cientos de opciones y es fácil perderse. La buena noticia es que la elección depende casi solo de un dato: la VRAM de tu tarjeta gráfica. Te explicamos qué modelos de Ollama caben en 8, 12, 16, 24 y 32 GB, cuáles van mejor para cada tarea y cómo comprobar que funcionan a pleno rendimiento.",
+    "resumen": [
+      "El modelo de Ollama que puedes usar lo decide la VRAM: tiene que caber entero en la tarjeta gráfica para ir rápido.",
+      "Con 8 GB, modelos de 7B a 8B; con 12 a 16 GB, de 12B a 14B; con 24 GB, hasta 27B; con 32 GB, modelos de 32B con contexto amplio.",
+      "Las versiones Q4, que son las que Ollama descarga por defecto, ocupan en GB algo más de la mitad de sus miles de millones de parámetros.",
+      "Con `ollama ps` compruebas en segundos si el modelo cabe entero en la GPU o se está desbordando a la RAM."
+    ],
+    "secciones": [
+      {
+        "h2": "Cómo elegir un modelo de Ollama en un minuto",
+        "bloques": [
+          {
+            "p": "Los **modelos de Ollama** se nombran con dos datos: la familia (Llama, Qwen, Gemma, Mistral, DeepSeek) y el tamaño en miles de millones de parámetros, que se escribe con una B: 8B, 14B, 32B. Cuantos más parámetros, más listo suele ser el modelo, pero también más memoria ocupa y más despacio responde."
+          },
+          {
+            "p": "La regla práctica es sencilla: **elige el modelo más grande que quepa entero en la VRAM de tu tarjeta gráfica, dejando margen para la conversación**. Si cabe entero, Ollama lo ejecuta en la GPU y va rápido. Si no cabe, pasa una parte a la memoria RAM del ordenador y la velocidad cae a unas pocas palabras por segundo. Por eso un modelo de 14B que cabe suele ser mejor experiencia que uno de 32B que no cabe."
+          },
+          {
+            "p": "Si no sabes cuánta VRAM tiene tu tarjeta, en Windows lo ves en el Administrador de tareas, pestaña Rendimiento, apartado GPU, línea «Memoria dedicada de GPU». Y si quieres repasar qué es exactamente la VRAM y por qué manda tanto, lo tienes en [qué es la VRAM y cuánta necesitas](/guias/que-es-la-vram-cuanta-necesitas-ia/)."
+          }
+        ]
+      },
+      {
+        "h2": "Cuánto ocupa cada modelo en Ollama",
+        "bloques": [
+          {
+            "p": "Ollama descarga por defecto los modelos en cuantización Q4, una forma de comprimir los pesos del modelo para que ocupen casi cuatro veces menos con una pérdida de calidad pequeña. En la práctica, cada peso usa unos 4,5 bits. A eso hay que sumarle la memoria que necesita la conversación (la caché de contexto), que en nuestras cuentas es un 20 % adicional."
+          },
+          {
+            "tabla": {
+              "cab": [
+                "Tamaño del modelo",
+                "Ejemplos en Ollama",
+                "Memoria aproximada (Q4)",
+                "VRAM recomendada"
+              ],
+              "filas": [
+                [
+                  "7B a 8B",
+                  "llama3.1:8b, qwen3:8b, deepseek-r1:8b",
+                  "5 a 6 GB",
+                  "8 GB"
+                ],
+                [
+                  "12B",
+                  "gemma3:12b",
+                  "unos 8 GB",
+                  "12 GB"
+                ],
+                [
+                  "14B",
+                  "qwen3:14b, deepseek-r1:14b, qwen2.5-coder:14b",
+                  "unos 9,5 GB",
+                  "12 a 16 GB"
+                ],
+                [
+                  "24B",
+                  "mistral-small:24b",
+                  "unos 16 GB",
+                  "24 GB"
+                ],
+                [
+                  "27B",
+                  "gemma3:27b",
+                  "unos 18 GB",
+                  "24 GB"
+                ],
+                [
+                  "32B",
+                  "qwen3:32b, qwen2.5-coder:32b, deepseek-r1:32b",
+                  "unos 21,6 GB",
+                  "24 a 32 GB"
+                ],
+                [
+                  "70B",
+                  "llama3.3:70b, deepseek-r1:70b",
+                  "unos 47 GB",
+                  "48 GB o más"
+                ]
+              ],
+              "nota": "Cálculo de Inferium: parámetros × 4,5 bits ÷ 8, más un 20 % para el contexto. Los nombres son etiquetas de la biblioteca de Ollama; la oferta cambia a menudo, así que revisa la página de cada modelo antes de descargarlo."
+            }
+          },
+          {
+            "aviso": "Ollama permite descargar versiones con más calidad (Q8 o FP16), pero ocupan casi el doble o el cuádruple. Para empezar, quédate con la versión por defecto: es la que mejor equilibra calidad, memoria y velocidad.",
+            "titulo": "Sobre las versiones"
+          }
+        ]
+      },
+      {
+        "h2": "Modelos de Ollama para tarjetas de 8 GB",
+        "bloques": [
+          {
+            "p": "Con 8 GB de VRAM, como una RTX 5060 o muchas tarjetas de generaciones anteriores, el terreno cómodo son los **modelos de 7B a 8B**. Caben enteros con sitio para conversaciones de longitud normal y responden muy rápido: en una RTX 5060 estimamos unos {tps:nvidia-rtx-5060} tokens por segundo con un modelo de 8B, bastante más rápido de lo que se lee."
+          },
+          {
+            "ul": [
+              "**llama3.1:8b.** Un modelo de propósito general muy equilibrado, ideal para empezar y para tareas del día a día.",
+              "**qwen3:8b.** Muy bueno en español, en razonamiento y en tareas con instrucciones largas. Una de las opciones más completas en este tamaño.",
+              "**deepseek-r1:8b.** Una versión pequeña de DeepSeek R1 que «piensa» antes de responder. Va bien para problemas de lógica y matemáticas, aunque tarda más en contestar porque escribe su razonamiento.",
+              "**gemma3:4b.** Si tu tarjeta tiene 6 GB, como la RTX 3050, este modelo pequeño de Google te deja margen y responde con soltura."
+            ]
+          },
+          {
+            "p": "Lo que no te recomendamos con 8 GB es forzar modelos de 14B: técnicamente arrancan, pero una parte se va a la RAM y la experiencia empeora mucho. Si se te queda corto, el salto lógico es una tarjeta de 16 GB."
+          },
+          {
+            "pick": "nvidia-rtx-5060",
+            "rol": "Para modelos de 7B a 8B",
+            "texto": "Con {vram:nvidia-rtx-5060} GB y {bw:nvidia-rtx-5060} GB/s, mueve los modelos de 8B con soltura, pero no va más allá."
+          }
+        ]
+      },
+      {
+        "h2": "Modelos de Ollama para tarjetas de 12 y 16 GB",
+        "bloques": [
+          {
+            "p": "Es el escalón más interesante para la mayoría. Con 12 GB, como la RTX 3060 de 12 GB o la RTX 5070, entran los **modelos de 12B a 14B** con contexto justo. Con 16 GB, como la RTX 5060 Ti, la RX 9060 XT o la RTX 5070 Ti, esos mismos modelos caben con holgura y te queda memoria para conversaciones largas o documentos extensos."
+          },
+          {
+            "ul": [
+              "**qwen3:14b.** Para muchos usuarios, el mejor equilibrio en 16 GB: responde bien en español, razona con soltura y sigue instrucciones complejas.",
+              "**gemma3:12b.** El modelo mediano de Google. Además de texto entiende imágenes: puedes pasarle una foto o una captura y preguntarle por ella.",
+              "**qwen2.5-coder:14b.** Especializado en programación. Es una opción muy popular para usar como asistente de código local con editores como VS Code.",
+              "**deepseek-r1:14b.** La versión con razonamiento, más lenta en responder pero más cuidadosa en problemas difíciles."
+            ]
+          },
+          {
+            "p": "En velocidad, el ancho de banda marca la diferencia. Con un modelo de 14B estimamos que una RTX 5060 Ti ronda la mitad de velocidad que una RTX 5070 Ti, porque esta tiene el doble de ancho de banda ({bw:nvidia-rtx-5060-ti-16gb} frente a {bw:nvidia-rtx-5070-ti} GB/s). Las dos cargan exactamente los mismos modelos; la segunda solo los mueve más rápido."
+          },
+          {
+            "barras": {
+              "titulo": "Tokens por segundo estimados con un modelo de 8B en tarjetas de 12 y 16 GB",
+              "datos": [
+                [
+                  "RTX 3060 12 GB",
+                  "{tps:nvidia-rtx-3060-12gb}",
+                  "{tps:nvidia-rtx-3060-12gb}"
+                ],
+                [
+                  "RX 9060 XT 16 GB",
+                  "{tps:amd-radeon-rx-9060-xt-16gb}",
+                  "{tps:amd-radeon-rx-9060-xt-16gb}"
+                ],
+                [
+                  "RTX 5060 Ti 16 GB",
+                  "{tps:nvidia-rtx-5060-ti-16gb}",
+                  "{tps:nvidia-rtx-5060-ti-16gb}"
+                ],
+                [
+                  "RX 9070 XT",
+                  "{tps:amd-radeon-rx-9070-xt}",
+                  "{tps:amd-radeon-rx-9070-xt}"
+                ],
+                [
+                  "RTX 5070 Ti",
+                  "{tps:nvidia-rtx-5070-ti}",
+                  "{tps:nvidia-rtx-5070-ti}"
+                ]
+              ],
+              "unidad": "",
+              "nota": "Estimación propia de Inferium (ancho de banda × 0,7 ÷ tamaño del modelo), no una prueba medida. Sirve para comparar entre tarjetas."
+            }
+          },
+          {
+            "pick": "nvidia-rtx-5060-ti-16gb",
+            "rol": "La entrada con 16 GB y CUDA",
+            "texto": "Con {vram:nvidia-rtx-5060-ti-16gb} GB caben los modelos de 14B con holgura. Es la tarjeta que más recomendamos para empezar en serio con Ollama."
+          }
+        ]
+      },
+      {
+        "h2": "Modelos de Ollama para 24 y 32 GB",
+        "bloques": [
+          {
+            "p": "Con 24 GB o más dejas atrás los modelos medianos. En 24 GB, como la RTX PRO 4000, entran **mistral-small:24b** y **gemma3:27b**, que son claramente más capaces que los de 14B en redacción, resúmenes largos y razonamiento. Los modelos de 32B también arrancan en 24 GB, pero con muy poco contexto."
+          },
+          {
+            "p": "Con 32 GB, como la RTX 5090, llegas a los **modelos de 32B con contexto amplio**: qwen3:32b, qwen2.5-coder:32b o deepseek-r1:32b. Es el tamaño que mucha gente considera el punto en el que un modelo local empieza a parecerse a los asistentes de pago para tareas del día a día, sobre todo en programación. En una RTX 5090 un modelo de 32B en Q4 sigue respondiendo con mucha soltura gracias a sus {bw:nvidia-rtx-5090} GB/s."
+          },
+          {
+            "p": "Los modelos de 70B, como llama3.3:70b, necesitan unos 47 GB: no caben en ninguna tarjeta de consumo. Para ellos hacen falta [GPU profesionales para IA](/gpu-profesionales-para-ia/) de 48 GB o más, dos tarjetas, o un equipo con mucha memoria unificada como un [mini PC con Ryzen AI Max+ 395](/mini-pc/) o un Mac con 64 GB o más."
+          },
+          {
+            "pick": "nvidia-rtx-5090",
+            "rol": "Para modelos de 32B",
+            "texto": "Con {vram:nvidia-rtx-5090} GB y {bw:nvidia-rtx-5090} GB/s, es la tarjeta de consumo que mejor mueve los modelos de 32B en Ollama."
+          }
+        ]
+      },
+      {
+        "h2": "Qué modelo elegir según para qué lo uses",
+        "bloques": [
+          {
+            "tabla": {
+              "cab": [
+                "Uso",
+                "Con 8 GB",
+                "Con 16 GB",
+                "Con 32 GB"
+              ],
+              "filas": [
+                [
+                  "Chatear y escribir en español",
+                  "qwen3:8b",
+                  "qwen3:14b",
+                  "qwen3:32b"
+                ],
+                [
+                  "Programar",
+                  "qwen2.5-coder:7b",
+                  "qwen2.5-coder:14b",
+                  "qwen2.5-coder:32b"
+                ],
+                [
+                  "Razonamiento y matemáticas",
+                  "deepseek-r1:8b",
+                  "deepseek-r1:14b",
+                  "deepseek-r1:32b"
+                ],
+                [
+                  "Preguntar sobre imágenes",
+                  "gemma3:4b",
+                  "gemma3:12b",
+                  "gemma3:27b"
+                ]
+              ],
+              "nota": "Sugerencias de Inferium entre modelos populares de la biblioteca de Ollama. Prueba dos o tres y quédate con el que mejor responda a tu forma de trabajar."
+            }
+          },
+          {
+            "p": "No hay un modelo perfecto para todo. Lo más práctico es tener descargados dos o tres: uno general para el día a día, uno de programación si escribes código y uno con razonamiento para problemas difíciles. Ollama solo carga en memoria el que estás usando, así que tenerlos en el disco no ralentiza nada, aunque sí ocupa espacio: cuenta con varios GB por modelo en tu [SSD](/componentes/ssd-nvme/)."
+          }
+        ]
+      },
+      {
+        "h2": "Cómo comprobar que el modelo va en la GPU",
+        "bloques": [
+          {
+            "ol": [
+              "Descarga y arranca el modelo con `ollama run qwen3:14b` (o el que hayas elegido).",
+              "En otra ventana de terminal escribe `ollama ps`.",
+              "Mira la columna PROCESSOR. Si pone **100% GPU**, el modelo cabe entero y va a máxima velocidad.",
+              "Si pone algo como **30%/70% CPU/GPU**, una parte está en la RAM. Prueba un modelo más pequeño o reduce el contexto."
+            ]
+          },
+          {
+            "p": "Este comando es la mejor forma de saber si tu tarjeta se queda corta. Si casi todos los modelos que te interesan aparecen repartidos entre CPU y GPU, es la señal de que necesitas más VRAM. Para saber exactamente cuánta, usa la [calculadora de VRAM](/calculadora-vram/) con el modelo que quieras."
+          },
+          {
+            "aviso": "En tarjetas AMD, Ollama funciona con las Radeon compatibles con ROCm (en Windows y Linux). Antes de comprar, revisa la lista de tarjetas compatibles en la documentación oficial de Ollama. Lo explicamos en [NVIDIA o AMD para IA](/guias/nvidia-o-amd-para-ia-cuda-rocm/).",
+            "titulo": "Si tu tarjeta es AMD"
+          }
+        ]
+      },
+      {
+        "h2": "Si tu tarjeta se queda corta",
+        "bloques": [
+          {
+            "p": "Si quieres usar modelos más grandes de los que admite tu tarjeta, tienes tres caminos. El primero, y el más eficaz, es una tarjeta con más VRAM: pasar de 8 a 16 GB te abre todos los modelos de 14B. El segundo es un equipo con memoria unificada, que carga modelos enormes aunque los mueva más despacio. El tercero, si tienes portátil, es una [tarjeta gráfica externa](/guias/tarjeta-grafica-externa-egpu-portatil/)."
+          },
+          {
+            "p": "Si estás pensando en comprar, en [mejor tarjeta gráfica calidad precio para IA](/guias/mejor-tarjeta-grafica-calidad-precio-ia/) ordenamos las opciones por lo que ofrecen para modelos como estos. Y si aún no has instalado Ollama, empieza por [qué es Ollama y cómo instalarlo](/guias/que-es-ollama-como-instalarlo-requisitos/)."
+          },
+          {
+            "cta": {
+              "texto": "¿Quieres ver qué tarjeta necesita tu modelo?",
+              "boton": "Abrir la calculadora de VRAM",
+              "url": "/calculadora-vram/"
+            }
+          }
+        ]
+      }
+    ],
+    "faq": [
+      [
+        "¿Cuál es el mejor modelo de Ollama?",
+        "Depende de tu VRAM y de lo que hagas. Como referencia, qwen3:8b para 8 GB, qwen3:14b para 16 GB y qwen3:32b para 32 GB son opciones generales muy completas, y las versiones coder son las más útiles para programar."
+      ],
+      [
+        "¿Qué modelo de Ollama puedo usar con 8 GB de VRAM?",
+        "Modelos de 7B a 8B, como llama3.1:8b, qwen3:8b o deepseek-r1:8b. Caben enteros y van rápidos."
+      ],
+      [
+        "¿Qué modelo de Ollama puedo usar con 16 GB de VRAM?",
+        "Modelos de 12B a 14B con holgura, como qwen3:14b, gemma3:12b o qwen2.5-coder:14b."
+      ],
+      [
+        "¿Cuánto ocupa un modelo de Ollama?",
+        "En la versión por defecto (Q4), algo más de la mitad de sus miles de millones de parámetros en GB, más el contexto: unos 5,4 GB un modelo de 8B y unos 21,6 GB uno de 32B."
+      ],
+      [
+        "¿Cómo sé si un modelo de Ollama usa mi tarjeta gráfica?",
+        "Ejecuta `ollama ps` mientras el modelo está cargado. Si en PROCESSOR aparece 100% GPU, va entero en la tarjeta."
+      ],
+      [
+        "¿Puedo usar un modelo que no cabe en mi VRAM?",
+        "Sí, Ollama reparte el modelo entre la GPU y la RAM, pero va mucho más lento. Es útil para probar, no para el uso diario."
+      ]
+    ],
+    "relacionadas": [
+      "que-es-ollama-como-instalarlo-requisitos",
+      "que-es-la-vram-cuanta-necesitas-ia",
+      "mejor-tarjeta-grafica-calidad-precio-ia"
+    ]
+  },
+  {
+    "slug": "mac-mini-m6-para-ia",
+    "tipo": "informativa",
+    "titulo": "Mac mini M6 para IA: qué modelos mueve y qué memoria elegir",
+    "seoTitulo": "Mac mini M6 para IA: qué modelos mueve y qué memoria elegir",
+    "descripcion": "¿Sirve el Mac mini M6 para IA local? Qué modelos de Ollama y LM Studio mueve con 16, 24 y 32 GB, a qué velocidad, y cuándo te conviene más el Mac mini M5 Pro.",
+    "keyword": "mac mini m6",
+    "publico": "Persona que se plantea comprar un Mac mini M6 y quiere saber si le servirá para usar modelos de IA en local",
+    "fecha": "2026-11-18",
+    "publicar": "2026-11-18 09:00",
+    "entradilla": "El Mac mini es uno de los ordenadores más buscados en España, y con el chip M6 muchos lo miran también como equipo para IA local. Te contamos qué puede hacer de verdad el Mac mini M6 con modelos de lenguaje, qué memoria elegir al comprarlo y en qué casos te sale mejor el Mac mini M5 Pro o un PC con tarjeta gráfica.",
+    "resumen": [
+      "El Mac mini M6 sirve para IA local: con 16 GB mueve modelos de 8B con soltura y con 24 o 32 GB sube a modelos de 14B y 24B.",
+      "Según Apple, la versión de 16 GB tiene 153 GB/s de ancho de banda y las de 24 y 32 GB, 170 GB/s. Eso lo hace más lento que una tarjeta gráfica de gama media.",
+      "La memoria no se puede ampliar después: es la decisión más importante al comprarlo.",
+      "Si quieres velocidad para programar con un asistente local, el Mac mini M5 Pro casi duplica el ancho de banda."
+    ],
+    "secciones": [
+      {
+        "h2": "Respuesta corta: ¿sirve el Mac mini M6 para IA?",
+        "bloques": [
+          {
+            "p": "Sí. El **Mac mini M6** es una forma muy cómoda de empezar con la inteligencia artificial en local: es pequeño, silencioso, consume poquísimo y Ollama y LM Studio funcionan en él sin configurar nada. Con la versión de 16 GB puedes chatear con modelos de 8B a buena velocidad, y con 24 o 32 GB llegas a modelos medianos de 14B y 24B."
+          },
+          {
+            "p": "Lo que no es, y conviene saberlo antes de comprar, es un equipo rápido para modelos grandes. Su memoria tiene menos ancho de banda que la de una tarjeta gráfica de gama media, así que genera texto más despacio que un PC con, por ejemplo, una RTX 5060 Ti de 16 GB. Y su memoria va soldada: lo que elijas al comprarlo es lo que tendrás siempre."
+          },
+          {
+            "stats": [
+              [
+                "{vram:apple-mac-mini-m6} GB",
+                "memoria unificada en la versión base"
+              ],
+              [
+                "{bw:apple-mac-mini-m6} GB/s",
+                "ancho de banda con 16 GB, según Apple"
+              ],
+              [
+                "{w:apple-mac-mini-m6} W",
+                "consumo máximo medido por Apple"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "h2": "Por qué un Mac mini puede ejecutar modelos de IA",
+        "bloques": [
+          {
+            "p": "Los chips de Apple usan **memoria unificada**: el procesador y la gráfica comparten la misma memoria, sin copiar datos de una a otra. En un PC, un modelo tiene que caber en la VRAM de la tarjeta gráfica; en un Mac, puede ocupar buena parte de la memoria total del equipo. Por eso un Mac mini de 24 GB carga modelos que no entran en una tarjeta de 16 GB."
+          },
+          {
+            "p": "Eso sí, macOS se reserva una parte de la memoria para el sistema y las aplicaciones abiertas, así que un Mac mini de 16 GB no dedica los 16 GB al modelo. Cuenta siempre con algo de margen, sobre todo si vas a tener el navegador y otros programas abiertos mientras usas la IA. Lo explicamos con más detalle en [qué es la VRAM y cuánta necesitas](/guias/que-es-la-vram-cuanta-necesitas-ia/)."
+          }
+        ]
+      },
+      {
+        "h2": "Qué modelos mueve el Mac mini M6 según su memoria",
+        "bloques": [
+          {
+            "tabla": {
+              "cab": [
+                "Memoria",
+                "Modelos cómodos (Q4)",
+                "Modelos justos",
+                "Velocidad estimada con 8B"
+              ],
+              "filas": [
+                [
+                  "16 GB",
+                  "7B a 8B (llama3.1:8b, qwen3:8b)",
+                  "12B a 14B, con poco contexto",
+                  "unos {tps:apple-mac-mini-m6} tokens/s"
+                ],
+                [
+                  "24 GB",
+                  "Hasta 14B (qwen3:14b, gemma3:12b)",
+                  "24B (mistral-small:24b)",
+                  "unos 26 tokens/s"
+                ],
+                [
+                  "32 GB",
+                  "Hasta 24B",
+                  "27B (gemma3:27b)",
+                  "unos 26 tokens/s"
+                ]
+              ],
+              "nota": "Cálculo de Inferium: un modelo en Q4 ocupa parámetros × 4,5 bits ÷ 8, más un 20 % para el contexto, y hay que dejar memoria para macOS. Velocidad: estimación propia (ancho de banda × 0,7 ÷ tamaño del modelo), con 153 GB/s en 16 GB y 170 GB/s en 24 y 32 GB según Apple."
+            }
+          },
+          {
+            "p": "Como referencia, a partir de unos 15 tokens por segundo el texto aparece a un ritmo cómodo de leer. Con un modelo de 8B el Mac mini M6 va holgado; con uno de 14B, en nuestra estimación ronda los 14 a 15 tokens por segundo, todavía usable para chatear, aunque se nota que piensa. Los modelos de 24B funcionan en las versiones de 24 y 32 GB, pero ya a un ritmo más pausado: en torno a 9 tokens por segundo según nuestra estimación, útil para tareas en las que no te importa esperar un poco."
+          },
+          {
+            "p": "Si te preguntas qué modelo concreto descargar, en [mejores modelos de Ollama según tu tarjeta gráfica](/guias/mejores-modelos-ollama-segun-tu-tarjeta-grafica/) tienes recomendaciones por tamaño de memoria. En un Mac, cuenta la memoria unificada como si fuera VRAM, restando el margen del sistema."
+          }
+        ]
+      },
+      {
+        "h2": "Qué memoria elegir: 16, 24 o 32 GB",
+        "bloques": [
+          {
+            "p": "Es la pregunta clave, porque **la memoria del Mac mini no se puede ampliar nunca**. Nuestra recomendación depende de cuánto vayas a usar la IA:"
+          },
+          {
+            "ul": [
+              "**16 GB.** Suficiente si quieres probar la IA local, usar modelos de 8B para redactar, resumir o preguntar dudas, y usar el Mac para todo lo demás. Es la versión más vendida y la más asequible.",
+              "**24 GB.** La que recomendamos si la IA es uno de los motivos de compra. Te abre los modelos de 14B con holgura, que son claramente mejores que los de 8B, y sube el ancho de banda a 170 GB/s.",
+              "**32 GB.** Para quien quiere margen para modelos de 24B o trabajar con documentos largos. Si apuntas más alto que esto, ya te interesa mirar el Mac mini M5 Pro o un Mac Studio."
+            ]
+          },
+          {
+            "aviso": "Si dudas entre más memoria o más almacenamiento, elige más memoria. El almacenamiento se puede ampliar con un SSD externo rápido; la memoria, no.",
+            "titulo": "Un consejo"
+          }
+        ]
+      },
+      {
+        "h2": "Mac mini M6 o Mac mini M5 Pro para IA",
+        "bloques": [
+          {
+            "p": "Es la duda más habitual. El **Mac mini M5 Pro** parte de 24 GB de memoria y, según Apple, ofrece {bw:apple-mac-mini-m5-pro} GB/s de ancho de banda, casi el doble que el M6. En la práctica, eso significa que con el mismo modelo genera texto casi el doble de rápido: en nuestra estimación, unos {tps:apple-mac-mini-m5-pro} tokens por segundo con un modelo de 8B frente a los {tps:apple-mac-mini-m6} del M6 de 16 GB."
+          },
+          {
+            "tabla": {
+              "cab": [
+                "Dato",
+                "Mac mini M6",
+                "Mac mini M5 Pro"
+              ],
+              "filas": [
+                [
+                  "Memoria base",
+                  "{vram:apple-mac-mini-m6} GB",
+                  "{vram:apple-mac-mini-m5-pro} GB"
+                ],
+                [
+                  "Ancho de banda",
+                  "{bw:apple-mac-mini-m6} GB/s (170 con 24 o 32 GB)",
+                  "{bw:apple-mac-mini-m5-pro} GB/s"
+                ],
+                [
+                  "Consumo máximo",
+                  "{w:apple-mac-mini-m6} W",
+                  "{w:apple-mac-mini-m5-pro} W"
+                ],
+                [
+                  "Tokens/s con 8B (estimación)",
+                  "{tps:apple-mac-mini-m6}",
+                  "{tps:apple-mac-mini-m5-pro}"
+                ],
+                [
+                  "Nota IA de Inferium",
+                  "{nota:apple-mac-mini-m6}",
+                  "{nota:apple-mac-mini-m5-pro}"
+                ]
+              ],
+              "nota": "Datos de las fichas de Inferium, con la configuración base de cada uno."
+            }
+          },
+          {
+            "p": "Si vas a usar la IA a diario, por ejemplo para programar con un asistente local en tu editor de código, el M5 Pro compensa: cada respuesta llega antes y puedes usar modelos más grandes sin esperar. Si la IA es un extra y el Mac es sobre todo tu ordenador de diario, el M6 con 24 GB es una compra muy sensata. Los tienes enfrentados en [Mac mini M6 vs Mac mini M5 Pro](/comparador/mac-mini-m6-vs-mac-mini-m5-pro/)."
+          },
+          {
+            "pick": "apple-mac-mini-m6",
+            "rol": "Para empezar con la IA local",
+            "texto": "Silencioso, pequeño y con un consumo máximo de {w:apple-mac-mini-m6} W. Elige 24 GB si la IA es uno de los motivos de compra."
+          },
+          {
+            "pick": "apple-mac-mini-m5-pro",
+            "rol": "Si quieres velocidad",
+            "texto": "Con {bw:apple-mac-mini-m5-pro} GB/s casi duplica la velocidad de generación del M6 y parte de 24 GB."
+          }
+        ]
+      },
+      {
+        "h2": "Mac mini M6 o PC con tarjeta gráfica",
+        "bloques": [
+          {
+            "p": "Un PC con una tarjeta gráfica de 16 GB, como la RTX 5060 Ti, carga los mismos modelos que un Mac mini M6 de 24 GB y los mueve bastante más rápido: la tarjeta tiene {bw:nvidia-rtx-5060-ti-16gb} GB/s de ancho de banda. Además, el ecosistema CUDA de NVIDIA es el estándar para generar imágenes con Stable Diffusion o Flux, donde el Mac va más limitado."
+          },
+          {
+            "p": "El Mac mini gana en otras cosas: no hace ruido, consume muy poco, ocupa lo que un libro y no hay que montar nada. Para tener un asistente de IA siempre encendido en casa, o si ya trabajas con macOS, es difícil encontrar algo más cómodo. La comparación completa entre los Mac y las tarjetas gráficas la tienes en [mejor Mac para IA local](/guias/mejor-mac-para-ia-local/)."
+          }
+        ]
+      },
+      {
+        "h2": "Cómo empezar con IA en tu Mac mini M6",
+        "bloques": [
+          {
+            "ol": [
+              "**Instala Ollama o LM Studio.** Los dos tienen versión para macOS y se instalan en un par de minutos. Si dudas, lee [LM Studio o Ollama](/guias/lm-studio-o-ollama/).",
+              "**Empieza con un modelo de 8B.** Por ejemplo `ollama run qwen3:8b`. Es la mejor primera prueba en cualquier configuración.",
+              "**Sube a 14B si tienes 24 GB o más.** Notarás respuestas más elaboradas y mejor español.",
+              "**Prueba los modelos MLX en LM Studio.** LM Studio ofrece versiones de muchos modelos preparadas para los chips de Apple, que suelen aprovechar mejor el hardware.",
+              "**Cierra lo que no uses.** Cuantas menos aplicaciones abiertas, más memoria queda para el modelo."
+            ]
+          },
+          {
+            "cta": {
+              "texto": "¿Quieres ver todos los Mac con sus datos?",
+              "boton": "Ver Mac para IA",
+              "url": "/mac/"
+            }
+          }
+        ]
+      }
+    ],
+    "faq": [
+      [
+        "¿Sirve el Mac mini M6 para IA?",
+        "Sí. Con 16 GB mueve modelos de 8B con soltura y con 24 o 32 GB llega a modelos de 14B y 24B. Es más lento que un PC con una tarjeta gráfica de gama media, pero mucho más silencioso y eficiente."
+      ],
+      [
+        "¿Cuánta memoria necesita un Mac mini para IA?",
+        "16 GB para empezar con modelos de 8B, 24 GB para trabajar cómodo con modelos de 14B y 32 GB si quieres llegar a modelos de 24B."
+      ],
+      [
+        "¿Qué ancho de banda tiene el Mac mini M6?",
+        "Según Apple, 153 GB/s en la versión de 16 GB y 170 GB/s en las de 24 y 32 GB."
+      ],
+      [
+        "¿Mac mini M6 o M5 Pro para IA?",
+        "El M5 Pro tiene casi el doble de ancho de banda y parte de 24 GB, así que es mucho más rápido con los mismos modelos. El M6 es la opción más asequible si la IA no es tu uso principal."
+      ],
+      [
+        "¿Se puede ampliar la memoria del Mac mini?",
+        "No. La memoria va integrada en el chip y se elige al comprarlo."
+      ],
+      [
+        "¿Funciona Ollama en el Mac mini M6?",
+        "Sí. Ollama y LM Studio tienen versión para macOS y aprovechan la gráfica del chip de Apple sin configurar nada."
+      ]
+    ],
+    "relacionadas": [
+      "mejor-mac-para-ia-local",
+      "mejores-modelos-ollama-segun-tu-tarjeta-grafica",
+      "que-es-ollama-como-instalarlo-requisitos"
+    ]
+  },
+  {
+    "slug": "rtx-5090-para-ia",
+    "tipo": "informativa",
+    "titulo": "RTX 5090 para IA: qué modelos mueve y si merece la pena",
+    "seoTitulo": "RTX 5090 para IA: qué modelos mueve y si merece la pena",
+    "descripcion": "La RTX 5090 para inteligencia artificial: qué modelos de Ollama y LM Studio caben en sus 32 GB, a qué velocidad, qué fuente necesita y cuándo compensa frente a la RTX 5080 o una GPU profesional.",
+    "keyword": "rtx 5090",
+    "publico": "Persona que se plantea comprar una RTX 5090 pensando en usar modelos de IA en local y quiere saber si le compensa",
+    "fecha": "2026-11-20",
+    "publicar": "2026-11-20 09:00",
+    "entradilla": "La RTX 5090 es la tarjeta gráfica de consumo más potente de NVIDIA y una de las más buscadas en España. Para jugar es la reina, pero ¿qué tal para inteligencia artificial? Te contamos qué modelos caben en sus 32 GB, a qué velocidad van, qué necesita tu PC para llevarla y en qué casos compensa de verdad.",
+    "resumen": [
+      "La RTX 5090 tiene 32 GB de VRAM y el mayor ancho de banda de una tarjeta de consumo: es la mejor GPU doméstica para IA local.",
+      "En sus 32 GB caben los modelos de 32B en Q4 con contexto amplio, y van muy rápido. Los de 70B no caben enteros.",
+      "Consume hasta 575 W y pide una fuente de 1000 W con conector de 16 pines, además de una caja amplia.",
+      "Compensa si quieres modelos de 32B o generar imágenes y vídeo sin límites. Para modelos de 14B, una tarjeta de 16 GB es mucho más sensata."
+    ],
+    "secciones": [
+      {
+        "h2": "La RTX 5090 en números (para IA)",
+        "bloques": [
+          {
+            "p": "Cuando se habla de la **RTX 5090** casi siempre se habla de juegos, pero para inteligencia artificial lo que importa son otros datos. El primero es la **VRAM**: tiene 32 GB, el doble que una RTX 5080. El segundo es el **ancho de banda**, que decide cuántas palabras por segundo genera un modelo: aquí es la tarjeta de consumo más rápida que existe. Y el tercero es el **software**: al ser NVIDIA, funciona con CUDA, el ecosistema en el que se ha construido casi toda la IA."
+          },
+          {
+            "stats": [
+              [
+                "{vram:nvidia-rtx-5090} GB",
+                "de VRAM GDDR7"
+              ],
+              [
+                "{bw:nvidia-rtx-5090} GB/s",
+                "de ancho de banda"
+              ],
+              [
+                "{tps:nvidia-rtx-5090}",
+                "tokens/s estimados con un modelo de 8B"
+              ],
+              [
+                "{w:nvidia-rtx-5090} W",
+                "de consumo máximo"
+              ]
+            ]
+          },
+          {
+            "p": "Con esos datos, nuestra nota IA para la RTX 5090 es de {nota:nvidia-rtx-5090}, la más alta entre las tarjetas de consumo del catálogo. Si quieres repasar por qué la VRAM y el ancho de banda pesan tanto, lo explicamos en [qué es la VRAM y cuánta necesitas](/guias/que-es-la-vram-cuanta-necesitas-ia/)."
+          }
+        ]
+      },
+      {
+        "h2": "Qué modelos de IA caben en sus 32 GB",
+        "bloques": [
+          {
+            "p": "La gran ventaja de la RTX 5090 es que abre el escalón de los **modelos de 32B**, que con 16 GB no se pueden usar enteros. Es el tamaño en el que muchos modelos locales empiezan a acercarse a los asistentes de pago en programación, redacción y razonamiento."
+          },
+          {
+            "tabla": {
+              "cab": [
+                "Modelo (Q4)",
+                "Memoria aproximada",
+                "¿Cabe en la RTX 5090?",
+                "Velocidad estimada"
+              ],
+              "filas": [
+                [
+                  "Llama 3.1 8B / Qwen3 8B",
+                  "unos 5,4 GB",
+                  "Sí, con muchísimo margen",
+                  "unos {tps:nvidia-rtx-5090} tokens/s"
+                ],
+                [
+                  "Qwen3 14B",
+                  "unos 9,5 GB",
+                  "Sí, con contexto muy largo",
+                  "unos 160 tokens/s"
+                ],
+                [
+                  "Mistral Small 24B / Gemma 3 27B",
+                  "16 a 18 GB",
+                  "Sí, con holgura",
+                  "unos 80 a 95 tokens/s"
+                ],
+                [
+                  "Qwen3 32B / Qwen2.5 Coder 32B",
+                  "unos 21,6 GB",
+                  "Sí, con contexto amplio",
+                  "unos 70 tokens/s"
+                ],
+                [
+                  "Llama 3.3 70B",
+                  "unos 47 GB",
+                  "No entero: hacen falta dos tarjetas o más VRAM",
+                  ""
+                ]
+              ],
+              "nota": "Cálculo de Inferium: parámetros × 4,5 bits ÷ 8, más un 20 % para el contexto. Velocidad: estimación propia (ancho de banda × 0,7 ÷ tamaño de los pesos), no una prueba medida."
+            }
+          },
+          {
+            "p": "Para ponerlo en perspectiva: a partir de unos 15 tokens por segundo el texto aparece más rápido de lo que se lee. La RTX 5090 multiplica esa cifra incluso con modelos de 32B, así que las respuestas son prácticamente instantáneas. Eso se nota mucho cuando usas un asistente de código que genera bloques largos o cuando procesas documentos extensos."
+          },
+          {
+            "p": "Los 32 GB también dan margen para **versiones de más calidad** de modelos medianos: un modelo de 14B en Q8, que ocupa casi el doble que en Q4, entra sin problema. Si quieres ideas concretas de qué descargar, mira [mejores modelos de Ollama según tu tarjeta gráfica](/guias/mejores-modelos-ollama-segun-tu-tarjeta-grafica/)."
+          }
+        ]
+      },
+      {
+        "h2": "Generar imágenes y vídeo con la RTX 5090",
+        "bloques": [
+          {
+            "p": "Donde la RTX 5090 brilla especialmente es en la **generación de imágenes**. Modelos como Flux.1 dev, que piden unos 16 GB para ir bien, funcionan con mucho margen, lo que permite subir la resolución, encadenar varios LoRA o trabajar en ComfyUI con flujos complejos sin quedarse sin memoria. SDXL va sobrado."
+          },
+          {
+            "p": "En **vídeo generado por IA**, que es mucho más exigente en memoria, los 32 GB marcan una diferencia real frente a las tarjetas de 16 GB, que a menudo obligan a reducir la resolución o la duración. Como es una NVIDIA, todos los tutoriales, extensiones y nodos funcionan a la primera. Si este es tu uso principal, tienes más opciones en [GPU para Stable Diffusion](/gpu-para-stable-diffusion/)."
+          }
+        ]
+      },
+      {
+        "h2": "Lo que necesita tu PC para llevar una RTX 5090",
+        "bloques": [
+          {
+            "p": "La RTX 5090 no es una tarjeta que se pinche en cualquier ordenador. Antes de comprarla, revisa estos puntos:"
+          },
+          {
+            "ol": [
+              "**Fuente de alimentación de 1000 W o más.** La tarjeta consume hasta {w:nvidia-rtx-5090} W por sí sola. Una fuente ATX 3.0 o 3.1 de buena calidad, con conector de 16 pines (12V-2x6) nativo, es lo más seguro. Tienes opciones en [fuentes de alimentación](/componentes/fuentes-de-alimentacion/).",
+              "**Una caja amplia y bien ventilada.** Es una tarjeta muy grande. Compara su longitud y su grosor con las medidas máximas que admite tu caja. Tienes cajas con espacio de sobra en [cajas de PC](/componentes/cajas-pc/).",
+              "**64 GB de RAM.** Para acompañar a 32 GB de VRAM conviene tener al menos el doble de memoria RAM, sobre todo si vas a cargar modelos grandes o trabajar con varios programas a la vez.",
+              "**Un SSD con espacio.** Los modelos de 32B ocupan unos 20 GB cada uno y los de imagen otros tantos. Un SSD NVMe de 2 TB es un buen punto de partida.",
+              "**Cuidado con el conector.** Mételo hasta el fondo, hasta que haga clic, y no dobles el cable justo a la salida. Un [soporte para la tarjeta](/componentes/accesorios-para-gpu/) evita que se incline con el tiempo."
+            ]
+          },
+          {
+            "aviso": "La RTX 5090 trabajando durante horas con un modelo de IA genera mucho calor. Con una fuente justa o una caja mal ventilada aparecen los reinicios y el ruido. Si vas a hacer la inversión, no ahorres en la fuente.",
+            "titulo": "Ojo con esto"
+          }
+        ]
+      },
+      {
+        "h2": "RTX 5090 o RTX 5080 para IA",
+        "bloques": [
+          {
+            "p": "La **RTX 5080** es más barata y muy rápida, pero tiene 16 GB de VRAM: la mitad. Eso significa que carga los mismos modelos que una RTX 5060 Ti o una RTX 5070 Ti, es decir, hasta 14B con holgura. Para IA, la diferencia entre la 5080 y la 5090 no es de velocidad, es de qué modelos puedes usar."
+          },
+          {
+            "tabla": {
+              "cab": [
+                "Dato",
+                "RTX 5080",
+                "RTX 5090"
+              ],
+              "filas": [
+                [
+                  "VRAM",
+                  "{vram:nvidia-rtx-5080} GB",
+                  "{vram:nvidia-rtx-5090} GB"
+                ],
+                [
+                  "Ancho de banda",
+                  "{bw:nvidia-rtx-5080} GB/s",
+                  "{bw:nvidia-rtx-5090} GB/s"
+                ],
+                [
+                  "Modelo más grande en Q4",
+                  "{mayor:nvidia-rtx-5080}",
+                  "{mayor:nvidia-rtx-5090}"
+                ],
+                [
+                  "Consumo",
+                  "{w:nvidia-rtx-5080} W",
+                  "{w:nvidia-rtx-5090} W"
+                ],
+                [
+                  "Nota IA de Inferium",
+                  "{nota:nvidia-rtx-5080}",
+                  "{nota:nvidia-rtx-5090}"
+                ]
+              ],
+              "nota": "Datos de las fichas de Inferium."
+            }
+          },
+          {
+            "p": "Si tus modelos son de 14B o menos, la RTX 5080 (o incluso una RTX 5070 Ti, con la misma VRAM) te da una experiencia excelente gastando bastante menos. Si quieres modelos de 32B, la RTX 5090 es la única tarjeta de consumo que los mueve enteros. Lo tienes con más detalle en [RTX 5080 vs RTX 5090](/comparador/rtx-5080-vs-rtx-5090/)."
+          }
+        ]
+      },
+      {
+        "h2": "RTX 5090 o una GPU profesional",
+        "bloques": [
+          {
+            "p": "La **RTX PRO 6000 Blackwell** tiene el mismo ancho de banda que la RTX 5090 pero 96 GB de VRAM, el triple. Ahí sí caben los modelos de 70B enteros y con contexto de sobra. A cambio, cuesta muchísimo más: solo compensa si la IA es tu trabajo y le vas a sacar rendimiento económico. Entre medias está la **RTX PRO 5000**, con 48 GB, más lenta pero con más memoria y solo 300 W."
+          },
+          {
+            "p": "Otra vía para llegar a 70B es montar **dos RTX 5090**: sumarías 64 GB y programas como Ollama reparten el modelo entre las dos. Es una opción potente, pero exige una placa con dos ranuras bien separadas, una fuente enorme y una caja muy grande. Comparamos todas estas opciones en [GPU profesionales para IA](/gpu-profesionales-para-ia/) y en [RTX 5090 vs RTX PRO 6000](/comparador/rtx-5090-vs-rtx-pro-6000/)."
+          },
+          {
+            "pick": "nvidia-rtx-5090",
+            "rol": "La mejor tarjeta de consumo para IA",
+            "texto": "{vram:nvidia-rtx-5090} GB de VRAM y {bw:nvidia-rtx-5090} GB/s: modelos de 32B a gran velocidad e imagen y vídeo sin límites."
+          },
+          {
+            "pick": "nvidia-rtx-pro-6000-blackwell",
+            "rol": "Si necesitas modelos de 70B",
+            "texto": "Mismo ancho de banda y {vram:nvidia-rtx-pro-6000-blackwell} GB de VRAM. Solo compensa para uso profesional."
+          }
+        ]
+      },
+      {
+        "h2": "¿Merece la pena la RTX 5090 para IA?",
+        "bloques": [
+          {
+            "p": "Depende de lo que quieras hacer. Estos son los casos en los que, en nuestra opinión, sí compensa:"
+          },
+          {
+            "ul": [
+              "**Quieres usar modelos de 32B a diario**, sobre todo para programar con un asistente local o trabajar con documentos largos.",
+              "**Generas imágenes o vídeo con IA** de forma intensiva y no quieres pelearte con la memoria.",
+              "**La IA es parte de tu trabajo** y el tiempo que ahorras en cada respuesta tiene valor.",
+              "**Además juegas**, y quieres la mejor tarjeta para las dos cosas."
+            ]
+          },
+          {
+            "p": "Y estos son los casos en los que te sale mejor otra opción: si vas a usar modelos de 8B a 14B, una tarjeta de 16 GB como la RTX 5060 Ti o la RTX 5070 Ti te da casi la misma experiencia por mucho menos; si buscas cargar modelos enormes y no te importa la velocidad, un [mini PC con mucha memoria unificada](/mini-pc/) o un Mac con 64 GB o más son alternativas; y si tu presupuesto es ajustado, mira [mejor tarjeta gráfica calidad precio para IA](/guias/mejor-tarjeta-grafica-calidad-precio-ia/)."
+          },
+          {
+            "cta": {
+              "texto": "¿Quieres compararla con otras tarjetas?",
+              "boton": "Abrir el comparador",
+              "url": "/comparador/"
+            }
+          }
+        ]
+      }
+    ],
+    "faq": [
+      [
+        "¿Es buena la RTX 5090 para IA?",
+        "Sí, es la mejor tarjeta de consumo para IA local: 32 GB de VRAM y el mayor ancho de banda del mercado doméstico, con CUDA para que todo el software funcione a la primera."
+      ],
+      [
+        "¿Qué modelos de IA caben en la RTX 5090?",
+        "Modelos de hasta 32B en Q4 con contexto amplio, como Qwen3 32B o Qwen2.5 Coder 32B. Los de 70B no caben enteros."
+      ],
+      [
+        "¿Cuánta VRAM tiene la RTX 5090?",
+        "32 GB de GDDR7."
+      ],
+      [
+        "¿Qué fuente necesita la RTX 5090?",
+        "Una de 1000 W o más, de buena calidad y con conector de 16 pines (12V-2x6) nativo. La tarjeta consume hasta 575 W."
+      ],
+      [
+        "¿RTX 5090 o RTX 5080 para IA?",
+        "Si vas a usar modelos de 32B, la 5090. Si te quedas en modelos de 14B o menos, la 5080 o una 5070 Ti cargan los mismos modelos gastando bastante menos."
+      ],
+      [
+        "¿Puede la RTX 5090 ejecutar Llama 3.3 70B?",
+        "No entero en Q4, porque necesita unos 47 GB. Puedes repartirlo entre la tarjeta y la RAM, pero va lento. Para 70B hacen falta dos tarjetas o una GPU profesional de 48 GB o más."
+      ]
+    ],
+    "relacionadas": [
+      "mejor-tarjeta-grafica-calidad-precio-ia",
+      "mejores-modelos-ollama-segun-tu-tarjeta-grafica",
+      "que-es-la-vram-cuanta-necesitas-ia"
+    ]
   }
 ]
